@@ -17,9 +17,9 @@ The virtual element method (VEM) of lowest order for Poisson equation is introdu
 
 PS: 
 
-   网上也有弹性问题 VEM 方法的文章及程序，但与本文的可能不相同 (如 locking free vem，投影限制条件的处理)。
+     - 网上也有弹性问题 VEM 方法的文章及程序，但与本文的可能不相同 (如 locking free vem，投影限制条件的处理)。
   
-   可以这么说，本文首次给出了 VEM 方法的 iFEM 方式处理。
+     - 可以这么说，本文首次给出了 VEM 方法的 iFEM 方式处理。
 
         
       
