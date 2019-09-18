@@ -13,7 +13,7 @@
 The virtual element method (VEM) of lowest order for Poisson equation is introduced in Chapter 2, including the computation of elliptic projection and L2 projection, the matrix form of the approximate variational problems as well as the treatment of boundary conditions. 
 
 ## Linear elasticity VEM (loweset order)
-For linear elasticity problems, we consider two kinds of variational formulations, named displacement-type VEM and tensor-type VEM, respectively. One can refer to the revalant chapter given in the mFEM repository beforehand. We provide sparse indices for fast assembling stiffness matrix and load vector as given in the programming of Poisson equation. The only thing is to compute the elliptic projections and L2 projections with the help of the standard assembly algorithm. 
+For linear elasticity problems, we consider two kinds of variational formulations, named displacement-type VEM and tensor-type VEM, respectively. One can refer to the relevant chapter given in the mFEM repository beforehand. We provide sparse indices for fast assembling stiffness matrix and load vector as given in the programming of Poisson equation. The only thing is to compute the elliptic projections and L2 projections with the help of the standard assembly algorithm. 
 
 
 PS: 
