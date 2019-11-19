@@ -27,8 +27,6 @@ The VEM of lowest order for linear elasticity problems is introduced in Chapter 
       相比网上有的程序，过程更加清晰，充分使用了 MATLAB 的向量运算。
       
   Undo:
- 
-      - 线弹性边值问题的一阶虚拟元方法
-      
+     
       - Poisson 方程的二阶虚拟元方法
 
