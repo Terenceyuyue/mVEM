@@ -2,16 +2,21 @@
 
 
 ## Mesh 
- Chapter 1 presents some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
+
+- Chapter 1 presents some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
  
- For the convenience of computation, we introduce some auxiliary mesh data. The idea stems from the treatment of triangulation in iFEM,     which is generalized to polygonal meshes with certain modifications. 
+- For the convenience of computation, we introduce some auxiliary mesh data. The idea stems from the treatment of triangulation in iFEM,     which is generalized to polygonal meshes with certain modifications. 
  
- We also provide a boundary setting function to identify the Neumann and Dirichlet boundaries (See setboundary.m).
+- We also provide a boundary setting function to identify the Neumann and Dirichlet boundaries (See setboundary.m).
  
-## The VEM of lowest order for linear elasticity problems is introduced in Chapter 3 for both the displacement-type and tensor-type bilinear forms. The sparse assembly indices for vector equation are presented 
 
 ## Poisson VEM (lowest order)
+
 The virtual element method (VEM) of lowest order is introduced in Chapter 2, including the computation of elliptic projection and L2 projection, the matrix form of the approximated variational problems as well as the treatment of boundary conditions. 
+
+## Linear elasticity problems (lowest order)
+
+The VEM of lowest order for linear elasticity problems is introduced in Chapter 3 for both the displacement-type and tensor-type bilinear forms. The sparse assembly indices for vector equation are presented. 
  
   PS: 
   
