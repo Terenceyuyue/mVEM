@@ -1,0 +1,559 @@
+Library {
+  Name			  "tp120149"
+  Version		  5.1
+  LibraryLinkDisplay	  "none"
+  CovSaveName		  "covdata"
+  CovNameIncrementing	  off
+  CovHtmlReporting	  on
+  BlockNameDataTip	  off
+  BlockParametersDataTip  off
+  BlockDescriptionStringDataTip	off
+  ToolBar		  on
+  StatusBar		  on
+  BrowserShowLibraryLinks off
+  BrowserLookUnderMasks	  off
+  Created		  "Mon Mar 22 20:45:52 2004"
+  Creator		  "kvasnica"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "michal"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Fri Dec 02 20:12:03 2005"
+  ModelVersionFormat	  "1.%<AutoIncrement:63>"
+  ConfigurationManager	  "None"
+  SimParamPage		  "Solver"
+  LinearizationMsg	  "none"
+  Profile		  off
+  ExtModeMexFile	  "ext_comm"
+  ExtModeBatchMode	  off
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  ExtModeLogAll		  on
+  SimulationMode	  "normal"
+  ConsistencyChecking	  "none"
+  ArrayBoundsChecking	  "none"
+  AlgebraicLoopMsg	  "warning"
+  BlockPriorityViolationMsg "warning"
+  MinStepSizeMsg	  "warning"
+  InheritedTsInSrcMsg	  "warning"
+  MultiTaskRateTransMsg	  "error"
+  SingleTaskRateTransMsg  "none"
+  CheckForMatrixSingularity "none"
+  IntegerOverflowMsg	  "warning"
+  Int32ToFloatConvMsg	  "warning"
+  UnnecessaryDatatypeConvMsg "none"
+  VectorMatrixConversionMsg "none"
+  SignalLabelMismatchMsg  "none"
+  UnconnectedInputMsg	  "warning"
+  UnconnectedOutputMsg	  "warning"
+  UnconnectedLineMsg	  "warning"
+  SfunCompatibilityCheckMsg "none"
+  RTWMakeCommand	  "make_rtw"
+  RTWGenerateCodeOnly	  off
+  RTWRetainRTWFile	  off
+  TLCProfiler		  off
+  TLCDebug		  off
+  TLCCoverage		  off
+  BlockDefaults {
+    Orientation		    "right"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  LineDefaults {
+    FontName		    "Helvetica"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  System {
+    Name		    "tp120149"
+    Location		    [321, 636, 835, 934]
+    Open		    off
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    212
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "usletter"
+    PaperUnits		    "inches"
+    ZoomFactor		    "100"
+    ReportName		    "simulink-default.rpt"
+    Block {
+      BlockType		      SubSystem
+      Name		      "Dynamical System"
+      Ports		      [1, 2]
+      Position		      [340, 26, 435, 99]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskType		      "Dynamical System with Constraints"
+      MaskDescription	      "Gives state update and output as a function of "
+"current state and current input."
+      MaskHelp		      "This is equivalent to simulating a system using"
+" \"mpt_simSys\"."
+      MaskPromptString	      "System Structure|Initial State|Sampling Time (L"
+"eave empty to use default value stored in sysStruct)|Enforce Constraints"
+      MaskStyleString	      "edit,edit,edit,checkbox"
+      MaskTunableValueString  "on,on,on,on"
+      MaskCallbackString      "|||"
+      MaskEnableString	      "on,on,on,on"
+      MaskVisibilityString    "on,on,on,on"
+      MaskToolTipString	      "on,on,on,on"
+      MaskVariables	      "sysStruct=@1;x0=@2;Ts=@3;constr=@4;"
+      MaskInitialization      "if isempty(x0)\n	error('Initial state mu"
+"st be given!');\nend\nif ~isfield(sysStruct,'verified')\n	sysStruct = "
+"mpt_verifySysStruct(sysStruct);\nend\n[nx,nu,ny] = mpt_sysStructInfo(sysStruc"
+"t);\nif length(x0(:))~=nx\n	error(['Initial state must be a ' num2str("
+"nx) 'x1 vector!']);\nend\nif isfield(sysStruct, 'Ts')\n	ts = sysStruct"
+".Ts;\nelse\n	ts = 1;\nend\nif isempty(Ts)\n	Ts = ts;\nelseif Ts"
+"==0\n	Ts = ts;\nend\nif isempty(Ts)\n	error('Sampling time must"
+" be given!');\nend\nif Ts==0,\n	error('Sampling time must be greater z"
+"ero!');\nend"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      MaskValueString	      "sysStruct|0|[]|on"
+      System {
+	Name			"Dynamical System"
+	Location		[333, 446, 711, 590]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "u(t)"
+	  Position		  [25, 63, 55, 77]
+	  Port			  "1"
+	  PortDimensions	  "-1"
+	  SampleTime		  "-1"
+	  DataType		  "auto"
+	  SignalType		  "auto"
+	  Interpolate		  on
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux"
+	  Ports			  [1, 2]
+	  Position		  [255, 51, 260, 89]
+	  BackgroundColor	  "black"
+	  ShowName		  off
+	  Outputs		  "[nx ny]"
+	  BusSelectionMode	  off
+	}
+	Block {
+	  BlockType		  "S-Function"
+	  Name			  "S-Function"
+	  Ports			  [1, 1]
+	  Position		  [115, 54, 215, 86]
+	  FunctionName		  "mpt_simSys_sfunc"
+	  Parameters		  "sysStruct,x0,Ts,nx,nu,ny,constr"
+	  PortCounts		  "[]"
+	  SFunctionModules	  "''"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "x(t)"
+	  Position		  [295, 33, 325, 47]
+	  Port			  "1"
+	  OutputWhenDisabled	  "held"
+	  InitialOutput		  "[]"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "y(t)"
+	  Position		  [300, 98, 330, 112]
+	  Port			  "2"
+	  OutputWhenDisabled	  "held"
+	  InitialOutput		  "[]"
+	}
+	Line {
+	  SrcBlock		  "u(t)"
+	  SrcPort		  1
+	  DstBlock		  "S-Function"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "S-Function"
+	  SrcPort		  1
+	  DstBlock		  "Demux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  Points		  [15, 0]
+	  DstBlock		  "x(t)"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  Points		  [15, 0; 0, 25]
+	  DstBlock		  "y(t)"
+	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "In Polytope"
+      Ports		      [1, 1]
+      Position		      [220, 143, 315, 217]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      AncestorBlock	      "mpt_sim/Polytope"
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskType		      "In Polytope"
+      MaskDescription	      "Returns 0 if a given point is not inside of a g"
+"iven polytope, 1 otherwise."
+      MaskHelp		      "\n"
+      MaskPromptString	      "Polytope"
+      MaskStyleString	      "edit"
+      MaskTunableValueString  "off"
+      MaskEnableString	      "on"
+      MaskVisibilityString    "on"
+      MaskToolTipString	      "on"
+      MaskVariables	      "P=@1;"
+      MaskInitialization      "if ~isfulldim(P),\n	error('Polytope must"
+" be fully dimensional!');\nend\n[nr, nx, abstol, H, K, nc] = mpt_getSfuncPara"
+"m(P);\n"
+      MaskDisplay	      "image(imread('mpt_polytope.jpg'));"
+      MaskSelfModifiable      on
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "normalized"
+      System {
+	Name			"In Polytope"
+	Location		[341, 524, 785, 721]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "Point"
+	  Position		  [80, 78, 110, 92]
+	  Port			  "1"
+	  PortDimensions	  "-1"
+	  SampleTime		  "-1"
+	  DataType		  "auto"
+	  SignalType		  "auto"
+	  Interpolate		  on
+	}
+	Block {
+	  BlockType		  "S-Function"
+	  Name			  "S-Function"
+	  Ports			  [1, 1]
+	  Position		  [160, 63, 290, 107]
+	  FunctionName		  "mpt_isinside_sfunc"
+	  Parameters		  "nr, nx, abstol, H, K, nc"
+	  PortCounts		  "[]"
+	  SFunctionModules	  "''"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Polytope\nNumber"
+	  Position		  [335, 78, 365, 92]
+	  Port			  "1"
+	  OutputWhenDisabled	  "held"
+	  InitialOutput		  "[]"
+	}
+	Line {
+	  SrcBlock		  "S-Function"
+	  SrcPort		  1
+	  DstBlock		  "Polytope\nNumber"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Point"
+	  SrcPort		  1
+	  DstBlock		  "S-Function"
+	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "MPT Controller"
+      Ports		      [2, 2]
+      Position		      [115, 26, 210, 99]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskType		      "MPT Controller"
+      MaskDescription	      "Evaluates a given explicit or on-line controlle"
+"r for a given state."
+      MaskHelp		      "Evaluation of an explicit control law is perfor"
+"med by the C-code S-function \"mpt_getInput_sfunc_parm\". You can also use \""
+"mpt_getInput_sfunc\" function, which requires the controller to be exported t"
+"o C-code using \"mpt_exportc\".\n\nEvaluation of an on-line controller is per"
+"formed by calling mpt_getInpit.m\n"
+      MaskPromptString	      "MPT Controller Variable|Sampling Time (Leave em"
+"pty to use default value stored in controller)|Stop simulation if no feasible"
+" control law can be found"
+      MaskStyleString	      "edit,edit,checkbox"
+      MaskTunableValueString  "off,off,off"
+      MaskCallbackString      "||"
+      MaskEnableString	      "on,on,on"
+      MaskVisibilityString    "on,on,on"
+      MaskToolTipString	      "on,on,on"
+      MaskVariables	      "ctrl=@1;Ts=@2;infbreak=@3;"
+      MaskInitialization      "if isempty(ctrl)\n	error('No controller "
+"specified!');\nend\nif ~isa(ctrl, 'mptctrl')\n	error('Controller must "
+"be an MPTCTRL object!');\nend\nif cancompile(ctrl)\n    [H, K, F, G, nc, nr, "
+"nx, nu, ny, nxt, nref, ts, dumode, tracking, abstol] = mpt_getSfuncParam(ctrl"
+");\n    funname = 'mpt_getInput_sfunc_parm';\n    params = 'H, K, F, G, nc, n"
+"r, nx, nu, ny, nxt, nref, Ts, dumode, tracking, abstol, infbreak';\nelse\n   "
+" nu = ctrl.details.dims.nu;\n	if isfield(ctrl.sysStruct, 'Ts'),\n"
+"		ts = ctrl.sysStruct.Ts;\n	else\n		ts = 1"
+";\n	end\n    funname = 'mpt_simInput_sfunc';\n    params = 'ctrl, Ts, "
+"infbreak';\nend\nif isempty(Ts),\n    Ts = ts;\nelseif Ts==0,\n    Ts = ts;\n"
+"end\nset_param(gcbh, 'MaskSelfModifiable', 'on')\nset_param([gcb '/S-Function"
+"'], 'FunctionName', funname, 'Parameters', params);\n\n"
+      MaskDisplay	      "image(imread('mpt_ctrl.jpg'));"
+      MaskSelfModifiable      on
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "normalized"
+      MaskValueString	      "|[]|on"
+      System {
+	Name			"MPT Controller"
+	Location		[341, 524, 785, 721]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "States"
+	  Position		  [30, 43, 60, 57]
+	  Port			  "1"
+	  PortDimensions	  "-1"
+	  SampleTime		  "-1"
+	  DataType		  "auto"
+	  SignalType		  "auto"
+	  Interpolate		  on
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "References"
+	  Position		  [30, 103, 60, 117]
+	  Port			  "2"
+	  PortDimensions	  "-1"
+	  SampleTime		  "-1"
+	  DataType		  "auto"
+	  SignalType		  "auto"
+	  Interpolate		  on
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux"
+	  Ports			  [1, 2]
+	  Position		  [315, 66, 320, 104]
+	  BackgroundColor	  "black"
+	  ShowName		  off
+	  Outputs		  "[nu 1]"
+	  BusSelectionMode	  off
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  Ports			  [2, 1]
+	  Position		  [120, 66, 125, 104]
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  "S-Function"
+	  Name			  "S-Function"
+	  Ports			  [1, 1]
+	  Position		  [160, 63, 290, 107]
+	  FunctionName		  "mpt_simInput_sfunc"
+	  Parameters		  "ctrl, Ts"
+	  PortCounts		  "[]"
+	  SFunctionModules	  "''"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Control\nAction"
+	  Position		  [355, 33, 385, 47]
+	  Port			  "1"
+	  OutputWhenDisabled	  "held"
+	  InitialOutput		  "[]"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Region"
+	  Position		  [355, 123, 385, 137]
+	  Port			  "2"
+	  OutputWhenDisabled	  "held"
+	  InitialOutput		  "[]"
+	}
+	Line {
+	  SrcBlock		  "Mux"
+	  SrcPort		  1
+	  Points		  [0, 0]
+	  DstBlock		  "S-Function"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "States"
+	  SrcPort		  1
+	  Points		  [20, 0; 0, 25]
+	  DstBlock		  "Mux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "References"
+	  SrcPort		  1
+	  Points		  [20, 0; 0, -15]
+	  DstBlock		  "Mux"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "S-Function"
+	  SrcPort		  1
+	  DstBlock		  "Demux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  Points		  [5, 0; 0, -35]
+	  DstBlock		  "Control\nAction"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  Points		  [5, 0; 0, 35]
+	  DstBlock		  "Region"
+	  DstPort		  1
+	}
+      }
+    }
+    Annotation {
+      Text		      "state\nmeasurements"
+      Position		      [59, 44]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "state/output\nreferences"
+      Position		      [59, 84]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "control\naction"
+      Position		      [249, 44]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "input"
+      Position		      [314, 64]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "outputs"
+      Position		      [469, 79]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "states"
+      Position		      [464, 44]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "region \nnumber"
+      Position		      [249, 84]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "polytope\nindex"
+      Position		      [354, 184]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+    Annotation {
+      Text		      "point"
+      Position		      [189, 179]
+      ForegroundColor	      "gray"
+      FontSize		      12
+    }
+  }
+}

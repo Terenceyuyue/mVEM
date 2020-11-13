@@ -1,0 +1,32 @@
+SYSTEM turbo_car {
+  INTERFACE {
+    STATE {
+      REAL position [-50, 50];
+      REAL velocity [-10, 10];
+      REAL turbocount [0, 5];
+    }
+    INPUT {
+      REAL acc [-1, 1];
+      BOOL turbo;
+    }
+    OUTPUT {
+      REAL y;
+    }
+  }
+  IMPLEMENTATION {
+    AUX {
+      REAL aux_acc;
+    }
+    DA {
+      aux_acc = {IF turbo THEN 2*acc ELSE acc};
+    }
+    CONTINUOUS {
+      position = position + velocity + aux_acc;
+      velocity = velocity + 0.5*aux_acc;
+      turbocount = turbocount - (REAL turbo);
+    }
+    OUTPUT {
+      y = position;
+    }
+  }
+}

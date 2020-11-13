@@ -1,0 +1,45 @@
+GLPKMEX INSTALLATION INSTRUCTIONS
+**********************************
+
+GLPKMEX is a Matlab MEX Interface for the GLPK library developed by 
+Andrew Makhorin. GLPKMEX is developed by Nicolo' Giorgetti, email 
+giorgetti __ at __ ieee.org.
+ 
+
+--> Standard installation procedure (suitable for most users):
+
+1) Download and install GLPK;
+
+2) Start Matlab and run makeglpkmex.m. Specify correct path to both GLPK 
+   directory and eventually to the GLPK include and library directories.
+
+3) Test the interface on the examples included (glpktest1.m, glpktest2.m, 
+   glpksparse.m). Everything should works fine.
+
+--> Specific installation procedure for those who use CYGWIN under Win*
+
+Requirements:
+
+A) The last version of cygwin, downloadable from http://www.cygwin.com
+   (or download mingw)
+B) Gnumex: http://gnumex.sourceforge.net/
+
+1) Download GLPK and install it by specifying CFLAGS="-O3 -mno-cygwin" as 
+   argument of make, i.e.: 
+      a) ./configure;
+      b) make CFLAGS="-O3 -mno-cygwin"
+      c) make install
+   This avoid to build a glpk library which needs of cygwin1.dll to run.  
+   
+2) Start Matlab and run gnumex. Make a mexopts.bat with option 'cygwin-mingw' if 
+   you are using cygwin or 'mingw' if you are using mingw.
+
+3) run makeglpkmex.m. Specify correct path to GLPK directory and eventually to 
+   the GLPK include and library directories. Moreover, you have to specify the 
+   location of mexopts.bat file generated at step 2).
+
+4) Test the interface on the examples included (glpktest1.m, glpktest2.m, 
+   glpksparse.m). Everything should works fine.
+  
+
+

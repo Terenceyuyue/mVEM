@@ -1,0 +1,40 @@
+SYSTEM pwa_car {
+  INTERFACE {
+    STATE {
+      REAL x1 [-7.000000, 1.000000];
+      REAL x2 [-40.000000, 40.000000];
+    }
+    INPUT {
+      REAL u1 [-5.000000, 5.000000];
+    }
+    OUTPUT {
+      REAL y1;
+      REAL y2;
+    }
+  }
+  IMPLEMENTATION {
+    AUX {
+      REAL f1_1, f1_2, f2_1, f2_2;
+      BOOL d1, d2, d3;
+    }
+    AD {
+      d1 = x1 >= -0.1;
+      d2 = x1 >= -3;
+      d3 = x1 >= -4; 
+    }
+    DA {
+      f1_1 = { IF ~d3 THEN 0.01541 ELSE 0};
+      f2_1 = { IF ~d3 THEN 0.854998 ELSE 0};
+      f1_2 = { IF (d2 & (~d1)) THEN -0.025680 ELSE 0 };
+      f2_2 = { IF (d2 & (~d1)) THEN -1.703489 ELSE 0 };
+    }
+    CONTINUOUS {
+      x1 = x1 + 0.1*x2 + 0.005*u1 + f1_1 + f1_2;
+      x2 = x2 + 0.1*u1 + f2_1 + f2_2;
+    }
+    OUTPUT {
+      y1 = x1;
+      y2 = x2;
+    }
+  }
+}

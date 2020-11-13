@@ -1,0 +1,1298 @@
+% MPT Multi-Parametric Toolbox
+% Version 2.6.2 05-Dec-2006
+%
+% Authors: Michal Kvasnica, Pascal Grieder, Mato Baotic
+% kvasnica@control.ee.ethz.ch, grieder@control.ee.ethz.ch, baotic@control.ee.ethz.ch
+%
+% For support, write to: mpt@control.ee.ethz.ch
+
+
+Version 2.6.2 (05-Dec-2006)
+--------------------------
+
+[NEW] included latest release of YALMIP
+
+[NEW] Massive speedup of the mpQP algorithm especially for large dimensions
+
+[NEW] Included a mex version of polytope/isinside.m
+
+[NEW] mpt_mpsol2ctrl: convert YALMIP solution into an MPTCTRL object
+
+[NEW] speed improvements especially when solving mpMILP/mpMIQP problems
+
+[NEW] new function polytope/grid
+
+[PATCH] fixed mpt_solveMILP and mpt_solveMIQP when CPLEX is used and options.verbose=-1
+
+[PATCH] mpt_mplp: properly handle F*x terms in cost
+
+[PATCH] mpt_simplify: properly reject/accept controllers with overlaps
+
+[PATCH] mpt_sys: fixed an undefined variable
+
+[PATCH] simulink interface: improved detection of tracking controllers
+
+[PATCH] Bug 13: improve qhull numerical robustness in matlab R14 and newer
+
+[PATCH] Bug 28: mpt_mplp: improved detection of infeasible cases
+
+[PATCH] Bug 30: Open-loop solution had wrong number of elements
+
+[PATCH] Bug 37: improved mpt_verify()
+
+[PATCH] Bug 38: use ctrl.details.x0format instead of ctrl.details.dims
+
+[PATCH] Bug 39: Greedy merging failed for 1D polytopes
+
+[PATCH] Bug 41: tracking=1 fails for on-line MPC for MLD systems
+
+[PATCH] Bug 43: fprintf(0, ...) throws an error in R2006b (affects SeDuMi)
+
+[PATCH] Bug 46: isinvariant/isstabilizable was broken in MPT 2.6.1
+
+[PATCH] Bug 47: suppress annoying warnings when using quadprog
+
+[PATCH] Bug 50: make optimal merging more numerically robust
+
+[PATCH] Bug 51: mpQP fails to find an initial feasible point
+
+[PATCH] Bug 54: Better detection of the MATLAB release number
+
+[PATCH] Bug 56: Complex referencing of polytopes/polyarrays fails
+
+[PATCH] Bug 57: Automatically symmetrize the H matrix in mpt_mpqp
+
+[PATCH] Bug 60: Speedup of polytope/subsref
+
+[PATCH] Bug 61: Indexing of polyarrays by logicals now works
+
+[PATCH] Bug 64: polytope/uminus didn't update bounding box
+
+[PATCH] Bug 67: polytope/isinside: auto-switch to fastbreak=1 if nargout < 2
+
+
+
+Version 2.6.1 (17-May-2006)
+--------------------------
+
+[NEW] included latest release of YALMIP. note that YALMIP changed its
+directory structure and you need to adjust your Matlab path accordingly!!
+
+[PATCH] consistent use of deltaU formulation. if probStruct.tracking=1 is 
+used with LTI or PWA systems, MPT now always goes for deltaU formulation 
+
+[PATCH] fixed a performance regression in on-line control of LTI systems
+
+[PATCH] fixed loading of saved controllers for nonlinear systems
+
+[PATCH] C-code obtained by mpt_exportST() now uses single-precision numbers
+instead of double-precision
+
+[PATCH] mpt_mplp, mpt_mpqp now accept sparse matrices
+
+[PATCH] fixed problems with MOSEK on mixed-integer problems
+
+[PATCH] fixed passing of optional arguments to the HYSDEL compiler
+
+
+
+Version 2.6 (30-Mar-2006)
+-------------------------
+
+[NEW] "Design your own MPC" function. see 'help mpt_ownmpc' for details
+
+[NEW] on-line MPC for nonlinear and piecewise nonlinear systems
+(see 'help mpt_nonlinfcn')
+
+[NEW] support for soft constraints
+(see 'help mpt_yalmipcftoc' for details)
+ 
+[NEW] support for move blocking for PWA/MLD systems
+(see 'help mpt_yalmipcftoc' for details)
+
+[NEW] support for multi-model dynamics
+(see 'help mpt_yalmipcftoc' for details)
+
+[NEW] support for terminal state constraints defined in "probStruct.xN"
+(see 'help mpt_yalmipcftoc' for details)
+
+[NEW] export search tree into C-code (see 'help mpt_exportST' for details)
+
+[NEW] mpt_lyapunov now allows to analyze stability of autonomous systems
+where the input argument to mpt_lyapunov() is a system structure
+
+[NEW] new function to display detailed information about a given
+explicit controller (see 'help mptctrl/info' for details)
+
+[NEW] output constraints are no longer mandatory and are not required
+if state constraints are defined
+
+[NEW] mpt_plotTimeTrajectory/simplot: allow to disable displaying of
+legends (see 'help mpt_plotTimeTrajectory' for details)
+
+[NEW] included latest version of MEXCLP
+
+[NEW] polytope/plot: now supports Options.elevate to enable "elevation" of
+plotted polytopes (see 'help polytope/plot' for details)
+
+[PATCH] mpt_computePWATset: include state constraints if they are given
+
+[PATCH] mpt_lyapunov: fix crashes when no lyapunov function was found
+
+[PATCH] mpt_mplp, mpt_mpqp: speedup
+
+[PATCH] mpt_mpqp: give warning when the problem is not strictly positive
+definite
+
+[PATCH] polytope/projection: add protection against cycling
+
+[PATCH] mpt_getInput: give a warning if x0 violates constraints
+
+[PATCH] mpt_init: added better detection of path
+
+
+
+Version 2.5 (23-Nov-2005)
+-------------------------
+
+[NEW] Hybrid Identification Toolbox included
+
+[NEW] Ellipsoidal Toolbox now included
+
+[NEW] latest version of YALMIP included
+
+[NEW] mpMILP and mpMIQP solvers
+
+[NEW] optimal control of PWA systems with quadratic objective function
+
+[NEW] support for lower-dimensional noise polytopes
+
+[NEW] mex files for the GLNXA64 platform (64-bit linux for AMD processors)
+
+[NEW] mpt_sysStructInfo can now display textual information about a
+given system when called with no output arguments
+
+[NEW] mptctrl: allow to evaluate the control law for state x0 more easily by 
+'ctrl(x0)'
+
+[NEW] new function for simulations of closed-loop systems: mptctrl/sim, 
+mptctrl/simplot
+
+[NEW] mptctrl/get, mptctrl/set: set/get methods for MPTCTRL objects
+
+[NEW] mptctrl/modify: modify a controller in certain way (e.g. remove
+certain regions)
+
+[NEW] mpt_buildAdjacency: computes which regions are adjacent
+
+[NEW] mpt_norm2pwa: converts a norm to a PWA function
+
+[NEW] mpt_maxCtrlSet: allow to break computation of Kinf sets based on
+volume increase (Options.Vconverge)
+
+[NEW] mpt_maxCtrlSet: make mpt_maxCtrlSet() return sets obtained at each
+iteration
+
+[NEW] mpt_maxCtrlSet: allow to call mpt_maxCtrlSet with custom
+problem-dependent parameters (Options.probStruct)
+
+[NEW] mpt_computeTrajectory: now allows to specify arbitrary system which 
+will be used for simulations (Options.sysStruct, Options.sysHandle)
+
+[NEW] mpt_sys: do not generate HYSDEL simulator if user tells so
+(mpt_sys('hysdelfile.hys', 'nosimulator'))
+
+[NEW] mpt_options: allow to return individual settings
+
+[NEW] recompiled mex files on linux (issue157)
+
+[NEW] mpt_voronoi: sort voronoi cells according to seed points
+
+[NEW] mpt_iterativePWA: allow to specify which Lyapunov function to
+compute (Options.lyapunov_type={'any', 'pwq', 'pwa', 'none'})
+
+[NEW] mpt_plotPWA, mpt_plotPWQ: allow color of edges to be specified
+(Options.edgecolor)
+
+[NEW] mpt_plotPWA, mpt_plotPWQ: allow to specify level of transparency
+(Options.shade)
+
+[NEW] unitbox: unitbox(n) now produces the same output as unitbox(n, 1)
+
+[NEW] mpt_getInput: allow to use a "recovery" mode (Options.recover=1)
+
+[NEW] mpt_voronoi: allow to pass a "bounding polytope" when computing
+voronoi cells (Options.pbound)
+
+[NEW] polytope/distribpoints: distribure points in a polytope
+
+[NEW] polytope/dointersect: return indicies of intersecting regions
+
+[NEW] polytope/facetcircle: now allows to pass a vector of facets to explore
+
+[NEW] polytope/facetvoronoi: Computes an equivalent of voronoi diagrams
+for facets of a polytope
+
+[NEW] polytope/getInnerEllipsoid, polytope/getOutterEllipsoid: now return
+ellipsoid objects
+
+[NEW] polytope/minus: allow to simplify minkowski difference
+representation by merging (Options.merge)
+
+[NEW] polytope/pelemfun: execute arbitrary functions on each element of
+a polyarray
+
+[NEW] polytope/plot: allow colormap to be specified for polytope plots
+(Options.colormap)
+
+[NEW] polytope/plot: allow gradient coloring (Options.gradcolor=1)
+
+[NEW] polytope/projection: can now solve projection by mplp 
+(Options.projection=7)
+
+[NEW] polytope/unique: remove redundant entries of a polytope array
+
+[PATCH] polytope/bounding_box: allows to return all vertices of a
+bounding box
+
+[PATCH] polytope/bounding_box: change behavior with Options.noPolyOutput
+
+[PATCH] polytope/extreme, hull: allow rounding to increase numerical
+robustness for CDD (Options.roundat)
+
+[PATCH] polytope/facetcircle: properly normalize vectors of normals
+
+[PATCH] polytope/minus, polytope/plus: treat polytope arrays as a union
+of polytopes, not as single polytopes
+
+[PATCH] polytope/mtimes: allow scaling even when origin is not included
+
+[PATCH] polytope/projection: fix problems with fourier-motzkin
+C-implementation
+
+[PATCH] polytope/projection: fix handling of dimensions which are not sorted
+
+[PATCH] polytope/reduce: always return correct keptrows
+
+[PATCH] polytope/reduce: preserve order of hyperplanes
+
+[PATCH] polytope/regiondiff: fix problems with Options.infbox being too
+large
+
+[PATCH] polytope/triangulate: properly update extreme points
+
+[PATCH] polytope/triangulate: do not return volume as a complex number
+
+[PATCH] polytope/volume: do not return volume as a complex number
+
+[PATCH] mpt_computeTrajectory: fixed computation of closed-loop cost for
+systems with deltaU constraints
+
+[PATCH] mpt_exportc: allows to specify name of output file
+
+[PATCH] mpt_getInput: don't check regions twice
+
+[PATCH] mpt_infsetPWA: properly detect cases where invariant set is empty
+
+[PATCH] mpt_invariantSet: speed improvements
+
+[PATCH] mpt_invariantSet: allow to simplify intermediate steps using
+greedy merging
+
+[PATCH] mpt_init: improve speed
+
+[PATCH] mpt_mplp: fix problems with cycling
+
+[PATCH] mpt_mplp: fix random perturbations for 1D systems
+
+[PATCH] mpt_mplp: fix problems with "xBeyond violates more than one bounds"
+
+[PATCH] mpt_mpqp: improved handling of degeneracies
+
+[PATCH] mpt_optControlPWA: fixed handling of 1D systems
+
+[PATCH] mpt_optControlPWA: always return Pfinal as a polytope array
+
+[PATCH] mpt_plotPWA, mpt_plotPartition, mpt_plotU: respect user's choice
+of subplots
+
+[PATCH] mpt_plotU: fixed handling of 1D systems with multiple inputs
+
+[PATCH] mpt_solveQP: properly impose equality constraints for NAG QP solver
+
+[PATCH] mpt_voronoi: make mpt_mplp() silent
+
+
+
+Version 2.0.4 (16-Sep-2005)
+---------------------------
+
+[PATCH] fix computation of extreme points for cyclic polytopes
+
+[PATCH] mpt_iterativePWA: allow user-defined target sets even if no dynamics 
+contains the origin
+
+[PATCH] remove ghost legends in mpt_plotTimeTrajectory
+
+[PATCH] YALMIP updated to R20050915
+
+
+
+Version 2.0.3 (05-Sep-2005)
+---------------------------
+
+[NEW] mpt_solveLP: unified "exitflag" output
+
+[NEW] polytope/facetvoronoi - computes some kind of "voronoi cells"
+for facets of a polytope
+
+[NEW] mpt_invariantSet: another major speedup
+
+[NEW] polytope/isconvex - decides if a polyarray forms a convex union
+
+[NEW] major speedup of polytope/union by calling isconvex()
+
+[NEW] mpt_evalPWA - evaluates a PWA function at a given location
+
+[NEW] mpt_solveLP: now allows to specify bounds on variables
+[issue136]
+
+[PATCH] polytope/isbounded is now less sensitive to numerical problems
+(by Miroslav Baric) [issue141, issue142]
+
+[PATCH] polytope/regiondiff now exits quickly if input polytope is not
+fully dimensional [issue145]
+
+[PATCH] fixed conversion of MLD systems with boolean states to PWA
+form [issue127, issue140]
+
+[PATCH] polytope/facetcircle is now more numerically robust [issue138]
+
+[PATCH] better handling of empty regions in mpt_mplp (by Miroslav
+Baric)
+
+[PATCH] hull.m: use unreduced (H,K) pair when checking hull
+correctness (by Mario Vasak)
+
+[PATCH] mpt_sysStructInfo now propely detect intersections of dynamics
+in X-space [issue146]
+
+[PATCH] polytope/plot - minor updates by Frank J. Christophersen
+
+[PATCH] enforce deltaU constraints in closed-loop in on-line MPC for
+hybrid systems
+
+[PATCH] mpt_sys: properly handle cases where both Ts and 'nopwa' flag
+are given
+
+[PATCH] include constraints on final states when solving an on-line
+MPC for hybrid systems
+
+[PATCH] fixed issue with GLPKMEX giving different results on
+subsequent runs
+
+[PATCH] polytope/envelope - if envelope is R^n, keep dimension of
+input polytope
+
+[PATCH] check if probStruct.Rdu is positive definite (for 2-norm)
+
+[PATCH] mpt_solveLP - use e04naf()'s syntax for equality constraints
+[issue141]
+
+[PATCH] calculate correct output for PWA/MLD systems with guards on U
+
+[PATCH] renamed mpt_ss2mld to mpt_pwa2hys
+
+[PATCH] use mpt_pwa2mld() when converting from PWA to MLD
+
+
+
+Version 2.0.2 (25-Jul-2005)
+---------------------------
+
+[NEW] mpt_init can now permanently save list of available solvers, such
+that consequent runs of mpt_init are performed much faster. to utilize
+the new feature, call:
+
+mpt_init('save')
+
+if you want to set some default options, e.g. if you want to use CDD as
+default LP solver and change value of absolute tolerance to 1e-8, call:
+
+mpt_init('lpsolver', 'cdd', 'abs_tol', 1e-8, 'save');
+
+Note! if you install some new solvers _after_ you save the settings,
+this change will not be reflected by MPT. in order to tell MPT to find
+your new solver, call:
+
+mpt_init('rehash')
+
+[NEW] polytope/slice.m - orthogonal cuts through polytope(s)
+
+[NEW] mpt_mldsim - simulates an MLD system for one time step. can be used
+from mpt_simSys if Options.usemldsim is set to true
+
+[NEW] mpt_sys now accepts a combination mpt_sys(S, 'nopwa') - i.e. it
+can be used to create a sysStruct structure based on MLD matrices stored
+in "S" without translation to equivalent PWA representation
+
+[NEW] mpt_pwa2mld - converts a PWA system into MLD representation by
+assigning 1 boolean variable per region
+
+[NEW] 2 new mpLP solvers - mpt_mplp_ver6, mpt_mplp_ver7
+
+[NEW] major speedup of Lyapunov functions computation by exploting
+transtions map
+
+[NEW] major speedup of invariant set computation by exploiting
+transitions map
+
+[NEW] use bounding boxes for fast detection of intersections of
+polytopes (also used in eq.m, le.m and lt.m)
+
+[NEW] allow to pass guess of feasible solution to MILP/MIQP solvers
+
+[NEW] allow penalties on "z" and "d" variables in on-line MPC for MLD
+systems (probStruct.Qz, probStruct.Qd)
+
+[NEW] support terminal set constraints (probStruct.Tset) for on-line MPC
+for MLD systems
+
+[NEW] mpt_plotLyapunov - plots a Lyapunov function stored in controller
+objects
+
+[NEW] store matrices of MPC problem for MLD systems directly in
+controller object
+
+[NEW] mpt_transmap - computes transition maps
+
+[NEW] assign modified polytope object in caller's workspace in extreme.m
+
+[NEW] assign modified  controller object in caller's workspace in
+mpt_lyapunov.m, mpt_invariantSet, mpt_searchTree
+
+[NEW] mpt_verify now allows to solve a verification problem using a
+feasibility test (see "help mpt_verify", Options.usereachsets)
+
+[PATCH] hull.m - improved analytical computation for dimensions above 3
+by Mario Vasak
+
+[PATCH] use proper solver for 1/Inf-norm problems for LTI systems with
+uncertainties
+
+[PATCH] properly close progress bar in hys2pwa.m
+
+[PATCH] merge.m now allows to use optimal merging (by Tobias Geyer)
+
+[PATCH] mpt_optMerge, mpt_optMergeDivCon - documentation update
+
+[PATCH] allow to pass initial guess of xopt and return full optimizers
+
+[PATCH] vectorize code to improve set-up speed when looking for PWP
+Lyapunov functions
+
+[PATCH] use sparse matrices when constructing MPC problem for MLD systems
+
+[PATCH] handle hard final state constraints in on-line MPC problems for
+MLD systems (probStruct.xN)
+
+[PATCH] allow time-varying penalties for on-line MPC controllers for MLD
+systems
+
+[PATCH] do not reduce constraints in on-line MPC for LTI systems (leads
+to significant speedup)
+
+[PATCH] support permament saving of options in mpt_init
+
+[PATCH] compute proper mapping in domain.m if horizon > 1
+
+[PATCH] fixed propblem with persistent variables, which caused craches
+if 2 or more PWA2MLD translations are performed after each other
+
+[PATCH] fixed a problem where information about bounding boxes has been
+lost if a polytope object was loaded from disk
+
+[PATCH] must faster setup of MILP/MIQP problems for solvers interfaced
+by YALMIP
+
+[PATCH] automatically switch to fastest LP solver in mpt_getPWALyapFct
+(significant speedup)
+
+[PATCH] fixed problems which caused annoying warnings under Matlab R12.1
+
+[PATCH] handle time-varying penalty on outputs in explicit solution for
+LTI systems
+
+[PATCH] feasibility flag in mpt_solveMPC was not set properly for 1- and
+Inf-norm problems
+
+
+Version 2.0.1 (28-Apr-2005)
+---------------------------
+
+[new] included latest release of YALMIP which fixes some issues with MILP/MIQP and
+sum-of-squares computation
+
+[new] added support for CPLEXMEX and BPMPDMEX solvers
+
+[new] added an alternative method to compute LQR gain for linear systems. from this
+point on it is no longer necessary to have the Control Toolbox installed in order
+to solve 2-norm problems
+
+[fix] fixed stupid error which caused "mpt_sys()" to break when processing 
+HYSDEL models which contain only continuous inputs
+
+[fix] fixed computation of value of the objective function for certain QP solvers
+
+[fix] the reachability computation function "mpt_reachXU()" now allows to specify
+non-square matrix "A".
+
+
+
+Version 2.0 final (13-Apr-2005)
+-------------------------------
+
+[new] export of explicit controllers to standalone C-code (see 'help mpt_exportc' and
+'edit mpt_example.c')
+
+[new] updated Simulink library which allows to compile the controller block using
+Real-Time Workshop
+
+[new] new block in Simulink library - 'In Polytope' - returns a boolean flag if a
+given point is inside of a given polytope
+
+[new] verification of hybrid systems (see 'help mpt_verify', 'verifdemo1' and 
+'verifdemo2'
+
+[new] improved reachability analysis (see 'help mpt_reachSets', 'reachdemo1' and
+'reachdemo2')
+
+[new] computation of Common Sum of Squares Lyapunov functions (see 'help mpt_lyapunov')
+
+[new] mpt_solveMIQP and mpt_solveMILP now support CPLEX 8
+
+[new] included latest release of YALMIP
+
+[new] included Solaris mex files of SeDuMi 1.05
+
+[new] allow piecewise penalties on final states to be used for CFTOC of PWA systems
+
+[fix] improved compatibility of MPT studio with Matlab R12
+
+[fix] improved error checks
+
+
+
+Version 2.0PR (24-Feb-2005)
+---------------------------
+
+[new] graphical user interface. run 'mpt_studio' to start it.
+
+[new] global options can now be set using setup gui - run 'mpt_setup'.
+
+[new] solution to on-line MPC problems where the optimization problem is solved
+at every time step. supports linear systems, linear systems with boolean/integer
+inputs and hybrid systems modeled with HYSDEL
+      
+[new] improved Simulink interface
+
+[new] models of dynamical system can now be imported either from HYSDEL or from
+SS (state-space), TF (transfer-function), IDSS (system identification toolbox) and
+MPC (MPC toolbox) objects
+
+[new] mpt_control now returns an instance of MPTCTRL object, which is a newly
+introduced class to replace the ctrlStruct structures. all functions now accept
+both the mptctrl object, as well as the ctrlStruct structures as inputs, such that
+backwards compatibility is preserved
+
+[new] analyze.m - analyzes a given explicit controller and suggests which
+improvements can be made to the controller. call it by "analyze(controller)"
+
+[new] mpt_lyapunov - interface function for computation of Lyapunov functions
+
+[new] mpt_invariantSet - calculates an invariant subset of an explicit controller
+
+[new] new option for tracking - probStruct.tracking=2 yields a tracking controller
+without delta U formulation (i.e. without introducing additional states). note, 
+however, that convergence towards a given reference cannot be guaranteed with
+this approach, in general
+
+[new] very fast conversion from an MLD (mixed logical-dynamical) representation to
+an equivalent PWA (piecewise-affine) form.
+
+[new] state constraints can now be used. just define them in sysStruct.xmin and 
+sysStruct.xmax
+
+
+
+Polytope library:
+
+[new] computation of an analytic center of a polytope (analyticCenter.m)
+
+[new] computation of a distance of two polytopes (distance.m)
+
+[new] speedup in calculation of convex union of high-dimensional polytopes
+
+
+
+Miscelaneous:
+
+[new] included latest release of YALMIP
+
+[new] support for CLP solvers, a free LP and QP solver. mex interface included
+
+[new] mpt_isPWAbigger calculates if one PWA function dominates another
+PWA function
+      
+[new] mpt_removeOverlaps can now be used on polytope arrays if called as:
+P = mpt_removeOverlaps(Pn)
+
+[new] improved verification of results in mpt_getPWQLyapFct if the LMI solver
+reports numerical problems
+
+
+
+Notable bug fixes:
+
+[fix] affine terms have always been assumed to be zero in mpt_getPWQLyapFct
+
+[fix] mpt_infsetPWA often stalled when applied to higher-dimensional partitions.
+this is now solved by using a different method to compute convex unions.
+
+[fix] added more verification on user inut
+
+[fix] output tracking no longer produces an error in mpt_computeTrajectory
+(http://autsun04.ee.ethz.ch:8080/mpt/issue98)
+
+
+
+
+Version 2.0TR (13-Dec-2004)
+---------------------------
+
+IMPORTANT NOTE: probStruct.y0bounds is now set to 1 by default!!! this means 
+that constraints are enforced on y(0) as well ( before only on y(1)..y(N) ).
+this may change the look of your solution, feasible space will also be smaller.
+costraints satisfaction and stability guarantees (if available) are still
+provided.
+
+[new] mpt_reachSets - computes sets of states wich are reachable from some
+initial conditions in given number of steps
+
+[new] mpt_optControlPWA is used for computing CFTOC solutions for LTI systems
+with linear cost functions (the procedure uses a dynamic programming approach
+with piecewise-affine cost-to-go expression which is much faster than the
+one-step solution with mpt_optControl)
+
+[new] dointersect - returns true if two polytopes / polyarrays intersect
+
+[new] state vector is automatically augmented if deltaU constraints are present
+to guarantee fulfilment of these constraints in closed-loop
+
+[new] support for XPress, Mosek, OOQP, bintprog solvers
+
+[new] mpt_solveMILP / mpt_solveMIQP - interfaces to various MILP and MIQP
+solvers (CPLEX9, glpk, YALMIP's branch & bound)
+
+[new] mpt_solveMPC can now handle LTI systems with boolean/integer inputs
+
+[new] added support for CPLEX9 as an LP/QP/MILP/MIQP solver (interfaced
+with cplexint) 
+
+[new] cplexint mex interface for CPLEX9 included in distribution (only
+windows version at this point)
+
+[new] mpt_solveLP, mpt_solveLPi and mpt_solveQP can use the new "rescue"
+mode in which the problem is re-solved with a different solver if the
+intitial solver fails to give an optimal solution [issue87]
+
+[new] mptOptions.rescueLP and mptOptions.rescueQP can be enabled in
+mpt_init to enable the "rescue" mode in mpt_solveLP and mpt_solveQP
+
+[new] mpt_init tries to solve a test problem for all solvers which are
+found on a particular computer. originally we were only testing if the
+interface file exists
+
+[new] chebyball, chebyball_f, facetcircle, mpt_removeOverlaps and
+mpt_searchTree use the "rescue" mode when solving chebyshev's LP
+[issue87] 
+
+[new] mpt_solveLP and mpt_solveLPi use NAG's e04naf as LP solver if NAG is
+the default solver (before we used e04mbf, which is a tick slower and
+also les reliable (tested on [issue79]))
+
+[new] chebyball_f.m uses initial guess for x0 by default [issue79]
+
+[new] included optimal merging routines by Tobias Geyer
+
+[new] included espresso binaries for windows and linux in the distro
+
+[new] mpt_simplify can now use optimal merging if called with appropriate
+flag (see help file for more info)
+
+[new] mpt_plotPartition: use standard coloring scheme for solutions
+simplified by mpt_simplify()
+
+[new] optimset('LargeScale','off') added to calls to linprog() in
+mpt_solveLP and mpt_solveLPi - this makes the solver work more reliable
+on our test cases
+
+[new] mpt_solverInfo converts textual description of a solver to it's
+numerical code and vice versa (used by mpt_init, mpt_getOptions,
+mpt_setOptions)
+
+[new] sysStruct.xlabels renamed to sysStruct.StateName
+      sysStruct.ulabels renamed to sysStruct.InputName
+      sysStruct.ylabels renamed to sysStruct.OutputName
+
+[new] dupicate data (information about value function and hard bounds) are now
+      removed from ctrlStruct.details
+
+[new] Options.display changed to Options.verbose
+
+[new] YALMIP 3 included and fully supported
+
+[new] mpt_simplify.m reduces complexity of explicit controller by merging
+      regions which have the same control law. try mpt_simplify(ctrlStruct)
+      currently returns an error if controller parititon contains overlaps,
+      but there is an option to make it work even in this case (but the saving
+      is too small, that's why i disabled it)
+
+[new] @polytope/merge.m for merging of polytopes into larger chunks. merging
+      can either be greedy or optimal (requires espresso solver)
+
+[new] new mpLP solver is now available and used by default (mpt_mplp_ver4.m).
+      older solvers are still available using the Options.mplpver option.
+
+[new] solver for finite horizon optimal control problems for PWA systems based on
+      DP approach with PWA cost-to-go is now improved and used by default. the
+      solver has been available since version 1.4.1 as mpt_optControlPWA_new.m,
+      now it was renamed to mpt_optControlPWA.m. the original solver is still
+      available in auxiliary/mpt_optControlPWAold.m)
+
+[new] code optimization & speedup (up to 30% compared to version 1.4.4)
+
+[new] faster generation of search trees by mpt_searchTree (thanks Arne Linder)
+
+[new] search tree generated by mpt_searchTree is now stored in ctrlStruct.details
+      and the control law is now evaluated by mpt_getInput.m insted of
+      mpt_getInputST.m which has been removed from the distribution
+
+[new] mpt_identifyRegion for graphical identification of regions. try:
+      plot(Pn); mpt_identifyRegion(Pn);
+
+[new] analytical computation of extreme points for polytopes of arbitrary dimensions
+
+[new] alternative methods for convex hull and extreme points enumeration
+
+[new] mpt_checkPWQLyapFct and mpt_checkPWALyapFct merged into mpt_checkLyapFct
+
+[new] extended error handling in mpt_sysStructInfo
+
+[new] mpt_patch2eps converts 3D figures into EPS files (by Frank J. Christophersen)
+
+[new] extended problem reporting in projection.m
+
+[new] scripts for thorough testing of MPT are now available in the new testing/
+      directory (mpt_runTests.m, mpt_test_LTI2d.m, mpt_test_PWA.m)
+
+[new] mpt_feasibleStates generates equidistantly placed data points in feasible
+      space of a given controller
+
+[new] new option in mpt_oneStepCtrl - Options.set_limit. if the invariant set 
+      has a chebychev redius which is smaller than this value, the iteration is 
+      aborted. (default is 1e-3)
+
+[fix] sysStruct.dymax and sysStruct.dymin constraints now of the following form:
+sysStruct.dymin <= y(k+1) - y(k) <= sysStruct.dymax
+      
+[fix] projection: skip sub_iterativehull() if polytope is only defined by
+one constraint, otherwise the subfunction runs into infinite loop
+
+[fix] mpt_optControlPWA: return open-loop solution in details only if
+Options.details>0
+
+[fix] mpt_mplp_ver4: increased ALPHAit to 50 (seems to solve [issue86])
+
+[fix] mpt_mplp_ver4: findActiveSet() now calls mpt_solveLPi instead of
+mpt_solveLP
+
+[fix] mpt_mplp_ver4: findActiveSet() now uses the "rescue" mode in call
+to mpt_solveLPi
+
+[fix] mpt_mplp_ver4: uses rescue mode in call to mpt_solveQP (re-solves the QP 
+with a different solver if the initial one fails, see mpt_solveQP for details)
+[issue87]  
+
+[fix] mpt_solveLPi, mpt_solveLP: call YALMIP to solve an LP with sedumi
+
+[fix] mpt_solveQP: call YALMIP to solve a QP with sedumi
+
+[fix] mpt_mplp_ver4: message about "same AS found" now displayed only if
+Options.verbose > 1 
+
+[fix] mpt_verifySysStruct: allows Inf values in sysStruct.umin and
+sysStruct.umax (due to tracking problems) 
+
+[fix] mpt_sysStructInfo.m: don't compute intersection polytopes if they
+are not requested in output arguments 
+      
+[fix] default value for mptOptions.step_size changed to 1e-5 to avoid holes in
+      solutions
+
+[fix] mpt_iterative now correctly handles feedback pre-stabilization case
+
+[fix] mpt_computeTrajectory now allows user-specified control action in
+      Options.manualU also for open-loop trajectories
+
+[fix] cost function was not computerd for nominal system in case of parametric
+      uncertainties
+
+[fix] automatic initialization of the toolbox in mpt_delaunay and mpt_voronoi
+
+[fix] mpt_iterativePWA now does not produce occasional warnings with Matlab 6.1
+
+[fix] variable declaration was missing in mpt_mixedMinTime
+
+[fix] original problem structure was not set in solution of mpt_oneStepCtrl 
+
+
+Version 1.4.4 (30-Aug-2004)
+---------------------------
+
+[new] extended code in mpt_getPWQLyapFct, mpt_verifySolution
+
+[new] mpt_getQuadLyapFct computes common Lyapunov function for PWA system
+
+[new] extended error display in projection.m
+
+[fix] fixed inconsistency in projection.m for large dimensions
+      (thanks to Lars Imsland for quick report)
+
+
+Version 1.4.3 (30-Aug-2004)
+---------------------------
+
+[new] extended core computation in mpt_optControlPWA
+
+[new] additional error checks in mpt_solveLP
+
+[new] mpt_setOptions and mpt_getOptions to set/get global MPT options
+
+[fix] mpt_plotTimeTrajectory doesn't crash for 3D systems
+
+[fix] mpt_delaunay doesn't crash with Options.mplpver=3
+
+[fix] in extreme.m, call to combnk() has been replaced by nchoosek()
+
+
+Version 1.4.2 (10-Aug-2004)
+---------------------------
+
+[fix] shortcut and (&&) and or (||) operators removed from mpt_mplp_ver3.m to
+      ensure backwards compatibility with Matlab 6.1
+      
+[fix] small fix in mtimes.m      
+
+
+Version 1.4.1 (25-Jul-2004)
+---------------------------
+
+[new] automatic checking for updates through mpt_update can be enabled in mpt_init
+
+[new] mpt_maxCtrlSet.m now computes maximum controllable set also for PWA systems
+
+[new] updated mpLP solver
+
+[new] new LP solver supported - QSopt (mex interface written by Johan Loefberg)
+
+[new] template for system and problem structures added to mpt_sysStruct and 
+      mpt_probStruct, respectively
+
+[new] new functions mpt_checkPWQLyapFct and mpt_checkPWALyapFct which check if
+      decay rate of PWQ(PWA) Lyapunov Function is always negative
+
+[new] plotting of polytope arrays now does not break with an error message if a
+      problem occurs. if any problems are detected, the function tries to plot
+      as many polytopes as possible, giving an error message at the end
+
+[new] mpt_update connects to MPT webpage and checks for available updates
+
+[new] mpt_version returns version number when called as mpt_init('version')
+
+[new] less textual output when validating system and problem structures
+
+[new] text labeling of states, inputs and outputs (see Double_Integrator.m,
+      mpt_plotTimeTrajectory, mpt_plotTrajectory)
+
+[new] constraints on slew rate of the output can now be defined in sysStruct.dymin
+      and sysStruct.dymax
+
+[new] time-varying weighting matrices can now be used by defining probStruct.Q
+      probStruct.R as cell arrays
+
+[new] generation of  binary search trees (see help mpt_searchTree, mpt_getInputST)
+
+[new] HTML command reference guide added
+
+[new] minor speedup of control routines for PWA systems (by 5-20%)
+
+[new] mpt_removeOverlaps runs faster with Options.lowmem=0 and consumes less memory
+      compared to previous version
+
+[new] improved low memory modes for mpt_removeOverlaps
+
+[new] function 'double' can now handle polyarrays
+
+[new] 'double' now outputs only 2 arguments: H and K matrices of the H-representation 
+      of a given polytope. to access minrep, normal, xCheb and RCheb fields, use
+      isminrep, isnormal and chebyball functions, respectivelly
+
+[new] 'double' now outputs a cell array of H and K matrices if used on a polyarray
+
+[new] isinside.m now checks for proper dimension of x0
+
+[new] mpt_plotTimeTrajectory returns evolution of output variables as well
+
+[fix] fixed a problem in eq.m when comparing single polytopes with polyarrays
+
+[fix] extreme points were not updatededit mpt correctly when doing a sum of a polytope and
+      a vector (@polytope/plus.m)
+
+[fix] fixed inexact function call to mpt_mplp from mpt_delanuay and mpt_voronoi
+
+[fix] fixed a bug in mpt_getPWQLyapFct and mpt_getPWALyapFct for systems with
+      parametric uncertainty
+
+[fix] fixed issue with output regulation & quadratic performance criterions
+
+[fix] mpt_computeTrajectory stops when reference is reached for output regulation
+
+[fix] plot was crashing when applied to empty polytopes, this is fixed now
+
+[fix] fixed typo in function name in degeneracy handler of mpt_optInfControl
+
+[fix] fixed typo in code of mpt_optControl (useSymmetry part)
+
+[fix] additional checks performed in mpt_verifyProbStruct - excluding combination
+      of tracking & time-optimal (low complexity) solutions; 
+      probStruct.Tconstraint=0 & probStruct.subopt_lev>0;
+      probStruct.tracking & probStruct.Tconstraint=2;
+      time-varying Q and R in combination with probStruct.N=Inf or subopt_lev>0
+
+
+Version 1.4 (25-Jun-2004)
+---------------------------
+
+[new] move-blocking implemented (see help mpt_blockingMatrices, runMoveBlocking)
+
+[new] infinite-time, minimum-time and low-complexity solutions now available also 
+      for LTI systems and linear cost functions
+      
+[new] cost-optimal and minimum-time solution for systems with discrete inputs
+
+[new] plot of PWA/PWQ functions now allows plotting of the function in same colors
+      as regions below it (see help mpt_plotPWA, mpt_plotPWQ)
+
+[new] new function mpt_solveMPC solves the MPC problem on-line
+
+[new] new flag Options.lowmem -- defines 'memory saving mode'. if required, the
+      user can switch this mode on if the procedure runs into memory problems
+      (but computation will be slower if switched on). see mpt_removeOverlaps,
+      mpt_optControlPWA and mpt_optInfControlPWA for more details
+
+[new] mpt_plotTrajectory and mpt_plotPartition now accept Options.color and plot
+      the whole controller partition in that given color. Options.color has to
+      be a character as in the 'plot' command, e.g. 'y', 'r', 'b'... only one
+      color can be given
+
+[new] initial state for trajectory plotting in mpt_plotTrajectory can now
+      be provided in Options.x0 (in such case the mouse interface will be disabled
+
+[new] new mpLP algorithm which is faster and more reliable (you can still use the old
+      version by specifying Options.oldmplp=1)
+      
+[new] SeDuMi can now be used to solve LP's (call mpt_init('lpsolver','sedumi') )      
+      
+[new] solvers can now be specified by strings in mpt_init (e.g. 
+      mpt_init('lpsolver','nag','qpsolver','quadprog') )
+
+[new] new method for projection -- Equality Set Projection (thanks to Colin Jones
+      for allowing us to include his code into the toolbox)
+
+[new] fast implementation of Fourier-Motzkin elimination in C (thanks to Colin Jones
+      for allowing us to include his code into the toolbox)
+
+[new] new function mpt_getCinf computes maximum controllable set of states
+
+[new] mpt_delaunay computes the delaunay triangulation of a polytope       
+      
+[new] mpt_voronoi computes the voronoi diagram via mpLP
+      
+[new] if starting part of the infinite time solution for PWA systems is not found
+      in given number of iterations, alternative technique is used rather than
+      breaking with an error (see help mpt_optInfControlPWA)
+
+[new] intermediate results obtained at each iteration can now be stored and
+      returned by setting appropriate field in the Options for finite and
+      infinite horizon algorithms for PWA systems (see help mpt_optInfControlPWA,
+      help mpt_optControlPWA)
+
+[new] in finite horizon solution for PWA systems, regions which belong to 
+      infinite-time solution can be identified upon request 
+      (see help mpt_optControlPWA)
+      
+[new] generation of the core of infinite time solution for PWA systems can be now
+      switched off through Options (see help mpt_optInfControlPWA)
+
+[new] core of the infinite time solution can be specified by Options
+      (see help mpt_optInfControlPWA)
+
+[fix] fixed handling of equality constraints in mpt_solveQP for CPLEX      
+      
+[fix] plotting of polyhedral partition below the function plot in mpt_plotU and 
+      mpt_plotPWA is now enabled through Options.showPn (was Options.full_partition before)
+      
+[fix] mpt/simulink: mpt_getSimInput renamed to mpt_simInput      
+
+[fix] keptrows is no longer stored in the polytope object. to access this information,
+      use reduce (see help polytope/reduce)
+
+[fix] for some PWA systems, infinite time solution was not complete. fixed in this
+      version.
+      
+[fix] new call to projection.m - second argument now denotes indices of dimensions
+      on which the given polytope should be projected
+
+[fix] reduced switching strategy available in mpt_iterativePWA via Options 
+      (see help mpt_iterativePWA)
+      
+[fix] plotting of 1D polytopes now works properly
+      
+[fix] mpt_solveLP now accepts calls with just 3 input arguments
+
+[fix] minor fix in mpt_mplp for one-dimensional systems
+
+[fix] mpt_init is called from mpt_verifySysStruct if the toolbox was not initialized
+
+[fix] vertical concatenation of polytopes now accepts also empty matrices
+
+
+Version 1.3.1 (26-Mar-2004)
+---------------------------
+
+[new] fastest method to compute projections is now automatically selected by
+      the function
+
+[new] computation of extreme points in mpt_control can now be disabled (see help
+      mpt_control for details)
+
+[fix] trajectory evolution in mpt_computeTrajectory for Options.stopInTset=1 will
+      stop if all states belong to the terminal set for two consecutive time steps
+      
+[fix] fixed a problem in mpt_computeTrajectory for tracking problems      
+      
+[fix] a bug in mpt_constructMatrices caused an error for systems with a non-square
+      output matrix C
+      
+      
+Version 1.3 (23-Mar-2004)
+-------------------------
+
+[new] new functionality - projection of a polytope or a polytope array! 
+      (see help projection for more details)
+
+[new] mpt_oneStepCtrl - computation of low complexity controllers via
+      projection
+      
+[new] mpt_iterativePWA uses projections to calculate the maximum feasible
+      set
+      
+[new] mpt_iterativePWA with probStruct.subopt_lev=2 computes a one-step
+      controller.
+      
+[new] fixed-state tracking can be enabled by setting probStruct.xref 
+      and/or probStruct.uref
+
+[new] Simulink interface now available      
+      
+[new] speedup of nearly all functions
+
+[new] mpLP and mpQP algorithms use a search tree to detect if a point 
+      lies in some already explored polytope
+
+[new] bounding box of a polytope is now be stored in the polytope object
+
+[new] polytope/reduce now runs much faster
+
+[new] mpt_plotJ plots value function associated to an explicit controller
+
+[new] mpt_plotU can plot value of the control action for systems with 
+      multiple inputs (thanks to Arne Linder)
+
+[new] mpt_removeOverlaps runs much faster on results obtained by iterative 
+      algorithms (mpt_iterative, mpt_iterativePWA)
+
+[new] terminal sets can be used in mpt_optControlPWA
+
+[new] value function is returned from mpt_mpqp
+
+[new] mpt_simplexContr now uses projection to compute maximum feasible set
+
+[new] new oprator introduced for polytope objects -- multiplication
+      see help polytope/mtimes for more details
+
+[fix] mpt_iterativePWA now outputs less information when calling with
+      Options.display=1 
+
+[fix] change of output arguments in polytope/triangulate
+
+[fix] LQR invariant sets are now computed directly in mpt_constructMatrices 
+      rather than in individual control functions
+
+[fix] mpt_constructMatrices now augments the cost function for linear norms
+      to take x(0) into account
+
+[fix] mpt_constructMatrices now outputs the structure containing all
+      matrices of the particular problem
+      
+[fix] fixed a small bug in triangulate.m which appeared when calling the
+      function without output arguments 
+      
+[fix] polytope/subsasgn now allows P([i j k ... x])=[] assignment      
+      
+
+Version 1.2R1 (18-Feb-2004)
+---------------------------
+
+[fix] mpt_iterative no longer ignores user defined target sets 
+
+[fix] modified "subsref"; P([]) now returns an empty polytope if P is a polytope
+      or polytope array.
+
+
+Version 1.2 (6-Feb-2004)
+------------------------
+
+[new] Solution to constrained infinite-time optimal control problem for PWA
+      systems with linear performance indexes
+
+[new] Solution to constrained finite time optimal control problem for PWA
+      systems with linear performance indexes
+
+[new] Extended help for system and problem definition - see help mpt_sysStruct
+      and help mpt_probStruct
+
+[new] Triangulation of arbitrary polytopes (see help polytope/triangulate)
+
+[new] Visualization of tracking problems
+
+[new] Pre-stabilization with feedback implemented. Set probStruct.feedback = 1
+      to enable this feature
+
+[new] mpt_simplexContr - Computes a piecewise affine feedback law defined
+      over simplices. Feedback law is obtained by linear interpolation.
+
+[new] Yalmip 3 now supported!
+
+[new] SeDuMi 1.05 included in this release
+
+[new] CDDmex interface now compiled with the latest version of cddlib (0.93c)
+
+[new] mpt_plotArrangement - plots hyperplane arrangement
+
+[new] New LP solver - CDD using Dual-Simplex method
+
+[new] mpt_init now automatically chooses the fastest solver installed on the
+      user's computer. Manual specification is still possible.
+
+[new] extended manual now available (but still not complete)
+
+[fix] mpt_iterative no longer overwrites the feasible set Pfinal
+
+[fix] change of X-axis captions in mpt_plotTimeTrajectory
+
+[fix] Fixed checking of constraints violations in mpt_computeTrajectory
+
+
+
+Version 1.1 Revision 3 (19-Dec-2003)
+------------------------------------
+
+[new] output arguments from control functions have been changed!
+      instead of separate fields (PA, Fi, Gi, details), all results are
+      stored in the so-called controller structure (ctrlStruct). Analysis
+      and plotting functions also use the ctrlStruct as input argument. 
+      Check individual help files and the manual for more details.
+
+[new] some functions have been moved to the auxiliary/ folder. This
+      involves all functions which are not intended to be used directly by
+      the user.
+
+[new] mpt_solveLP now supports only version 1.1 of the Matlab-to-CPLEX
+      interface which can be downloaded from:
+      http://control.ee.ethz.ch/~hybrid/cplexint.msql
+
+[new] mpt_getInput returns the optimal control input for a given state
+      vector 
+
+[new] mpt_plotPWA, mpt_plotPWQ allow to plot PWA and PWQ functions
+      defined over polyhedral partitions
+
+[new] mpt_removeOverlaps can be used to remove overlaps from
+      partitions with associated linear cost function.
+
+[new] mousepoly.m - allows to "draw" a 2D polytope by mouse clicks
+
+[new] isbounded.m - contributed by Miroslav Baric. By solving 1 LP
+      determines if a given polytope is bounded.
+
+[new] mpt_solveQP now handles equality constraints
+
+[fix] mpt_plotPartition now uses the same coloring scheme for all
+      infinite-time and time-optimal solutions
+
+[fix] x0 in mpt_solveLP was not passed correctly
+
+[fix] hull.m now returns an empty polytope directly if vertices are
+      empty matrix
+
+[del] mpt_plotLyap3D - replaced by mpt_plotPWQ
+
+
+
+Version 1.1 Revision 2 (29-Nov-2003)
+------------------------------------
+
+[fix] Arne Linder reported a problem with handling of PWA systems
+      defined purely in U space. the bug was fixed in this release.
+
+
+
+Version 1.1 Revision 1 (25-Nov-2003)
+------------------------------------
+
+[fix] Adam Lagerberg reported an inconsistency in call to
+      mpt_getCommonLyapFct from mpt_getStabFeedback
+
+[fix] based on a report from Adam Lagerberg, mpt_iterativePWA waas
+      fixed while it was failing then origin was not included in first
+      dynamics 
+
+
+
+Version 1.1 (24-Nov-2003)
+-------------------------
+
+[new] improved degeneracy handling in mpQP solver
+
+[new] improved error checks
+
+[fix] many small bugs fixed
+
+
+
+Version 1.0
+-----------
+
+initial release for public testing
