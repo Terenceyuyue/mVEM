@@ -1,6 +1,6 @@
 # MATLAB Programming for Virtual Element Methods
 
-Note: Forking is not recommended. You may not be able to follow up on the progress of the ungoing project.
+Note: Forking is not recommended. You may not be able to follow up on the progress of the ongoing project.
 
 
 ## Mesh 
