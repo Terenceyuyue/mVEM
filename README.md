@@ -3,20 +3,33 @@
 
 ## Mesh 
 
-- Chapter 1 presents some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
+- We presents some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
  
-- For the convenience of computation, we introduce some auxiliary mesh data. The idea stems from the treatment of triangulation in iFEM,     which is generalized to polygonal meshes with certain modifications. 
+- For the convenience of computation, some auxiliary mesh data are introduced. 
+  The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with certain modifications. 
  
 - We also provide a boundary setting function to identify the Neumann and Dirichlet boundaries (See setboundary.m).
+
+- The mesh generation algorithms are also described in detail.
  
 
-## Poisson VEM (lowest order)
+## Poisson VEM (k<=3)
 
-The virtual element method (VEM) of lowest order is introduced in Chapter 2, including the computation of elliptic projection and L2 projection, the matrix form of the approximated variational problems as well as the treatment of boundary conditions. 
+We describe the details of designing the codes of conforming VEMs for Poisson equation with k up to 3, 
+including the computation of elliptic projection and L2 projection, the matrix form of the approximated variational problems as well as the treatment of boundary conditions.
+We also show how the errors under L2,H1 and energy norms can be computed using the numerical d.o.f.s.
 
-## Linear elasticity problems (lowest order)
+## Linear elasticity problems (lowest order k = 1)
 
-The VEM of lowest order for linear elasticity problems is introduced in Chapter 3 for both the displacement-type and tensor-type bilinear forms. The sparse assembly indices for vector equation are presented. 
+The VEM of lowest order for linear elasticity problems is introduced for both the displacement-type and tensor-type bilinear forms. 
+
+## Plate bending problems (lowest order k = 2)
+
+Three VEMs involved in the literature are described in detail, i.e., the C1, C0 and Morley-type elements.
+
+## Fourth-order singular perturbation problems
+
+ This problem combines the techniques in Poisson equation and plate bending problems.
  
   PS: 
   
@@ -27,6 +40,20 @@ The VEM of lowest order for linear elasticity problems is introduced in Chapter 
       相比网上有的程序，过程更加清晰，充分使用了 MATLAB 的向量运算。
       
   Undo:
+  
+      - Nonconforming VEMs of Poisson equation
      
-      - Poisson 方程的二阶虚拟元方法
+      - 3-D VEMs
+      
+      - Mixed VEMs: Stokes problem
+      
+      - Adaptive VEMs
+      
+      - Time-dependent problems and nonlinear problems
+      
+      - Various applications: Cahn–Hilliard problem, Stokes–Darcy problem, Navier-Stokes, etc.
+      
+      - Mesh generation in 3-D
+      
+      
 
