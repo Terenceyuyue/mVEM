@@ -15,7 +15,7 @@ Note: Forking is not recommended. You may not be able to follow up on the progre
 - The mesh generation algorithms are also described in detail.
  
 
-## Poisson VEM (k<=3)
+## Poisson equation (k <= 3)
 
 We describe the details of designing the codes of conforming VEMs for Poisson equation with k up to 3, 
 including the computation of elliptic projection and L2 projection, the matrix form of the approximated variational problems as well as the treatment of boundary conditions.
