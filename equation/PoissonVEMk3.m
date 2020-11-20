@@ -1,7 +1,7 @@
 function [u,info] = PoissonVEMk3(node,elem,pde,bdStruct)
 %PoissonVEMk3 solves Poisson equation using virtual element method in V3/W3
 %
-%     -\Delta u = f,  in Omega
+%     -\Delta u + cu = f,  in Omega
 %     Dirichlet boundary condition u=g_D on \Gamma_D, 
 %     Neumann boundary condition   grad(u)*n=g_N on \Gamma_N
 %
