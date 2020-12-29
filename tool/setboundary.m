@@ -34,6 +34,7 @@ if (nargin==2) || (~isempty(varargin{1}))
         Idx(id) = false;
     end
 end
+bdStruct.bdEdge = bdEdge; % all boundary edges
 bdStruct.bdEdgeD = bdEdge(Idx,:); % Dirichlet boundary edges
 bdStruct.bdEdgeN = bdEdge(~Idx,:); % Neumann boundary edges
 bdStruct.bdNodeIdx = unique(bdEdge(Idx,:)); % index of Dirichlet boundary nodes
