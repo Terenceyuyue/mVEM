@@ -1,4 +1,7 @@
 function aux = auxstructure(node,elem)
+%auxstructure displays a mesh in 2-D and 3-D.
+%
+% Copyright (C) Terence Yu.
 
 NT = size(elem,1); N = size(node,1);
 if ~iscell(elem) % transform to cell
@@ -31,13 +34,13 @@ i2 = length(totalEdge)+1-i2;
 edge2elem = totalJelem([i1,i2]);
 
 % --------- neighbor ---------
-NE = size(edge,1);
-ii1 = edge2elem(:,1); jj1 = (1:NE)'; ss1 = edge2elem(:,2);
-ii2 = edge2elem(:,2); jj2 = (1:NE)'; ss2 = edge2elem(:,1);
-label = (ii2~=ss2);
-ii2 = ii2(label); jj2 = jj2(label); ss2 = ss2(label);
-ii = [ii1;ii2]; jj = [jj1;jj2]; ss = [ss1;ss2];
-neighbor = sparse(ii,jj,ss,NT,NE);
+neighbor = cell(NT,1);
+for iel = 1:NT
+    index = elem2edge{iel};  
+    ia = edge2elem(index,1); ib = edge2elem(index,2);
+    ia(ia==iel) = ib(ia==iel);
+    neighbor{iel} = ia;
+end
 
 % --------- node2elem ---------
 ii = totalJelem; jj = v0; ss = ones(length(ii),1);
