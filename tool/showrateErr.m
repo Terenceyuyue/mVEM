@@ -1,5 +1,5 @@
 function showrateErr(h,varargin)
-%showrateh displays convergence rates of an err sequence with given names
+%showrateErr displays convergence rates of an err sequence with given names
 % such as ErrL2, ErrH1, ErrH2, ErrI
 %  e.g. showrateh(h,ErrL2,ErrH1,ErrH2,ErrI)
 %
