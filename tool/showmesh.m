@@ -1,7 +1,7 @@
 function showmesh(node,elem,options)
 %Showmesh displays a mesh in 2-D and 3-D.
 %
-% Copyright (C) Terence Yu.
+% Copyright (C) Terence Yu
 
 if nargin==2, options.FaceAlpha = 0.4; end
 

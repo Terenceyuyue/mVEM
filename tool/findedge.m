@@ -2,6 +2,8 @@ function findedge(node,elem,bdInd)
 %Findedge highlights edges
 % bdInd = 1; % boundary edge;
 % other cases: all edges
+%
+% Copyright (C) Terence Yu
 
 hold on
 

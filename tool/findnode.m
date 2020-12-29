@@ -1,5 +1,7 @@
 function findnode(node,range)
 %Findnode highlights nodes in certain range.
+%
+% Copyright (C) Terence Yu.
 
 dim = size(node,2);
 

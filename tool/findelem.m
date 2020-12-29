@@ -1,5 +1,7 @@
 function findelem(node,elem,range)
 %Findelem highlights some elements
+%
+% Copyright (C) Terence Yu
 
 hold on
 
