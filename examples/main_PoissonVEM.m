@@ -40,7 +40,7 @@ end
 
 %% Plot convergence rates and display error table
 figure(2);
-showrateh(h,ErrL2,ErrH1,ErrI);
+showrateErr(h,ErrL2,ErrH1,ErrI);
 
 fprintf('\n');
 disp('Table: Error')
