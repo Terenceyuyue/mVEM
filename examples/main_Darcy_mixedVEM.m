@@ -35,6 +35,11 @@ disp('Table: Error')
 colname = {'#Dof','h','||u-u_h||','||p-p_h||'};
 disptable(colname,N,[],h,'%0.3e',ErruL2,'%0.5e',ErrpL2,'%0.5e');
 
+%% Conclusion
+%
+% The optimal rate of convergence of the L2-norm for u (2nd order) and p
+% (1st order) is observed for k = 1.
+
 % %% Display exact d.o.f.s
 % % auxiliary data
 % aux = auxgeometry(node,elem);
