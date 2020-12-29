@@ -1,5 +1,5 @@
 function aux = auxstructure(node,elem)
-%auxstructure gets auxiliary mesh data strucuture
+%auxstructure gets auxiliary mesh data structure
 %
 % Copyright (C) Terence Yu.
 
