@@ -1,4 +1,7 @@
 function aux = auxgeometry(node,elem)
+%auxgeometry gets geometry data
+%
+% Copyright (C) Terence Yu.
 
 NT = size(elem,1);
 if ~iscell(elem) % transform to cell
