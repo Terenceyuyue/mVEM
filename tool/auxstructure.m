@@ -1,5 +1,5 @@
 function aux = auxstructure(node,elem)
-%auxstructure displays a mesh in 2-D and 3-D.
+%auxstructure gets auxiliary mesh data strucuture
 %
 % Copyright (C) Terence Yu.
 
