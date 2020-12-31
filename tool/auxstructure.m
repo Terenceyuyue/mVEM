@@ -39,7 +39,7 @@ for iel = 1:NT
     index = elem2edge{iel};  
     ia = edge2elem(index,1); ib = edge2elem(index,2);
     ia(ia==iel) = ib(ia==iel);
-    neighbor{iel} = ia;
+    neighbor{iel} = ia';
 end
 
 % --------- node2elem ---------
