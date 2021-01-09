@@ -4,7 +4,7 @@ function pde = PlateBendingData(varargin)
 if nargin == 0
     t = 0.1; % plate thickness (m)
     E = 10920; % Young's modulus (Nm/kg^2)
-    nu = 0.3;  % Poisson's ratio
+    nu = 0.3;  % Poisson's ratio (nu \neq 1)
     D = E*t^3/12/(1-nu^2); % flexural rigidity
     c = 0; % 弹性耦合常数
     para = struct('t',t, 'E',E, 'nu',nu, 'D',D, 'c',c);    
