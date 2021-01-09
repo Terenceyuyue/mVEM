@@ -36,6 +36,13 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 ## Mixed virtual element methods
 
  - Mixed vem for Darcy problem in the lowest order
+ 
+ 
+##  Adaptive VEMs
+
+  - Mesh refinement of polygonal meshes
+  
+  - Adaptive VEM for Poisson equation in the lowest order
 
  
   PS: 
@@ -53,8 +60,6 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
       - 3-D VEMs
       
       - Mixed VEMs: Stokes problem
-      
-      - Adaptive VEMs
       
       - Time-dependent problems and nonlinear problems
       
