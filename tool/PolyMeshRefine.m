@@ -1,5 +1,5 @@
 function [node,elem] = PolyMeshRefine(node,elem,elemMarked)
-%PolyMeshRefine refines a 2-D polygonal mesh
+%PolyMeshRefine refines a 2-D polygonal mesh satisfying one-hanging node rule
 %
 % We divide elements by connecting the midpoint of each edge to its
 % barycenter.
