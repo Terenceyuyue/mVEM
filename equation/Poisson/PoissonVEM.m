@@ -10,6 +10,7 @@ function [u,info] = PoissonVEM(node,elem,pde,bdStruct)
 %% Get auxiliary data
 aux = auxgeometry(node,elem);
 node = aux.node; elem = aux.elem;
+centroid = aux.centroid;  diameter = aux.diameter;  area = aux.area;
 N = size(node,1);  NT = size(elem,1);
 
 %% Compute projection matrices
@@ -18,8 +19,8 @@ G = cell(NT,1);  Gs = cell(NT,1); H = cell(NT,1);
 for iel = 1:NT
     % element information
     index = elem{iel};  Nv = length(index);    
-    xK = aux.centroid(iel,1); yK = aux.centroid(iel,2); 
-    hK = aux.diameter(iel);
+    xK = centroid(iel,1); yK = centroid(iel,2); 
+    hK = diameter(iel);
     x = node(index,1); y = node(index,2);    
     % scaled monomials
     m1 = @(x,y) 1 + 0*x; m2 = @(x,y) (x-xK)./hK; m3 = @(x,y) (y-yK)./hK;    
@@ -34,14 +35,14 @@ for iel = 1:NT
     B1s = B1; B1s(1,:) = 1/Nv;    Bs{iel} = B1s;
     G{iel} = B1*D1;     Gs{iel} = B1s*D1;  
     % H
-    nodeT = [node(index,:);aux.centroid(iel,:)];
+    nodeT = [node(index,:); centroid(iel,:)];
     elemT = [(Nv+1)*ones(Nv,1),(1:Nv)',[2:Nv,1]'];   
     % mm 
     mm = @(x,y) [m1(x,y).*m1(x,y), m1(x,y).*m2(x,y), m1(x,y).*m3(x,y), ...
                  m2(x,y).*m1(x,y), m2(x,y).*m2(x,y), m2(x,y).*m3(x,y), ...
                  m3(x,y).*m1(x,y), m3(x,y).*m2(x,y), m3(x,y).*m3(x,y)];
     H1 = zeros(3,3);
-    H1(:) = integralTri(mm,3,nodeT,elemT); % n = 2   
+    H1(:) = integralTri(mm,3,nodeT,elemT); % n = 3   
     H{iel} = H1; 
 end
 
@@ -49,6 +50,8 @@ end
 ABelem = cell(NT,1); belem = cell(NT,1);
 Ph = cell(NT,1); % matrix for error evaluation
 for iel = 1:NT
+    % elementwise information
+    hK = diameter(iel);
     % Projection
     Pis = Gs{iel}\Bs{iel};   Pi  = D{iel}*Pis;   I = eye(size(Pi));    
     % Stiffness matrix
@@ -56,7 +59,7 @@ for iel = 1:NT
     BK = pde.c*Pis'*H{iel}*Pis + pde.c*hK^2*(I-Pi)'*(I-Pi);  % Pis = Pi0s;
     ABelem{iel} = reshape(AK'+BK',1,[]); % straighten as row vector for easy assembly    
     % Load vector   
-    fK = Pis'*[pde.f(aux.centroid(iel,:))*aux.area(iel);0;0];    
+    fK = Pis'*[pde.f(centroid(iel,:))*area(iel);0;0];    
     belem{iel} = fK'; % straighten as row vector for easy assembly
     % matrix for error evaluation
     Ph{iel} = Pis; 
