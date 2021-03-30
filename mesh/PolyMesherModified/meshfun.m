@@ -13,10 +13,6 @@ NT = 200;
 % Nx = 5; Ny = 5;
 [node,elem] = PolyMesher(Domain,MaxIter,NT);
 
-% ---------------- Distortion of given mesh -------------------
-tc = 0.1;
-node = node + tc*repmat(sin(2*pi*node(:,1)).*sin(2*pi*node(:,2)),1,2);
-
 % ----------------- Visulization of the mesh ------------------
 showmesh(node,elem);
 % findnode(node); findelem(node,elem); findedge(node,elem);
