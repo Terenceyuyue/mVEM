@@ -1,0 +1,44 @@
+function bdStruct= setboundary(node,elem,varargin)
+% varargin: string for Neumann boundary
+
+NT = size(elem,1);
+if ~iscell(elem) % transform to cell
+    elem = mat2cell(elem,ones(NT,1),length(elem(1,:)));
+end
+
+%% totalEdge
+shiftfun = @(verts) [verts(2:end),verts(1)];  % or shiftfun = @(verts) circshift(verts,-1);
+T1 = cellfun(shiftfun, elem, 'UniformOutput', false);
+v0 = horzcat(elem{:})'; % the starting points of edges
+v1 = horzcat(T1{:})'; % the ending points of edges
+allEdge = [v0,v1];
+totalEdge = sort(allEdge,2);
+
+%% counterclockwise bdEdge
+[~,~,s] = find(sparse(totalEdge(:,2),totalEdge(:,1),1));
+[~, i1, ~] = unique(totalEdge,'rows');
+bdEdge = allEdge(i1(s==1),:);
+
+%% set up boundary
+nE = size(bdEdge,1);
+% initial as Dirichlet (true for Dirichlet, false for Neumann)
+Idx = true(nE,1);
+midbdEdge = (node(bdEdge(:,1),:) + node(bdEdge(:,2),:))/2;
+x = midbdEdge(:,1); y = midbdEdge(:,2); %#ok<NASGU>
+nvar = length(varargin); % 1 * size(varargin,2)
+% note that length(varargin) = 1 for bdNeumann = [] or ''
+if (nargin==2) || (~isempty(varargin{1}))
+    for i = 1:nvar
+        bdNeumann = varargin{i};
+        id = eval(bdNeumann);
+        Idx(id) = false;
+    end
+end
+bdStruct.bdEdge = bdEdge; % all boundary edges
+bdStruct.bdEdgeD = bdEdge(Idx,:); % Dirichlet boundary edges
+bdStruct.bdEdgeN = bdEdge(~Idx,:); % Neumann boundary edges
+bdStruct.bdNodeIdx = unique(bdEdge(Idx,:)); % index of Dirichlet boundary nodes
+bdEdgeIdx = find(s==1);      % index of all boundary edges
+bdStruct.bdEdgeIdx = bdEdgeIdx; 
+bdStruct.bdEdgeIdxD = bdEdgeIdx(Idx); % index of Dirichelt boundary edges
+bdStruct.bdEdgeIdxN = bdEdgeIdx(~Idx); % index of Neumann boundary edges
