@@ -3,6 +3,8 @@ function [node,elem] = uniformrefine(node,elem)
 
 % Copyright (C) Long Chen, modified by Terence Yu. 
 
+if iscell(elem), elem = vertcat(elem{:}); end
+
 %% auxiliary mesh data
 if size(elem,2)==3
     allEdge = [elem(:,[1,2]); elem(:,[2,3]); elem(:,[3,1])];  % using the convention in VEM
