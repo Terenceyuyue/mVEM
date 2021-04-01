@@ -1,6 +1,5 @@
 %------------- PolyMesher -------------------%
-% Ref: 环形区域
-% 修改 BdBox,dCircle 即可
+% Ref: L 型区域
 %--------------------------------------------%
 function [x] = Lshape_Domain(Demand,Arg)
   BdBox = [0 1 0 1];
@@ -26,14 +25,10 @@ function [PFix] = FixedPoints(BdBox)
   x1 = BdBox(1); x2 = BdBox(2); 
   y1 = BdBox(3); y2 = BdBox(4);
   xm = (x1+x2)/2; ym = (y1+y2)/2;
-%   PFix = [xm y1
-%           xm ym
-%           x2 ym
-%           ];
-%     PFix = [ x1   y1;
-%              xm   y1;
-%              xm   ym;
-%              x2   ym;
-%              x2   y2;
-%              x1   y2];
+  PFix = [ x1   y1;
+      xm   y1;
+      xm   ym;
+      x2   ym;
+      x2   y2;
+      x1   y2];
 %------------------------------------%
