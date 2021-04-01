@@ -24,6 +24,12 @@ while(Iter<=MaxIter && Err>Tol)
     % Compute the centroid of Voronoi cell (Lloyd's update)
     [P,Area,Err] = PolyMesher_VoroCentroid(P,node,elem);
     Iter = Iter+1;
+    if mod(Iter,10)==0
+        fprintf('Iter: %3d   Error: %1.3e\n',Iter,Err);
+    end
+    if NT<=1000
+        clf; showmesh(node,elem(1:NT)); pause(1e-6);
+    end
 end
 
 % ----------- Remove small edges to obtain (node,elem) -------------

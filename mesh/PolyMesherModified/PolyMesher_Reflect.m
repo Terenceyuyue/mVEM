@@ -12,7 +12,7 @@ I = abs(d(:,1:NBdrySegs))<Alpha;  %Logical index of seeds near the bdry
 P1 = repmat(P(:,1),1,NBdrySegs);  %[NT x NBdrySegs] extension of P(:,1)
 P2 = repmat(P(:,2),1,NBdrySegs);  %[NT x NBdrySegs] extension of P(:,2)
 R_P = [P1(I), P2(I)] - 2*[n1(I), n2(I)].*repmat(d(I),1,2);
-% d_R_P = Domain('Dist',R_P);
-% J = d_R_P(:,end)>0 & abs(d_R_P(:,end))>=eta*abs(d(I));
-% R_P = R_P(J,:); 
+d_R_P = Domain('Dist',R_P);
+J = d_R_P(:,end)>0 & abs(d_R_P(:,end))>=eta*abs(d(I));
+R_P = R_P(J,:); 
 R_P = unique(R_P,'rows');
