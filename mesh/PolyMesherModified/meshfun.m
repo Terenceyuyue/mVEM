@@ -8,10 +8,11 @@ clc;clear;close all
 % Options: Rectangle_Domain, Circle_Domain, Upper_Circle_Domain,
 % Upper_Circle_Circle_Domain, Rectangle_Circle_Domain, Circle_Circle_Domain
 % Michell_Domain, Horn_Domain, Suspension_Domain, Wrench_Domain
-Domain = @Rectangle_Domain;  MaxIter = 500;
+Domain = @Lshape_Domain;  MaxIter = 500;
 NT = 200;  
-% Nx = 5; Ny = 5;
 [node,elem] = PolyMesher(Domain,MaxIter,NT);
+% Nx = 20; Ny = 20;
+%[node,elem] = PolyMesher(Domain,MaxIter,Nx,Ny);
 
 % ----------------- Visulization of the mesh ------------------
 showmesh(node,elem);
