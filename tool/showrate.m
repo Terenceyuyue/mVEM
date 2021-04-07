@@ -1,13 +1,18 @@
-function r = showrate(h,Err,opt1,opt2,strErr)
-% 
-% e.g. opt1 = 'r-*',  opt2 = 'k.-'
+function r = showrate(h,Err,varargin)
+% varargin = { opt1, opt2, strErr };
+% e.g. opt1 = 'r-*',  opt2 = 'k.-', strErr = '||u-u_h||'
 %      opt1: line proverty for error curve 
 %      opt2: line proverty for convergence curve
 %
-% Copyright (C) Terence Yu.
+% Copyright (C) Long Chen, Modified by Terence Yu.
 
-if nargin == 4
-    strErr = '||u-u_h||';
+switch length(varargin)
+    case 0  % showrate(h,Err)
+        opt1 = 'r-*';  opt2 = 'k.-'; strErr = '||u-u_h||'; 
+    case 1  % showrate(h,Err,strErr)
+        opt1 = 'r-*';  opt2 = 'k.-'; strErr = varargin{1};   
+    case 2 % showrate(h,Err,opt1,opt2)
+        opt1 = varargin{1}; opt2 = varargin{2}; strErr = '||u-u_h||'; 
 end
 
 Err(Err == 0) = 1e-16; % Prevent the case err = 0, log(err) = -Inf.
