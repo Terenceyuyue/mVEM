@@ -53,4 +53,4 @@ disptable(colname,N,[],h,'%0.3e',ErrL2,'%0.5e',ErrH1,'%0.5e',ErrI,'%0.5e');
 % The optimal rate of convergence of the H1-norm (1st order), L2-norm
 % (2nd order) and energy norm ||uI-uh||_E (1st order) is observed for k = 1. 
 
-figure,spy(info.kk)
+% figure,spy(info.kk)
