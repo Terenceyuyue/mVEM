@@ -53,7 +53,6 @@ figure,
 plot((1:step),etaN(1:step),'k.-','linewidth',1);
 xlabel('k'); ylabel('\eta (u_h)');
 
-
 figure,
 id = 15;
 h = 1./sqrt(N(id:end));
