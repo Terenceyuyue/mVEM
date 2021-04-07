@@ -28,8 +28,8 @@ for k = 1:maxIt
     
     % compute errors in discrete L2 and H1 norms
     kOrder = 1;
-    %     ErrL2(k) = getL2error(node,elem,uh,info,pde,kOrder);
-     ErrH1(k) = getH1error(node,elem,uh,info,pde,kOrder);
+    % ErrL2(k) = getL2error(node,elem,uh,info,pde,kOrder);
+    ErrH1(k) = getH1error(node,elem,uh,info,pde,kOrder);
     
     % Step 2: ESTIMATE
     eta = PoissonVEM_indicator(node,elem,uh,info,pde);
