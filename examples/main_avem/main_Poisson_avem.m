@@ -26,17 +26,10 @@ for k = 1:maxIt
     showresult(node,elem,pde.uexact,uh);
     pause(0.1);
     
-    %     figure(1); clf;
-    %     showmesh(node,elem,options);
-    %     figure(2); clf;
-    %     showsolution(node,elem,uh);
-    %     figure(3); clf;
-    %     showsolution(node,elem,pde.uexact(node));
-    
-    %     % compute errors in discrete L2 and H1 norms
-    %     kOrder = 1;
+    % compute errors in discrete L2 and H1 norms
+    kOrder = 1;
     %     ErrL2(k) = getL2error(node,elem,uh,info,pde,kOrder);
-    %     ErrH1(k) = getH1error(node,elem,uh,info,pde,kOrder);
+     ErrH1(k) = getH1error(node,elem,uh,info,pde,kOrder);
     
     % Step 2: ESTIMATE
     eta = PoissonVEM_indicator(node,elem,uh,info,pde);
@@ -48,7 +41,7 @@ for k = 1:maxIt
     % Step 4: REFINE
     [node,elem] = PolyMeshRefine(node,elem,elemMarked);
     
-    if (size(node,1)>maxN) || (k==maxIt)
+    if (size(node,1)>maxN) || (k==maxIt) 
         bdStruct = setboundary(node,elem);
         uh = PoissonVEM(node,elem,pde,bdStruct);
         step = k
@@ -59,3 +52,10 @@ end
 figure,
 plot((1:step),etaN(1:step),'k.-','linewidth',1);
 xlabel('k'); ylabel('\eta (u_h)');
+
+
+figure,
+id = 15;
+h = 1./sqrt(N(id:end));
+showrateh(h,etaN(id:end),'r-*','\eta (u_h)', ErrH1(id:end), 'b-s','|u-u_h|_1')
+
