@@ -71,7 +71,7 @@ for s = 1:NE
     gradLu = ak1'*gradmk1; gradRu = ak2'*gradmk2;
     % jump of grad(pi(uh))
     Jumpu = gradLu-gradRu; ce = 0.5;
-    if k1==k2, Jumpu = gradLu; ce = 1; end    
+    if k1==k2, ce = 0; end    
     % edgeJump
     edgeJump(s) = ce*(dot(Jumpu,Ne(s,:)))^2;
 end
