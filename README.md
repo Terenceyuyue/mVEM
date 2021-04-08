@@ -11,6 +11,10 @@
 - We also provide a boundary setting function to identify the Neumann and Dirichlet boundaries (See setboundary.m).
 
 - The mesh generation algorithms are also described in detail.
+
+- We present an efficient implementation of the mesh refinement for polygonal meshes. To the best of our knowledge, 
+  this is the first publicly available implementation of the polygonal mesh refinement algorithms. 
+  We remove the small edges by requiring the one-hanging-node rule.
  
 
 ## Poisson equation (k <= 3)
