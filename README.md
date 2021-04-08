@@ -4,18 +4,16 @@
 ## Mesh 
 
 - We presents some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
- 
+
 - For the convenience of computation, some auxiliary mesh data are introduced. 
   The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with certain modifications. 
- 
+
 - We also provide a boundary setting function to identify the Neumann and Dirichlet boundaries (See setboundary.m).
 
 - The mesh generation algorithms are also described in detail.
 
-- We present an efficient implementation of the mesh refinement for polygonal meshes. To the best of our knowledge, 
-  this is the first publicly available implementation of the polygonal mesh refinement algorithms. 
-  We remove the small edges by requiring the one-hanging-node rule.
- 
+- We present an efficient implementation of the mesh refinement for polygonal meshes. To the best of our knowledge, this is the first publicly available implementation of the polygonal mesh refinement algorithms. We remove the small edges by requiring the one-hanging-node rule.
+
 
 ## Poisson equation (k <= 3)
 
@@ -38,25 +36,25 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 ## Mixed virtual element methods
 
  - Mixed vem for Darcy problem in the lowest order
- 
- 
+
+
 ##  Adaptive VEMs
 
   - Mesh refinement of polygonal meshes
   
   - Adaptive VEM for Poisson equation in the lowest order
 
- 
+
   PS: 
-  
+
       程序对区域、边界条件等的处理都较为一般，可容易地移植到其他问题。
       
       编程过程完全遵循有限元的思路。
       
       相比网上有的程序，过程更加清晰，充分使用了 MATLAB 的向量运算。
-      
+
   Undo:
-  
+
       - Nonconforming VEMs of Poisson equation
      
       - 3-D VEMs
@@ -68,6 +66,7 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
       - Various applications: Cahn–Hilliard problem, Stokes–Darcy problem, Navier-Stokes, etc.
       
       - Mesh generation in 3-D
-      
-      
+
+
+​      
 
