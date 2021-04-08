@@ -22,9 +22,11 @@ for k = 1:maxIt
     [uh,info] = PoissonVEM(node,elem,pde,bdStruct);
     % record and plot
     N(k) = length(uh);  h(k) = 1/sqrt(size(elem,1));
-    figure(1); 
-    showresult(node,elem,pde.uexact,uh);
-    pause(0.1);
+    if N(k)<2e3
+        figure(1); 
+        showresult(node,elem,pde.uexact,uh);
+        pause(0.1);
+    end
     
     % compute errors in discrete L2 and H1 norms
     kOrder = 1;
