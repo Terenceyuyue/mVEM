@@ -59,20 +59,19 @@ e = node(edge(:,2),:)-node(edge(:,1),:);
 Ne = [-e(:,2), e(:,1)];
 % edgeJump
 edgeJump = zeros(NE,1);
+a = cellfun(@mtimes, Ph, chi, 'UniformOutput', false); % Ph{iel}*chi{iel}
+gradm = @(hK) [0 0; 1/hK 0; 0 1/hK];    
 for s = 1:NE
     % element information
-    k1 = edge2elem(s,1);  k2 = edge2elem(s,2); 
-    hK1 = diameter(k1);   hK2 = diameter(k2);
-    % coefficient of elliptic projection
-    gradmk1 = [0 0; 1/hK1 0; 0 1/hK1];
-    gradmk2 = [0 0; 1/hK2 0; 0 1/hK2];
+    k1 = edge2elem(s,1);  k2 = edge2elem(s,2);
+    if k1==k2, continue; end
+    h1 = diameter(k1);   h2 = diameter(k2);
     % grad of Pi(uh)
-    ak1 = Ph{k1}*chi{k1};  ak2 = Ph{k2}*chi{k2};
-    gradLu = ak1'*gradmk1; gradRu = ak2'*gradmk2;
+    gradLu = a{k1}'*gradm(h1); gradRu = a{k2}'*gradm(h2);
     % jump of grad(pi(uh))
-    Jumpu = gradLu-gradRu; ce = 0.5*(k1~=k2); 
+    Jumpu = gradLu-gradRu;  
     % edgeJump
-    edgeJump(s) = ce*(dot(Jumpu,Ne(s,:)))^2;
+    edgeJump(s) = 0.5*(dot(Jumpu,Ne(s,:)))^2; % ce = 0.5
 end
 % elemJump
 elemJump = cellfun(@(ie) sum(edgeJump(ie)), elem2edge);
