@@ -1,12 +1,19 @@
 function eta = PoissonVEM_indicator(node,elem,uh,info,pde)
-% This function returns the local error indicator of Poisson equation in 2-D.
+% This function returns the local error indicator of solving the Poisson equation 
+% using virtual element method in V1
 % 
+% See also PoissonVEM.m
+%
 % Copyright (C) Terence Yu.
 
 %% Pis and chi
+% Pis
 Ph = info.Ph; D = info.D;
+% elementwise numerical d.o.f.s
 index = info.elem2dof; % elemenwise global index
-chi = cellfun(@(id) uh(id), index, 'UniformOutput', false); % elementwise numerical d.o.f.s
+chi = cellfun(@(id) uh(id), index, 'UniformOutput', false); 
+% coefficient of elliptic projection: Ph{iel}*chi{iel}
+a = cellfun(@mtimes, Ph, chi, 'UniformOutput', false); 
 
 %% auxiliary data
 % auxgeometry
@@ -34,8 +41,6 @@ for iel = 1:NT
     mm = @(x,y) [m1(x,y).*m1(x,y), m1(x,y).*m2(x,y), m1(x,y).*m3(x,y), ...
                  m2(x,y).*m1(x,y), m2(x,y).*m2(x,y), m2(x,y).*m3(x,y), ...
                  m3(x,y).*m1(x,y), m3(x,y).*m2(x,y), m3(x,y).*m3(x,y)];
-    % coefficient of elliptic projection
-    a = Ph{iel}*chi{iel}; % Pis = Ph{iel}
     % eta1
     H = zeros(3,3);
     H(:) = integralTri(mm,3,nodeT,elemT); % n = 3
@@ -49,7 +54,7 @@ for iel = 1:NT
     eta2f = @(x,y) Pif(x,y).^2;  % Laplace(Pi(uh)) = 0
     eta2(iel) = hK^2*integralTri(eta2f,3,nodeT,elemT);
     % eta3
-    eta3(iel) = sum((chi{iel}-D{iel}*a).^2);
+    eta3(iel) = sum((chi{iel}-D{iel}*a{iel}).^2);
 end
 elemRes = eta1 + eta2 + eta3;
 
@@ -59,16 +64,15 @@ e = node(edge(:,2),:)-node(edge(:,1),:);
 Ne = [-e(:,2), e(:,1)];
 % edgeJump
 edgeJump = zeros(NE,1);
-a = cellfun(@mtimes, Ph, chi, 'UniformOutput', false); % Ph{iel}*chi{iel}
 gradm = @(hK) [0 0; 1/hK 0; 0 1/hK];    
 for s = 1:NE
     % element information
     k1 = edge2elem(s,1);  k2 = edge2elem(s,2);
-    if k1==k2, continue; end
+    if k1==k2, continue; end  % initialized as zero
     h1 = diameter(k1);   h2 = diameter(k2);
     % grad of Pi(uh)
     gradLu = a{k1}'*gradm(h1); gradRu = a{k2}'*gradm(h2);
-    % jump of grad(pi(uh))
+    % jump of grad(Pi(uh))
     Jumpu = gradLu-gradRu;  
     % edgeJump
     edgeJump(s) = 0.5*(dot(Jumpu,Ne(s,:)))^2; % ce = 0.5
