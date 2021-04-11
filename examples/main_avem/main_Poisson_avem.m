@@ -7,7 +7,7 @@ ErrL2 = zeros(maxIt,1);
 ErrH1 = zeros(maxIt,1);
 
 %% Generate an initial mesh
-load meshex1
+load meshdata1
 
 %% Get the PDE data
 pde = Poissondata_avem();
@@ -23,7 +23,7 @@ for k = 1:maxIt
     % record and plot
     N(k) = length(uh);  h(k) = 1/sqrt(size(elem,1));
     if N(k)<2e3
-        figure(1); 
+        figure(1);
         showresult(node,elem,pde.uexact,uh);
         pause(0.1);
     end
@@ -35,7 +35,7 @@ for k = 1:maxIt
     
     % Step 2: ESTIMATE
     eta = PoissonVEM_indicator(node,elem,uh,info,pde);
-    etaN(k) = norm(eta); 
+    etaN(k) = norm(eta);
     
     % Step 3: MARK
     elemMarked = mark(elem,eta,theta);
@@ -43,7 +43,7 @@ for k = 1:maxIt
     % Step 4: REFINE
     [node,elem] = PolyMeshRefine(node,elem,elemMarked);
     
-    if (size(node,1)>maxN) || (k==maxIt) 
+    if (size(node,1)>maxN) || (k==maxIt)
         bdStruct = setboundary(node,elem);
         uh = PoissonVEM(node,elem,pde,bdStruct);
         step = k
@@ -57,6 +57,6 @@ xlabel('k'); ylabel('\eta (u_h)');
 
 figure,
 id = 15;
-h = 1./sqrt(N(id:end));
-showrateh(h,etaN(id:end),'r-*','\eta (u_h)', ErrH1(id:end), 'b-s','|u-u_h|_1')
+h = 1./sqrt(N(id:step));
+showrateh(h,etaN(id:step),'r-*','\eta (u_h)', ErrH1(id:step), 'b-s','|u-u_h|_1')
 
