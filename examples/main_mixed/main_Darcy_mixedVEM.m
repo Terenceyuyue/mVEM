@@ -19,14 +19,14 @@ for k = 1:maxIt
     % get boundary information
     bdStruct = setboundary(node,elem);
     % solve the problem    
-    [uh,ph,info] = Darcy_mixedVEM(node,elem,pde,bdStruct);
+    [uh,ph,info] = Darcy_mixedVEM(node,elem,pde,bdStruct);    
+    % record and plot
+    N(k) = length(uh);  h(k) = 1/sqrt(size(elem,1));
     [uhI,phI,nodeI,elemI] = ProjectionDarcy(node,elem,uh,ph,info,pde);
     figure(1); 
     showresult(nodeI,elemI,pde.uexact,uhI);
     %showresult(nodeI,elemI,pde.pexact,phI);
     pause(0.1);
-    % record and plot
-    N(k) = length(uh);  h(k) = 1/sqrt(size(elem,1));
     
     % compute errors in discrete L2 norm
     [ErruL2(k),ErrpL2(k)] = getL2error_Darcy(node,elem,uh,ph,info,pde);
