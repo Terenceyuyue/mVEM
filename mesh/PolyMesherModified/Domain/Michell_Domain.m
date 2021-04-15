@@ -32,6 +32,6 @@ function [x] = BndryCnds(Node,Element,BdBox)
 end
 %----------------------------------------------------- SPECIFY FIXED POINTS
 function [PFix] = FixedPoints(BdBox)
-  PFix = [5 0];
+  PFix = [];
 end
 %-------------------------------------------------------------------------%

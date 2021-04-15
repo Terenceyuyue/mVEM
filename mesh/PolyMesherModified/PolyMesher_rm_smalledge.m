@@ -1,6 +1,6 @@
-function [node,elem] = PolyMesher_rm_smalledge(NT,node,elem)
+function [node,elem] = PolyMesher_rm_smalledge(node,elem)
 % remove small edges
-[node,elem] = PolyMesher_Reorder(NT,node,elem);
+[node,elem] = PolyMesher_Reorder(node,elem);
 T1 = cellfun(@(verts) [verts(2:end),verts(1)], elem, 'UniformOutput', false);
 v0 = horzcat(elem{:})'; v1 = horzcat(T1{:})'; 
 totalEdge = sort([v0,v1],2);
@@ -19,9 +19,9 @@ for i = 1:length(nv2)
 end
 elemLen = cellfun('length',elem);
 elem = mat2cell(totalid', 1, elemLen)';
-for iel = 1:NT
+for iel = 1:size(elem,1)
     index = elem{iel};
     [~,i1] = unique(index);
     elem{iel} = index(sort(i1));
 end
-[node,elem] = PolyMesher_Reorder(NT,node,elem);
+[node,elem] = PolyMesher_Reorder(node,elem);

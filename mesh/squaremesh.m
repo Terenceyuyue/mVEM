@@ -30,3 +30,7 @@ if tri
 else
     elem = [k k+1 k+1+nx k+nx];           % rectangle element
 end
+
+% transform to cell
+NT = size(elem,1);
+elem = mat2cell(elem,ones(NT,1),length(elem(1,:)));

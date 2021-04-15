@@ -9,9 +9,9 @@ volume = (BdBox(2)-BdBox(1))*(BdBox(4)-BdBox(3))*(BdBox(6)-BdBox(5));
 elemTri = cell(NT,1); iter = 1;
 while(iter<=MaxIter)
     % Compute the reflection pointset
-    R_P = PolyMesher_Reflect3D(P,Domain,volume);
+    RP = PolyMesher_Reflect3D(P,Domain,volume);
     % Construct the Voronoi diagram
-    [V,C] = voronoin([P;R_P],{'Qbb','Qz'});
+    [V,C] = voronoin([P;RP],{'Qbb','Qz'});
     % Compute the centroid of Voronoi cell (Lloyd's update)
     P = zeros(NT,3); volume = 0;
     for iel = 1:NT

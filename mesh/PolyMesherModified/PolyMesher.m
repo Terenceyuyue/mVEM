@@ -9,8 +9,10 @@ switch nvar
     case 2
         Nx = varargin{1}; Ny = varargin{2};
         P = PolyMesher_init_Pointset(Domain,Nx,Ny);
-        NT = size(P,1);
 end
+
+PFix = Domain('PFix');   P = [PFix; P];  
+nFix = size(PFix,1);     NT = size(P,1);
 
 % -------------------- Lloyd's iteration ---------------
 Iter = 0; Err = 1; Tol = 5e-6;
@@ -23,15 +25,16 @@ while(Iter<=MaxIter && Err>Tol)
     [node,elem] = voronoin([P;R_P],{'Qbb','Qz'});
     % Compute the centroid of Voronoi cell (Lloyd's update)
     [P,Area,Err] = PolyMesher_VoroCentroid(P,node,elem);
+    % Include the fixed seeds
+    P(1:nFix,:) = PFix;
     Iter = Iter+1;
     if mod(Iter,10)==0
         fprintf('Iter: %3d   Error: %1.3e\n',Iter,Err);
     end
-    if NT<=1000
-        clf; showmesh(node,elem(1:NT)); pause(1e-6);
-    end
+%     if NT<=1000 
+%         clf; showmesh(node,elem(1:NT)); pause(1e-6);
+%     end
 end
 
 % ----------- Remove small edges to obtain (node,elem) -------------
-[node,elem] = PolyMesher_rm_smalledge(NT,node,elem);
-
+[node,elem] = PolyMesher_rm_smalledge(node,elem(1:NT));

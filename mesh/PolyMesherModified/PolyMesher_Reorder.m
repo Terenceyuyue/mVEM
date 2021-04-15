@@ -1,11 +1,10 @@
-function [node,elem] = PolyMesher_Reorder(NT,node,elem)
+function [node,elem] = PolyMesher_Reorder(node,elem)
 
-elem = elem(1:NT);
 [id,~,totalid] = unique(horzcat(elem{:})');
 node = node(id,:);
 elemLen = cellfun('length',elem);
 elem = mat2cell(totalid', 1, elemLen)';
-for iel = 1:NT
+for iel = 1:size(elem,1)
     index = elem{iel};
     z1 = node(index(:,1),:); 
     z2 = node(index(:,2),:); 

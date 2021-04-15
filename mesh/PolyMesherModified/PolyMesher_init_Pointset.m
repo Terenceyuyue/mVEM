@@ -18,6 +18,7 @@ if nvar==1
     return;
 end
 
+
 % ------------ Generate uniform pointset -----------
 % if nvar==2   
     Nx = varargin{1}; Ny = varargin{2};

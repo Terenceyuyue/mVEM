@@ -12,7 +12,7 @@ clc;clear;close all
 % ---------------------- Choice of the domain ------------------
 % Options: Cube_Domain (NT>=2), Sphere_Domain (NT>=40)
 Domain = @Sphere_Domain; 
-MaxIter = 100;
+MaxIter = 200;
 NT = 50;  rm = false; % rm = true 仅去除极短的边
 [node,elem]= PolyMesher3D(Domain,MaxIter,NT,rm);
 
