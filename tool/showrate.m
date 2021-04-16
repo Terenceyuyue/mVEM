@@ -12,7 +12,9 @@ switch length(varargin)
     case 1  % showrate(h,Err,strErr)
         opt1 = 'r-*';  opt2 = 'k.-'; strErr = varargin{1};   
     case 2 % showrate(h,Err,opt1,opt2)
-        opt1 = varargin{1}; opt2 = varargin{2}; strErr = '||u-u_h||'; 
+        opt1 = varargin{1}; opt2 = varargin{2}; strErr = '||u-u_h||';
+    case 3 % showrate(h,Err,opt1,opt2,strErr)
+        opt1 = varargin{1}; opt2 = varargin{2}; strErr = varargin{3};
 end
 
 Err(Err == 0) = 1e-16; % Prevent the case err = 0, log(err) = -Inf.
