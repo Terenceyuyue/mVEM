@@ -54,7 +54,7 @@ for k = 1:maxIt
     % Relative error
     kk = info.kk; freeDof = info.freeDof;
     kk = kk(freeDof,freeDof); chie = chie(freeDof); chi = chi(freeDof);
-    ErrI(k) = sqrt(abs((chi-chie)'*kk*(chi-chie))/abs(chie'*kk*chie));
+    ErrI(k) = sqrt(abs((chi-chie)'*kk*(chi-chie)));
 end
 
 %% Plot convergence rates and display error table
