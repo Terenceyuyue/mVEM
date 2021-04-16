@@ -11,7 +11,7 @@ elemI = mat2cell(1:sum(elemLen), 1, elemLen)';
 
 %% Get Ph and chi
 Ph = info.Ph;
-index = info.elem2dof; % elemenwise global index
+index = info.elem2dof; % elementwise global index
 chi = cellfun(@(id) uh(id), index, 'UniformOutput', false); % elementwise numerical d.o.f.s
 
 %% Get auxiliary data
