@@ -26,8 +26,7 @@ for k = 1:maxIt
     figure(1); 
     showresult(nodeI,elemI,pde.uexact,uhI);
     %showresult(nodeI,elemI,pde.pexact,phI);
-    pause(0.1);
-    
+    pause(0.1);    
     % compute errors in discrete L2 norm
     [ErruL2(k),ErrpL2(k)] = getL2error_Darcy(node,elem,uh,ph,info,pde);
 end
