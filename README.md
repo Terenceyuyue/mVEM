@@ -3,7 +3,7 @@
 
 ## Mesh 
 
-- We presents some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
+- We present some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
 
 - For the convenience of computation, some auxiliary mesh data are introduced. 
   The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with certain modifications. 
