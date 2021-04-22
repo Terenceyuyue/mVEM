@@ -1,5 +1,13 @@
 function [node,elem] = PolyMeshRefine2(node,elem,isMarkedElem)
-
+    %PolyMeshRefine refines a 2-D polygonal mesh satisfying one-hanging node rule
+    %
+    % We divide elements by connecting the midpoint of each edge to its
+    % barycenter.
+    % We remove small edges by further partitioning some adjacent elements.
+    %
+    % Copyright (C) Terence Yu
+    %
+    % Last Edited by Dohyun Kim 2021.04.22.
     tol = 1e-10; % tolerance for detecting colinearity
     if ~iscell(elem)
         elem = num2cell(elem,2);
