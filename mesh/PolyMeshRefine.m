@@ -12,7 +12,7 @@ eps = 1e-10; % accuracy for finding midpoint
 
 %% Get auxiliary data
 NT = size(elem,1);
-if ~iscell(elem), elem = mat2cell(elem,ones(NT,1),length(elem(1,:))); end
+if ~iscell(elem), elem = num2cell(elem,2); end
 % diameter
 diameter = cellfun(@(index) max(pdist(node(index,:))), elem);
 if max(diameter)<4*eps, error('The mesh is too dense'); end
