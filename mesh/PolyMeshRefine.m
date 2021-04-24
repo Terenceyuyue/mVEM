@@ -1,4 +1,4 @@
-function [node,elem] = PolyMeshRefine(node,elem,elemMarked)
+function [node,elem] = PolyMeshRefine1(node,elem,elemMarked)
 %PolyMeshRefine refines a 2-D polygonal mesh satisfying one-hanging node rule
 %
 % We divide elements by connecting the midpoint of each edge to its
@@ -13,18 +13,8 @@ eps = 1e-10; % accuracy for finding midpoint
 %% Get auxiliary data
 NT = size(elem,1);
 if ~iscell(elem), elem = mat2cell(elem,ones(NT,1),length(elem(1,:))); end
-% centroid
-centroid = zeros(NT,2); diameter = zeros(NT,1); 
-s = 1;
-for iel = 1:NT
-    index = elem{iel};
-    verts = node(index,:); verts1 = verts([2:end,1],:); 
-    area_components = verts(:,1).*verts1(:,2)-verts1(:,1).*verts(:,2);
-    ar = 0.5*abs(sum(area_components));
-    centroid(s,:) = sum((verts+verts1).*repmat(area_components,1,2))/(6*ar);
-    diameter(s) = max(pdist(verts));    
-    s = s+1;
-end
+% diameter
+diameter = cellfun(@(index) max(pdist(node(index,:))), elem);
 if max(diameter)<4*eps, error('The mesh is too dense'); end
 % totalEdge
 shiftfun = @(verts) [verts(2:end),verts(1)];
@@ -53,6 +43,7 @@ end
 % number
 N = size(node,1); NE = size(edge,1);
 
+ismElem = cell(NT,1); % store the elementwise mid-point locations
 %% Determine the trivial and nontrivial marked elements
 % nontrivial marked elements: marked elements with hanging nodes
 nMarked = length(idElemMarked);
@@ -60,12 +51,10 @@ isT = false(nMarked,1);
 for s = 1:nMarked
     % current element
     iel = idElemMarked(s);
-    index = elem{iel};  Nv = length(index);
     % local logical index of elements with hanging nodes
-    v1 = [Nv,1:Nv-1]; v0 = 1:Nv; v2 = [2:Nv,1]; % left,current,right
-    p1 = node(index(v1),:); p0 = node(index(v0),:); p2 = node(index(v2),:);
-    err = sqrt(sum((p0-0.5*(p1+p2)).^2,2));
-    ism = (err<eps);  % is midpoint
+    p0 = node(elem{iel},:); p1 = circshift(p0,1,1); p2 = circshift(p0,-1,1);
+    err = vecnorm(p0-0.5*(p1+p2),2,2);
+    ism = (err<eps);  ismElem{iel} = ism;  % is midpoint    
     if sum(ism)<1, isT(s) = true; end  % trivial    
 end
 idElemMarkedT = idElemMarked(isT);
@@ -80,7 +69,8 @@ while ~isempty(idElemNew)
     idElemNewAdj = unique(horzcat(neighbor{idElemNew}));
     idElemNewAdj = setdiff(idElemNewAdj,idElemMarkedNew); % delete the ones in the new marked set
     % edge set of new marked elements
-    idEdgeMarkedNew = unique(horzcat(elem2edge{idElemMarkedNew}));
+    isEdgeMarked = false(NE,1); 
+    isEdgeMarked(horzcat(elem2edge{idElemMarkedNew})) = true;
     % find the adjacent elements to be refined
     nElemNewAdj = length(idElemNewAdj);
     isRefine = false(nElemNewAdj,1);
@@ -89,38 +79,36 @@ while ~isempty(idElemNew)
         iel = idElemNewAdj(s);
         index = elem{iel};  indexEdge = elem2edge{iel}; Nv = length(index);
         % local logical index of elements with hanging nodes
-        v1 = [Nv,1:Nv-1]; v0 = 1:Nv; v2 = [2:Nv,1]; % left,current,right
-        p1 = node(index(v1),:); p0 = node(index(v0),:); p2 = node(index(v2),:);
-        err = sqrt(sum((p0-0.5*(p1+p2)).^2,2));
-        ism = (err<eps);  % is midpoint
+        v1 = [Nv,1:Nv-1]; v0 = 1:Nv;  % left,current
+        p0 = node(elem{iel},:); p1 = circshift(p0,1,1); p2 = circshift(p0,-1,1);
+        err = vecnorm(p0-0.5*(p1+p2),2,2);
+        ism = (err<eps);  ismElem{iel} = ism;  % is midpoint    
         if sum(ism)<1, continue; end  % start the next loop if no hanging nodes exist
         % index numbers of edges connecting hanging nodes in the adjacent elements to be refined
-        idEdgeDg = unique(indexEdge([v1(ism),v0(ism)]));
+        idEdgeDg = indexEdge([v1(ism),v0(ism)]);
         % whether or not the above edges are in the edge set of new marked elements
-        if intersect(idEdgeDg, idEdgeMarkedNew), isRefine(s) = true; end
+        if sum(isEdgeMarked(idEdgeDg)), isRefine(s) = true; end
     end
     idElemNew = idElemNewAdj(isRefine);
     idElemMarkedNew = unique([idElemMarkedNew(:); idElemNew(:)]);
 end
 idElemRefineAddL = setdiff(idElemMarkedNew,idElemMarked);
 
-%% Partition the additional elements
-% additional elements are composed of: 
+%% Partition the nontrivial elements to be refined
+% these elements are composed of: 
 %  - nontrivial marked elements 
 %  - additional elements to be refined
-idElemAddL = [idElemMarkedNT; idElemRefineAddL];
-nAddL = length(idElemAddL);
-elemAddL = cell(nAddL,1);
-elem2edgeAddL = cell(nAddL,1);
-for s = 1:nAddL
+idElemRefineNT = [idElemMarkedNT; idElemRefineAddL];
+nRefineNT = length(idElemRefineNT);
+elemRefineNT = cell(nRefineNT,1);
+elem2edgeRefineNT = cell(nRefineNT,1);
+for s = 1:nRefineNT
     % current element
-    iel = idElemAddL(s);
+    iel = idElemRefineNT(s);
     index = elem{iel}; indexEdge = elem2edge{iel}; Nv = length(index);
     % find midpoint
-    v1 = [Nv,1:Nv-1]; v0 = 1:Nv; v2 = [2:Nv,1];
-    p1 = node(index(v1),:); p0 = node(index(v0),:); p2 = node(index(v2),:);
-    err = sqrt(sum((p0-0.5*(p1+p2)).^2,2));
-    ism = (err<eps);
+    v1 = [Nv,1:Nv-1]; v0 = 1:Nv; 
+    ism = ismElem{iel};
     % modify the edge number
     ide = indexEdge+N;  % the connection number
     ide(v1(ism)) = index(ism); ide(ism) = index(ism);
@@ -128,88 +116,89 @@ for s = 1:nAddL
     nsub = Nv-sum(ism);
     z1 = ide(v1(~ism));  z0 = index(~ism);
     z2 = ide(~ism);      zc = iel*ones(nsub,1)+N+NE;
-    elemAddL{s} = [z1(:), z0(:), z2(:), zc(:)];
+    elemRefineNT{s} = [z1(:), z0(:), z2(:), zc(:)];
     % elem2edge
     ise = false(Nv,1); ise([v1(ism),v0(ism)]) = true;
     idg = zeros(Nv,1); idg(ise) = indexEdge(ise);
     e1 = idg(v1(~ism));     e0 = idg(~ism);
-    e2 = zeros(nsub,1);     ec = zeros(nsub,1);  % numbered as 0
-    elem2edgeAddL{s} = [e1(:), e0(:), e2(:), ec(:)];
+    elem2edgeRefineNT{s} = [e1(:), e0(:), zeros(nsub,2)]; % e2 = ec = 0
 end
-addElemAddL = vertcat(elemAddL{:});
-addElemAddL2edge = vertcat(elem2edgeAddL{:}); % transform to cell arrays
-if ~isempty(addElemAddL) % may be empty
-    addElemAddL = mat2cell(addElemAddL,ones(size(addElemAddL,1),1),4);
-    addElemAddL2edge = mat2cell(addElemAddL2edge,ones(size(addElemAddL2edge,1),1),4);
+addElemRefineNT = vertcat(elemRefineNT{:});
+addElemRefineT2edge = vertcat(elem2edgeRefineNT{:}); % transform to cell arrays
+if ~isempty(addElemRefineNT) 
+    addElemRefineNT = mat2cell(addElemRefineNT,ones(size(addElemRefineNT,1),1),4);
+    addElemRefineT2edge = mat2cell(addElemRefineT2edge,ones(size(addElemRefineT2edge,1),1),4);
 end
 
 %% Determine the elements to be expanded
 % these elements are composed of 
 % - adjacent polygonals of elements to be refined
-% - additional elements (see the def in Line 107)
+% - nontrivial elements
 % adjacent polygons of elements to be refined
 idElemRefine = [idElemRefineAddL(:); idElemMarked(:)];
 idElemRefineAdj = unique(horzcat(neighbor{idElemRefine}));
 idElemRefineAdj = setdiff(idElemRefineAdj,idElemRefine);
 % basic data structure of elements to be extended
-elemExtend = [elem(idElemRefineAdj); addElemAddL]; 
-elem2edgeExtend = [elem2edge(idElemRefineAdj); addElemAddL2edge];
+elemExtend = [elem(idElemRefineAdj); addElemRefineNT]; 
+elem2edgeExtend = [elem2edge(idElemRefineAdj); addElemRefineT2edge];
 
-%% Extend elements by adding hanging nodes
+%% Extend elements by adding hanging nodes 
 % natural numbers of trivial edges w.r.t some element to be refined
 isEdgeCut = false(NE,1);
 for s = 1:length(idElemRefine)
     iel = idElemRefine(s);
     index = elem{iel}; indexEdge = elem2edge{iel}; Nv = length(index);
-    v1 = [Nv,1:Nv-1]; v0 = 1:Nv; v2 = [2:Nv,1];
-    p1 = node(index(v1),:); p0 = node(index(v0),:); p2 = node(index(v2),:);
-    err = sqrt(sum((p0-0.5*(p1+p2)).^2,2));
-    ism = (err<eps);
-    idx = true(Nv,1);
-    idx(v1(ism)) = false; idx(ism) = false;
+    v1 = [Nv,1:Nv-1]; 
+    ism = ismElem{iel};
+    idx = true(Nv,1); idx(v1(ism)) = false; idx(ism) = false;
     isEdgeCut(indexEdge(idx)) = true;
 end
-idEdgeCut = find(isEdgeCut);
 % extend the elements
 for s = 1:length(elemExtend)
     index = elemExtend{s}; indexEdge = elem2edgeExtend{s};
-    Nv = length(index);
-    [idm,id] = intersect(indexEdge,idEdgeCut);
-    idvec = zeros(1,2*Nv);
-    idvec(1:2:end) = index;  idvec(2*id) = idm+N;
+    id = find(indexEdge>0); 
+    id = id(isEdgeCut(indexEdge(id)));
+    idvec = zeros(1,2*length(index));
+    idvec(1:2:end) = index;  idvec(2*id) = indexEdge(id)+N;
     elemExtend{s} = idvec(idvec>0);
 end
-% replace the old elements
-idElemOld = [idElemRefineAdj(:); idElemRefineAddL(:); idElemMarkedNT(:)];
-nOld = length(idElemOld);  
-elem(idElemOld) = elemExtend(1:nOld);
-addElemAddL = elemExtend(nOld+1:end);
 
 %% Partition the trivial marked elements
 nMarkedT = length(idElemMarkedT);
 addElemMarkedT = cell(nMarkedT,1);
 for s = 1:nMarkedT
-    iel = idElemMarkedT(s);
+    iel = idElemMarkedT(s); 
     index = elem{iel}; indexEdge = elem2edge{iel}; Nv = length(index);
-    v1 = [Nv,1:Nv-1];
     ide = indexEdge+N;  % connection number    
-    z1 = ide(v1);   z0 = index;
-    z2 = ide;       zc = iel*ones(Nv,1)+N+NE;
+    z1 = ide([Nv,1:Nv-1]);   z0 = index;
+    z2 = ide;                zc = iel*ones(Nv,1)+N+NE;
     addElemMarkedT{s} = [z1(:), z0(:), z2(:), zc(:)];
 end
-% replace the old elements 
-addElemMarkedT = vertcat(addElemMarkedT{:});
-addElemMarkedT = mat2cell(addElemMarkedT, ones(size(addElemMarkedT,1),1), 4);
-elem(idElemMarkedT) = addElemMarkedT(1:nMarkedT);
-addElemMarkedT = addElemMarkedT(nMarkedT+1:end);
+% addElem
+if ~isempty(addElemMarkedT)
+    addElemMarkedT = vertcat(addElemMarkedT{:});
+    addElemMarkedT = mat2cell(addElemMarkedT, ones(size(addElemMarkedT,1),1), 4);    
+end
+addElem = [elemExtend; addElemMarkedT];
 
 %% Update node and elem
+% node
 idElemRefine = unique(idElemRefine); % in ascending order
-z1 = node(edge(idEdgeCut,1),:); z2 = node(edge(idEdgeCut,2),:);
-nodeEdgeCut = (z1+z2)/2;
-nodeCenter = centroid(idElemRefine,:);
+nodeEdgeCut = (node(edge(isEdgeCut,1),:) + node(edge(isEdgeCut,2),:))/2;
+nodeCenter = zeros(length(idElemRefine),2);  
+for s = 1:length(idElemRefine)
+    iel = idElemRefine(s);  index = elem{iel};
+    verts = node(index,:); verts1 = verts([2:end,1],:); 
+    area_components = verts(:,1).*verts1(:,2)-verts1(:,1).*verts(:,2);
+    ar = 0.5*abs(sum(area_components));
+    nodeCenter(s,:) = sum((verts+verts1).*repmat(area_components,1,2))/(6*ar); 
+end
 node = [node; nodeEdgeCut; nodeCenter];
-elem = [elem; addElemAddL; addElemMarkedT];
+% elem
+idElemOld = [idElemRefine(:); idElemRefineAdj(:)];
+nOld = length(idElemOld);
+elem(idElemOld) = addElem(1:nOld);
+elem = [elem; addElem(nOld+1:end)];
 
 %% Reorder the vertices
 [~,~,totalid] = unique(horzcat(elem{:})');
