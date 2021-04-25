@@ -1,4 +1,4 @@
-function [node,elem] = PolyMeshRefine1(node,elem,elemMarked)
+function [node,elem] = PolyMeshRefine(node,elem,elemMarked)
 %PolyMeshRefine refines a 2-D polygonal mesh satisfying one-hanging node rule
 %
 % We divide elements by connecting the midpoint of each edge to its
@@ -124,10 +124,10 @@ for s = 1:nRefineNT
     elem2edgeRefineNT{s} = [e1(:), e0(:), zeros(nsub,2)]; % e2 = ec = 0
 end
 addElemRefineNT = vertcat(elemRefineNT{:});
-addElemRefineT2edge = vertcat(elem2edgeRefineNT{:}); % transform to cell arrays
+addElemRefineNT2edge = vertcat(elem2edgeRefineNT{:}); % transform to cell arrays
 if ~isempty(addElemRefineNT) 
     addElemRefineNT = mat2cell(addElemRefineNT,ones(size(addElemRefineNT,1),1),4);
-    addElemRefineT2edge = mat2cell(addElemRefineT2edge,ones(size(addElemRefineT2edge,1),1),4);
+    addElemRefineNT2edge = mat2cell(addElemRefineNT2edge,ones(size(addElemRefineNT2edge,1),1),4);
 end
 
 %% Determine the elements to be expanded
@@ -140,7 +140,7 @@ idElemRefineAdj = unique(horzcat(neighbor{idElemRefine}));
 idElemRefineAdj = setdiff(idElemRefineAdj,idElemRefine);
 % basic data structure of elements to be extended
 elemExtend = [elem(idElemRefineAdj); addElemRefineNT]; 
-elem2edgeExtend = [elem2edge(idElemRefineAdj); addElemRefineT2edge];
+elem2edgeExtend = [elem2edge(idElemRefineAdj); addElemRefineNT2edge];
 
 %% Extend elements by adding hanging nodes 
 % natural numbers of trivial edges w.r.t some element to be refined
@@ -188,17 +188,15 @@ nodeEdgeCut = (node(edge(isEdgeCut,1),:) + node(edge(isEdgeCut,2),:))/2;
 nodeCenter = zeros(length(idElemRefine),2);  
 for s = 1:length(idElemRefine)
     iel = idElemRefine(s);  index = elem{iel};
-    verts = node(index,:); verts1 = verts([2:end,1],:); 
+    verts = node(index(~ismElem{iel}),:); verts1 = verts([2:end,1],:); 
     area_components = verts(:,1).*verts1(:,2)-verts1(:,1).*verts(:,2);
     ar = 0.5*abs(sum(area_components));
     nodeCenter(s,:) = sum((verts+verts1).*repmat(area_components,1,2))/(6*ar); 
 end
 node = [node; nodeEdgeCut; nodeCenter];
 % elem
-idElemOld = [idElemRefine(:); idElemRefineAdj(:)];
-nOld = length(idElemOld);
-elem(idElemOld) = addElem(1:nOld);
-elem = [elem; addElem(nOld+1:end)];
+elem([idElemRefine(:); idElemRefineAdj(:)]) = []; % delete old
+elem = [elem; addElem];
 
 %% Reorder the vertices
 [~,~,totalid] = unique(horzcat(elem{:})');
