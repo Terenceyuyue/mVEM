@@ -25,7 +25,7 @@ for k = 1:maxIt
     if N(k)<2e3
         figure(1);
         showresult(node,elem,pde.uexact,uh);
-        pause(0.1);
+        drawnow; %pause(0.1);
     end
     
     % compute errors in discrete L2 and H1 norms
