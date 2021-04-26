@@ -32,13 +32,7 @@ totalJelem = vertcat(totalJelem{:});
 i2(totalJ) = 1:length(totalJ); i2 = i2(:); 
 edge2elem = totalJelem([i1,i2]);
 % neighbor
-neighbor = cell(NT,1);
-for iel = 1:NT
-    index = elem2edge{iel};  
-    ia = edge2elem(index,1); ib = edge2elem(index,2);
-    ia(ia==iel) = ib(ia==iel);
-    neighbor{iel} = ia';
-end
+neighbor = cell(NT,1); 
 % number
 N = size(node,1); NE = size(edge,1);
 
@@ -65,6 +59,13 @@ idElemMarkedNew = idElemMarked; % marked and all new elements
 idElemNew = idElemMarked; % new elements generated in current step
 while ~isempty(idElemNew)
     % adjacent polygons of new elements
+    for iel = idElemNew(:)'
+        if ~isempty(neighbor{iel}); continue; end
+        index = elem2edge{iel};
+        ia = edge2elem(index,1); ib = edge2elem(index,2);
+        ia(ia==iel) = ib(ia==iel);
+        neighbor{iel} = ia';
+    end
     idElemNewAdj = unique(horzcat(neighbor{idElemNew}));
     idElemNewAdj = setdiff(idElemNewAdj,idElemMarkedNew); % delete the ones in the new marked set
     % edge set of new marked elements
@@ -122,19 +123,22 @@ for s = 1:nRefineNT
     e1 = idg(v1(~ism));     e0 = idg(~ism);
     elem2edgeRefineNT{s} = [e1(:), e0(:), zeros(nsub,2)]; % e2 = ec = 0
 end
-addElemRefineNT = vertcat(elemRefineNT{:});
-addElemRefineNT2edge = vertcat(elem2edgeRefineNT{:}); % transform to cell arrays
-if ~isempty(addElemRefineNT) 
-    addElemRefineNT = mat2cell(addElemRefineNT,ones(size(addElemRefineNT,1),1),4);
-    addElemRefineNT2edge = mat2cell(addElemRefineNT2edge,ones(size(addElemRefineNT2edge,1),1),4);
-end
+addElemRefineNT = num2cell(vertcat(elemRefineNT{:}), 2);
+addElemRefineNT2edge = num2cell(vertcat(elem2edgeRefineNT{:}), 2); 
 
 %% Determine the elements to be expanded
 % these elements are composed of 
 % - adjacent polygonals of elements to be refined
 % - nontrivial elements
 % adjacent polygons of elements to be refined
-idElemRefine = [idElemRefineAddL(:); idElemMarked(:)];
+idElemRefine = unique([idElemRefineAddL(:); idElemMarked(:)]); % ascending order for update
+for iel = idElemRefine(:)'
+    if ~isempty(neighbor{iel}); continue; end
+    index = elem2edge{iel};
+    ia = edge2elem(index,1); ib = edge2elem(index,2);
+    ia(ia==iel) = ib(ia==iel);
+    neighbor{iel} = ia';
+end
 idElemRefineAdj = unique(horzcat(neighbor{idElemRefine}));
 idElemRefineAdj = setdiff(idElemRefineAdj,idElemRefine);
 % basic data structure of elements to be extended
@@ -174,15 +178,11 @@ for s = 1:nMarkedT
     addElemMarkedT{s} = [z1(:), z0(:), z2(:), zc(:)];
 end
 % addElem
-if ~isempty(addElemMarkedT)
-    addElemMarkedT = vertcat(addElemMarkedT{:});
-    addElemMarkedT = mat2cell(addElemMarkedT, ones(size(addElemMarkedT,1),1), 4);    
-end
+addElemMarkedT = num2cell(vertcat(addElemMarkedT{:}), 2);
 addElem = [elemExtend; addElemMarkedT];
 
 %% Update node and elem
 % node
-idElemRefine = unique(idElemRefine); % in ascending order
 nodeEdgeCut = (node(edge(isEdgeCut,1),:) + node(edge(isEdgeCut,2),:))/2;
 nodeCenter = zeros(length(idElemRefine),2);  
 for s = 1:length(idElemRefine)
