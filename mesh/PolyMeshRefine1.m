@@ -16,8 +16,10 @@ isMarkedElem(idElemMarked) = true;
 
 %% Get auxiliary data
 % diameter
-diameter = cellfun(@(index) max(pdist(node(index,:))), elem);
-if min(diameter)<tol, return; end % The mesh is too dense
+diameter = cellfun(@(index) max(pdist(node(index,:))), elem(elemMarked));
+if max(diameter)<tol
+    disp('The mesh is too dense');  return; 
+end 
 % edge
 edge = cellfun(@(index) [index;index([2:end,1])], elem, 'un', false);
 edge = [edge{:}]';
