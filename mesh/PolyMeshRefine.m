@@ -8,14 +8,14 @@ function [node,elem] = PolyMeshRefine(node,elem,elemMarked)
 % Copyright (C) Terence Yu.
 
 idElemMarked = unique(elemMarked(:)); % in ascending order
-eps = 1e-10; % accuracy for finding midpoint
+tol = 1e-10; % accuracy for finding midpoint
 
 %% Get auxiliary data
 NT = size(elem,1);
 if ~iscell(elem), elem = num2cell(elem,2); end
 % diameter
 diameter = cellfun(@(index) max(pdist(node(index,:))), elem);
-if max(diameter)<4*eps, error('The mesh is too dense'); end
+if min(diameter)<tol, return; end % The mesh is too dense
 % totalEdge
 shiftfun = @(verts) [verts(2:end),verts(1)];
 T1 = cellfun(shiftfun, elem, 'UniformOutput', false);
@@ -29,8 +29,7 @@ elem2edge = mat2cell(totalJ',1,elemLen)';
 Num = num2cell((1:NT)');    Len = num2cell(elemLen);
 totalJelem = cellfun(@(n1,n2) n1*ones(n2,1), Num, Len, 'UniformOutput', false);
 totalJelem = vertcat(totalJelem{:});
-[~, i2] = unique(totalJ(end:-1:1),'rows');
-i2 = length(totalEdge)+1-i2;
+i2(totalJ) = 1:length(totalJ); i2 = i2(:); 
 edge2elem = totalJelem([i1,i2]);
 % neighbor
 neighbor = cell(NT,1);
@@ -54,7 +53,7 @@ for s = 1:nMarked
     % local logical index of elements with hanging nodes
     p0 = node(elem{iel},:); p1 = circshift(p0,1,1); p2 = circshift(p0,-1,1);
     err = vecnorm(p0-0.5*(p1+p2),2,2);
-    ism = (err<eps);  ismElem{iel} = ism;  % is midpoint    
+    ism = (err<tol);  ismElem{iel} = ism;  % is midpoint    
     if sum(ism)<1, isT(s) = true; end  % trivial    
 end
 idElemMarkedT = idElemMarked(isT);
@@ -82,7 +81,7 @@ while ~isempty(idElemNew)
         v1 = [Nv,1:Nv-1]; v0 = 1:Nv;  % left,current
         p0 = node(elem{iel},:); p1 = circshift(p0,1,1); p2 = circshift(p0,-1,1);
         err = vecnorm(p0-0.5*(p1+p2),2,2);
-        ism = (err<eps);  ismElem{iel} = ism;  % is midpoint    
+        ism = (err<tol);  ismElem{iel} = ism;  % is midpoint    
         if sum(ism)<1, continue; end  % start the next loop if no hanging nodes exist
         % index numbers of edges connecting hanging nodes in the adjacent elements to be refined
         idEdgeDg = indexEdge([v1(ism),v0(ism)]);
