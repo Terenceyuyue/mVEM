@@ -16,7 +16,7 @@ v1 = horzcat(T1{:})'; % the ending points of edges
 totalEdge = sort([v0,v1],2);
 
 % -------- elem2edge: elementwise edges -------
-[~, i1, totalJ] = unique(totalEdge,'rows');
+[~, i1, totalJ] = unique(totalEdge,'rows'); % first occurence
 elemLen = cellfun('length',elem); % length of each elem
 elem2edge = mat2cell(totalJ',1,elemLen)';
 
@@ -29,8 +29,7 @@ bdEdge = edge(s==1,:);
 Num = num2cell((1:NT)');    Len = num2cell(elemLen);
 totalJelem = cellfun(@(n1,n2) n1*ones(n2,1), Num, Len, 'UniformOutput', false);
 totalJelem = vertcat(totalJelem{:});
-[~, i2] = unique(totalJ(end:-1:1),'rows');
-i2 = length(totalEdge)+1-i2;
+i2(totalJ) = 1:length(totalJ); i2 = i2(:); % second occurence by overlapping 
 edge2elem = totalJelem([i1,i2]);
 
 % --------- neighbor ---------
