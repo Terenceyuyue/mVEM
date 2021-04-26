@@ -14,8 +14,10 @@ tol = 1e-10; % accuracy for finding midpoint
 NT = size(elem,1);
 if ~iscell(elem), elem = num2cell(elem,2); end
 % diameter
-diameter = cellfun(@(index) max(pdist(node(index,:))), elem);
-if min(diameter)<tol, return; end % The mesh is too dense
+diameter = cellfun(@(index) max(pdist(node(index,:))), elem(elemMarked));
+if max(diameter)<tol
+    disp('The mesh is too dense'); return; 
+end 
 % totalEdge
 shiftfun = @(verts) [verts(2:end),verts(1)];
 T1 = cellfun(shiftfun, elem, 'UniformOutput', false);
