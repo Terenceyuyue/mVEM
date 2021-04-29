@@ -8,6 +8,9 @@ K = pde.K; % coefficient matrix
 Ph = info.Ph;
 index = info.elem2dof; % elemenwise global index
 chi = cellfun(@(id) uh(id), index, 'UniformOutput', false); % elementwise numerical d.o.f.s
+if length(ph)>size(elem,1)  % lifting mixed vem
+    ph = reshape(ph, [], 3);
+end
 
 %% Get auxiliary data
 % exact solution
@@ -23,7 +26,8 @@ for iel = 1:NT
     % element information
     index = elem{iel};  Nv = length(index);    
     xK = aux.centroid(iel,1); yK = aux.centroid(iel,2); hK = aux.diameter(iel); 
-    % ------- scaled monomials --------     
+    % ------- scaled monomials --------
+    m1 = @(x,y) 1+0*x;
     m2 = @(x,y) (x-xK)./hK; 
     m3 = @(x,y) (y-yK)./hK;
     % K(\nabla hK mj), j = 2,...
@@ -52,6 +56,10 @@ for iel = 1:NT
     amK = @(x,y) [amK1(x,y), amK2(x,y)];
     errf = @(x,y) (ue([x,y])-amK(x,y)).^2;
     errp = @(x,y) (pe([x,y])-ph(iel)).^2;
+    if size(ph,2)>1 % lifting mixed vem
+        pf = @(x,y) ph(iel,1)*m1(x,y)+ph(iel,2)*m2(x,y)+ph(iel,3)*m3(x,y);
+        errp = @(x,y) (pe([x,y])-pf(x,y)).^2;
+    end
     u = @(x,y) ue([x,y]).^2;  
     p = @(x,y) pe([x,y]).^2;
     % elementwise error
