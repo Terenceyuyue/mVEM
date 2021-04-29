@@ -5,11 +5,16 @@ function [uh,ph,info] = Darcy_mixedVEM(node,elem,pde,bdStruct)
 %     -div(K*grad(p)) = f   in Omega
 %     Neumann boundary condition   K*grad(u)*n=g on \Gamma
 %
-%  The mixed formulatoin is: 
+%  The mixed formulation is: 
 %      u = K*grad(p), div u = -f  in \Omega
 %      u*n = g                    on \Gamma
 %  The velocity u = K*grad(p) is approximated by the lowest order
-%  H(div)-conforming virtual element and p by piecewise constant element.
+%  H(div)-conforming virtual element (k = 1)
+%      V_k(K) = { v\in H(div;K) \cap H(rot;K): 
+%                   v\dot n|_e\in P_k(e), e \subsect \partial K,
+%                   div(v)|_K\in P_{k-1}(K), rot(v)|_K\in P_{k-1}(K) }
+%  and p by piecewise constant element (k = 1)
+%      Q_k(K) = P_{k-1}(K).
 %
 %   References
 %   F. Brezzi, R.S. Falk and L.D. Marini, "Basic principles of mixed
