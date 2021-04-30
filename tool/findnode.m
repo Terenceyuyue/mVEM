@@ -13,6 +13,13 @@ range = (1:size(node,1))';  shownum = true;
 if nargin==2
     var = varargin{1};
     if isnumeric(var), range = var; end
+    if iscell(var)
+        if size(var{1},1) == 1   % row vector
+            range = horzcat(var{:});
+        else
+            range = vertcat(var{:});
+        end
+    end
     if strcmpi(var,'noindex'), shownum = false; end
 end
 if nargin==3
