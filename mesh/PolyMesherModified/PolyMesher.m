@@ -15,7 +15,7 @@ PFix = Domain('PFix');   P = [PFix; P];
 nFix = size(PFix,1);     NT = size(P,1);
 
 % -------------------- Lloyd's iteration ---------------
-Iter = 0; Err = 1; Tol = 5e-6;
+Iter = 0; Err = 1; Tol = 1e-4;
 BdBox = Domain('BdBox'); 
 Area = (BdBox(2)-BdBox(1))*(BdBox(4)-BdBox(3));
 while(Iter<=MaxIter && Err>Tol)
@@ -31,9 +31,9 @@ while(Iter<=MaxIter && Err>Tol)
     if mod(Iter,10)==0
         fprintf('Iter: %3d   Error: %1.3e\n',Iter,Err);
     end
-%     if NT<=1000 
-%         clf; showmesh(node,elem(1:NT)); pause(1e-6);
-%     end
+end
+if NT<=1000
+    clf; showmesh(node,elem(1:NT)); 
 end
 
 % ----------- Remove small edges to obtain (node,elem) -------------

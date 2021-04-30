@@ -7,12 +7,12 @@ nvar = length(varargin);
 if nvar==1
     NT = varargin{1}; P = zeros(NT,2);  s = 0;
     while s < NT
-        xy(:,1) = (BdBox(2)-BdBox(1))*rand(NT,1)+BdBox(1);
-        xy(:,2) = (BdBox(4)-BdBox(3))*rand(NT,1)+BdBox(3);
-        d = Domain('Dist',xy); 
+        p(:,1) = (BdBox(2)-BdBox(1))*rand(NT,1)+BdBox(1);
+        p(:,2) = (BdBox(4)-BdBox(3))*rand(NT,1)+BdBox(3);
+        d = Domain('Dist',p); 
         I = find(d(:,end)<0);       % index of seeds inside the domain
         NumAdded = min(NT-s,length(I));  % number of seeds that can be added
-        P(s+1:s+NumAdded,:) = xy(I(1:NumAdded),:);
+        P(s+1:s+NumAdded,:) = p(I(1:NumAdded),:);
         s = s+NumAdded;
     end
     return;
