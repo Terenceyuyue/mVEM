@@ -14,7 +14,7 @@ tol = 1e-10; % accuracy for finding midpoint
 NT = size(elem,1);
 if ~iscell(elem), elem = num2cell(elem,2); end
 % diameter
-diameter = cellfun(@(index) max(pdist(node(index,:))), elem(elemMarked));
+diameter = cellfun(@(index) max(pdist(node(index,:))), elem(idElemMarked));
 if max(diameter)<tol
     disp('The mesh is too dense'); return; 
 end 
@@ -59,6 +59,7 @@ idElemMarkedNT = idElemMarked(~isT);
 % initialized as marked elements
 idElemMarkedNew = idElemMarked; % marked and all new elements
 idElemNew = idElemMarked; % new elements generated in current step
+isEdgeMarked = false(NE,1); 
 while ~isempty(idElemNew)
     % adjacent polygons of new elements
     for iel = idElemNew(:)'
@@ -68,17 +69,16 @@ while ~isempty(idElemNew)
         ia(ia==iel) = ib(ia==iel);
         neighbor{iel} = ia';
     end
-    idElemNewAdj = unique(horzcat(neighbor{idElemNew}));
-    idElemNewAdj = setdiff(idElemNewAdj,idElemMarkedNew); % delete the ones in the new marked set
+    idElemNewNeighbor = unique(horzcat(neighbor{idElemNew}));
+    idElemNewNeighbor = setdiff(idElemNewNeighbor,idElemMarkedNew); % delete the ones in the new marked set
     % edge set of new marked elements
-    isEdgeMarked = false(NE,1); 
-    isEdgeMarked(horzcat(elem2edge{idElemMarkedNew})) = true;
+    isEdgeMarked(horzcat(elem2edge{idElemNew})) = true;
     % find the adjacent elements to be refined
-    nElemNewAdj = length(idElemNewAdj);
+    nElemNewAdj = length(idElemNewNeighbor);
     isRefine = false(nElemNewAdj,1);
     for s = 1:nElemNewAdj
         % current element
-        iel = idElemNewAdj(s);
+        iel = idElemNewNeighbor(s);
         index = elem{iel};  indexEdge = elem2edge{iel}; Nv = length(index);
         % local logical index of elements with hanging nodes
         v1 = [Nv,1:Nv-1]; v0 = 1:Nv;  % left,current
@@ -91,7 +91,7 @@ while ~isempty(idElemNew)
         % whether or not the above edges are in the edge set of new marked elements
         if sum(isEdgeMarked(idEdgeDg)), isRefine(s) = true; end
     end
-    idElemNew = idElemNewAdj(isRefine);
+    idElemNew = idElemNewNeighbor(isRefine);
     idElemMarkedNew = unique([idElemMarkedNew(:); idElemNew(:)]);
 end
 idElemRefineAddL = setdiff(idElemMarkedNew,idElemMarked);
@@ -131,7 +131,7 @@ addElemRefineNT2edge = num2cell(vertcat(elem2edgeRefineNT{:}), 2);
 %% Determine the elements to be expanded
 % these elements are composed of 
 % - adjacent polygonals of elements to be refined
-% - nontrivial elements
+% - subcells of nontrivial elements
 % adjacent polygons of elements to be refined
 idElemRefine = unique([idElemRefineAddL(:); idElemMarked(:)]); % ascending order for update
 for iel = idElemRefine(:)'
@@ -141,11 +141,11 @@ for iel = idElemRefine(:)'
     ia(ia==iel) = ib(ia==iel);
     neighbor{iel} = ia';
 end
-idElemRefineAdj = unique(horzcat(neighbor{idElemRefine}));
-idElemRefineAdj = setdiff(idElemRefineAdj,idElemRefine);
+idElemRefineNeighbor = unique(horzcat(neighbor{idElemRefine}));
+idElemRefineNeighbor = setdiff(idElemRefineNeighbor,idElemRefine);
 % basic data structure of elements to be extended
-elemExtend = [elem(idElemRefineAdj); addElemRefineNT]; 
-elem2edgeExtend = [elem2edge(idElemRefineAdj); addElemRefineNT2edge];
+elemExtend = [elem(idElemRefineNeighbor); addElemRefineNT]; 
+elem2edgeExtend = [elem2edge(idElemRefineNeighbor); addElemRefineNT2edge];
 
 %% Extend elements by adding hanging nodes 
 % natural numbers of trivial edges w.r.t some element to be refined
@@ -196,7 +196,7 @@ for s = 1:length(idElemRefine)
 end
 node = [node; nodeEdgeCut; nodeCenter];
 % elem
-elem([idElemRefine(:); idElemRefineAdj(:)]) = []; % delete old
+elem([idElemRefine(:); idElemRefineNeighbor(:)]) = []; % delete old
 elem = [elem; addElem];
 
 %% Reorder the vertices
