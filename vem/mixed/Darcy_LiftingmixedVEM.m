@@ -1,14 +1,5 @@
 function [uh,ph,info] = Darcy_LiftingmixedVEM(node,elem,pde,bdStruct)
-%Darcy_mixedVEM solves Darcy problem using the lifting mixed virtual element method
-% in the lowest order
-%
-%     -div(K*grad(p)) = f   in Omega
-%     Neumann boundary condition   K*grad(u)*n=g on \Gamma
-%
-%  The mixed formulation is: 
-%      u = K*grad(p), div u = -f  in \Omega
-%      u*n = g                    on \Gamma
-%Darcy_mixedVEM solves Darcy problem using the mixed virtual element method
+%Darcy_LiftingmixedVEM solves Darcy problem using the lifting mixed virtual element method
 % in the lowest order
 %
 %     -div(K*grad(p)) = f   in Omega
