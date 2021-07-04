@@ -23,7 +23,7 @@ if dim==3
     view(3); set(h,'FaceAlpha',options.FaceAlpha); % transparency
 end
 
-if isfield(options,'facecolor')
+if isfield(options,'facecolor') 
     facecolor = options.facecolor;
 else
     facecolor = [0.5 0.9 0.45];
