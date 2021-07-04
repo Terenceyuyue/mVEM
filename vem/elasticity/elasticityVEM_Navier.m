@@ -22,15 +22,16 @@ Bs = cell(NT,1);
 G = cell(NT,1);  Gs = cell(NT,1);
 H0 = cell(NT,1); C0 = cell(NT,1);
 for iel = 1:NT
+    % element information
     index = elem{iel};     Nv = length(index);
     xK = centroid(iel,1); yK = centroid(iel,2); hK = diameter(iel);
-    
-    m1 = @(x,y) 1 + 0*x; m2 = @(x,y) (x-xK)./hK; m3 = @(x,y) (y-yK)./hK;
-    m = @(x,y) [m1(x,y), m2(x,y), m3(x,y)];
     x = node(index,1); y = node(index,2);
-    
+    % scaled monomials
+    m1 = @(x,y) 1 + 0*x; m2 = @(x,y) (x-xK)./hK; m3 = @(x,y) (y-yK)./hK;
+        
     % D
-    D1 = m(x,y);   D{iel} = D1;
+    D1 = [m1(x,y), m2(x,y), m3(x,y)];   
+    D{iel} = D1;
     
     % B, Bs, G, Gs
     rotid1 = [Nv,1:Nv-1]; rotid2 = [2:Nv,1]; % ending and starting indices
@@ -94,13 +95,12 @@ end
 kk = sparse(ii,jj,ss,2*N,2*N);
 
 %% Apply Dirichlet boundary conditions
-g_D = pde.g_D;  
+g_D = pde.g_D;
 bdNodeIdx = bdStruct.bdNodeIdx;
-isBdNode = false(N,1); isBdNode(bdNodeIdx) = true;
-bdNode = find(isBdNode); freeNode = find(~isBdNode);
-pD = node(bdNode,:);
-bdDof = [bdNode; bdNode+N]; freeDof = [freeNode;freeNode+N];
-u = zeros(2*N,1); uD = g_D(pD); u(bdDof) = uD(:);
+isBdNode = false(2*N,1); isBdNode([bdNodeIdx;bdNodeIdx+N]) = true;
+bdDof = (isBdNode); freeDof = (~isBdNode);
+nodeD = node(bdNodeIdx,:);
+u = zeros(2*N,1); uD = g_D(nodeD); u(bdDof) = uD(:);
 ff = ff - kk*u;
 
 %% Set solver

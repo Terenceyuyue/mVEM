@@ -231,3 +231,4 @@ end
 %% Store information for computing errors
 info.Ph = Ph; info.elem2dof = elem2dof; 
 info.kk = kk; info.freeDof = freeDof;
+info.kk = kk; info.freeDof = freeDof;
