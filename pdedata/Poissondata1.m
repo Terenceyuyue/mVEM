@@ -8,21 +8,21 @@ if nargin == 0,  c = 1; end
 % exact solution
     function val = uexact(p)
         x = p(:,1); y = p(:,2);
-        val = u(x,y);
+        val = u(x,y) + 0*x;
     end
 % right side hand function
     function val = f(p)
         x = p(:,1); y = p(:,2);
-        val = rhs(x,y);
+        val = rhs(x,y) + 0*x;
     end
 % Dirichlet boundary conditions
     function val = g_D(p)
-        val = uexact(p);
+        val = uexact(p) + 0*p(:,1);
     end
 % Neumann boundary conditions ( right side hand )
     function val = Du(p)
         x = p(:,1); y = p(:,2);
-        val = [ux(x,y), uy(x,y)];
+        val = [ux(x,y) + 0*x, uy(x,y) + 0*x];
     end
 
 pde = struct('uexact',@uexact, 'f',@f, 'g_D',@g_D, 'Du', @Du,'c', c);
