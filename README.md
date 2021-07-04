@@ -66,8 +66,6 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 
   Undo:
 
-      - Nonconforming VEMs of Poisson equation
-     
       - 3-D VEMs
       
       - Mixed VEMs: Stokes problem
