@@ -15,21 +15,23 @@
 - We present an efficient implementation of the mesh refinement for polygonal meshes. To the best of our knowledge, this is the first publicly available implementation of the polygonal mesh refinement algorithms. We remove the small edges by requiring the one-hanging-node rule.
 
 
-## Poisson equation (k <= 3)
+## Conforming Virtual Element Methods
+
+### Poisson equation (k <= 3)
 
 We describe the details of designing the codes of conforming VEMs for Poisson equation with k up to 3, 
 including the computation of elliptic projection and L2 projection, the matrix form of the approximated variational problems as well as the treatment of boundary conditions.
 We also show how the errors under L2,H1 and energy norms can be computed using the numerical d.o.f.s.
 
-## Linear elasticity problems (lowest order k = 1)
+### Linear elasticity problems (lowest order k = 1)
 
 The VEM of lowest order for linear elasticity problems is introduced for both the displacement-type and tensor-type bilinear forms. 
 
-## Plate bending problems (lowest order k = 2)
+### Plate bending problems (lowest order k = 2)
 
 Three VEMs involved in the literature are described in detail, i.e., the C1, C0 and Morley-type elements.
 
-## Fourth-order singular perturbation problems
+### Fourth-order singular perturbation problems
 
  This problem combines the techniques in Poisson equation and plate bending problems.
 
