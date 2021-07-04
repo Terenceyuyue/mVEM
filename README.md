@@ -25,7 +25,7 @@ We also show how the errors under L2,H1 and energy norms can be computed using t
 
 ### Linear elasticity problems (lowest order k = 1)
 
-The VEM of lowest order for linear elasticity problems is introduced for both the displacement-type and tensor-type bilinear forms. 
+The VEM of lowest order for linear elasticity problems is introduced for both the displacement-type (or Navier-type) and tensor-type bilinear forms. 
 
 ### Plate bending problems (lowest order k = 2)
 
