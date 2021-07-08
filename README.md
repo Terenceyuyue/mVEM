@@ -35,16 +35,6 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 
  This problem combines the techniques in Poisson equation and plate bending problems.
 
-## Mixed virtual element methods
-
- - Mixed vem for Darcy problem in the lowest order
-
-
-##  Adaptive Virtual Element Methods
-
-  - Mesh refinement of polygonal meshes
-  
-  - Adaptive VEM for Poisson equation in the lowest order
 
 
 ## Nonconforming Virtual Element Methods
@@ -54,6 +44,20 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
    - Poisson equation
    
    - linear elasticity problem with tensor-type bilinear form
+
+
+
+## Mixed Virtual Element Methods
+
+ - Mixed vem for Darcy problem in the lowest order
+
+
+
+##  Adaptive Virtual Element Methods
+
+  - Mesh refinement of polygonal meshes
+  
+  - Adaptive VEM for Poisson equation in the lowest order
 
 
   PS: 
