@@ -1,6 +1,6 @@
 # MATLAB Programming for Virtual Element Methods
 
-
+--------------
 ## MESH
 
 - We present some basic functions to show the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
@@ -36,7 +36,7 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
  This problem combines the techniques in Poisson equation and plate bending problems.
 
 
-
+---------------
 ## Nonconforming Virtual Element Methods
 
    We implement the nonconforming VEMs with a continuous treatment on the boundary of the domain.
@@ -46,13 +46,13 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
    - linear elasticity problem with tensor-type bilinear form
 
 
-
+------------------
 ## Mixed Virtual Element Methods
 
  - Mixed vem for Darcy problem in the lowest order
 
 
-
+------------------
 ##  Adaptive Virtual Element Methods
 
   - Mesh refinement of polygonal meshes
