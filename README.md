@@ -49,7 +49,11 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 ------------------
 ## Mixed Virtual Element Methods
 
- - Mixed vem for Darcy problem in the lowest order
+ - Mixed vem for Darcy problem in the lowest order H(div)-conforming virtual element
+ 
+ - Mixed vem for Darcy problem in the lowest order lifting H(div)-conforming virtual element
+ 
+ - Divergence-free mixed vem for Stokes problem in the lowest order
 
 
 ------------------
