@@ -71,6 +71,8 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
       编程过程完全遵循有限元的思路。
       
       相比网上有的程序，过程更加清晰，充分使用了 MATLAB 的向量运算。
+      
+      在计算各种投影的边界项时，部分程序中使用有限元载荷向量的装配技巧避免了繁琐的人为处理。
 
   Undo:
 
