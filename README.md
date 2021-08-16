@@ -76,9 +76,7 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 
   Undo:
 
-      - 3-D VEMs
-      
-      - Mixed VEMs: Stokes problem
+      - 3-D VEMs  
       
       - Time-dependent problems and nonlinear problems
       
