@@ -1,0 +1,45 @@
+SYSTEM twotanks {
+  INTERFACE {
+    STATE {
+      REAL x1 [0, 0.62];
+      REAL x2 [0, 0.62];
+    }
+    INPUT {
+      REAL u1 [0, 1];
+      BOOL u2;
+    }
+    OUTPUT {
+      REAL y;
+    }
+  }
+  IMPLEMENTATION {
+    AUX {
+      REAL zx1_1, zx1_3, zx1_5, zx1_7;
+      REAL zx2_2, zx2_4, zx2_6, zx2_8;
+      BOOL d1;
+    }
+    AD {
+      d1 = -x1 <= -0.3;
+    }
+    DA {
+      zx1_1 = { IF (d1 & (~u2)) THEN (0.945243 * x1) + (-0.039338 * x2) + (0.069930 * u1) + (0.016427) ELSE 0 };
+      zx2_2 = { IF (d1 & (~u2)) THEN (0.094095 * x1) + (0.960662 * x2) + (-0.016427) ELSE 0 };
+      zx1_3 = { IF ((~u2) & (~d1)) THEN (0.960662 * x1) + (0.069930 * u1) ELSE 0 };
+      zx2_4 = { IF ((~u2) & (~d1)) THEN (0.039338 * x1) + (0.960662 * x2) ELSE 0 };
+      zx1_5 = { IF (d1) THEN (0.945243 * x1) + (0.069930 * u1) + (0.016427) ELSE 0 };
+      zx2_6 = { IF (d1) THEN (0.054757 * x1) + (0.960662 * x2) + (-0.016427) ELSE 0 };
+      zx1_7 = { IF ((~d1)) THEN (1.000000 * x1) + (0.069930 * u1) ELSE 0 };
+      zx2_8 = { IF ((~d1)) THEN (0.960662 * x2)  ELSE 0 };
+    }
+    CONTINUOUS {
+      x1 = zx1_1 + zx1_3 + zx1_5 + zx1_7;
+      x2 = zx2_2 + zx2_4 + zx2_6 + zx2_8;
+    }
+    OUTPUT {
+      y = x2;
+    }
+    MUST {
+      x2 <= x1;
+    }
+  }
+}

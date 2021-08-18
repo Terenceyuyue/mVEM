@@ -1,0 +1,342 @@
+Model {
+  Name			  "twotankssim"
+  Version		  5.1
+  SampleTimeColors	  off
+  LibraryLinkDisplay	  "none"
+  WideLines		  off
+  ShowLineDimensions	  off
+  ShowPortDataTypes	  off
+  ExecutionOrder		  off
+  RecordCoverage	  off
+  CovPath		  "/"
+  CovSaveName		  "covdata"
+  CovNameIncrementing	  off
+  CovHtmlReporting	  on
+  BlockNameDataTip	  off
+  BlockParametersDataTip  off
+  BlockDescriptionStringDataTip	off
+  ToolBar		  on
+  StatusBar		  on
+  BrowserShowLibraryLinks on
+  BrowserLookUnderMasks	  off
+  Created		  "Sat Mar 19 21:48:50 2005"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "michal"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Mon Apr 11 13:36:46 2005"
+  ModelVersionFormat	  "1.%<AutoIncrement:10>"
+  ConfigurationManager	  "None"
+  SimParamPage		  "Solver"
+  LinearizationMsg	  "none"
+  Profile		  off
+  AccelSystemTargetFile	  "accel.tlc"
+  AccelTemplateMakefile	  "accel_default_tmf"
+  AccelMakeCommand	  "make_rtw"
+  ExtModeMexFile	  "ext_comm"
+  ExtModeBatchMode	  off
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  ExtModeLogAll		  on
+  BufferReuse		  on
+  SimulationMode	  "normal"
+  Solver		  "ode45"
+  SolverMode		  "Auto"
+  StartTime		  "0.0"
+  StopTime		  "1000"
+  MaxOrder		  5
+  MaxStep		  "auto"
+  MinStep		  "auto"
+  MaxNumMinSteps	  "-1"
+  InitialStep		  "auto"
+  FixedStep		  "auto"
+  RelTol		  "1e-3"
+  AbsTol		  "auto"
+  OutputOption		  "RefineOutputTimes"
+  OutputTimes		  "[]"
+  Refine		  "1"
+  LoadExternalInput	  off
+  ExternalInput		  "[t, u]"
+  LoadInitialState	  off
+  InitialState		  "xInitial"
+  SaveTime		  on
+  TimeSaveName		  "tout"
+  SaveState		  off
+  StateSaveName		  "xout"
+  SaveOutput		  on
+  OutputSaveName	  "yout"
+  SaveFinalState	  off
+  FinalStateName	  "xFinal"
+  SaveFormat		  "Array"
+  Decimation		  "1"
+  LimitDataPoints	  on
+  MaxDataPoints		  "1000"
+  ConsistencyChecking	  "none"
+  ArrayBoundsChecking	  "none"
+  AlgebraicLoopMsg	  "warning"
+  BlockPriorityViolationMsg "warning"
+  MinStepSizeMsg	  "warning"
+  InheritedTsInSrcMsg	  "warning"
+  MultiTaskRateTransMsg	  "error"
+  SingleTaskRateTransMsg  "none"
+  CheckForMatrixSingularity "none"
+  IntegerOverflowMsg	  "warning"
+  Int32ToFloatConvMsg	  "warning"
+  UnnecessaryDatatypeConvMsg "none"
+  VectorMatrixConversionMsg "none"
+  SignalLabelMismatchMsg  "none"
+  UnconnectedInputMsg	  "warning"
+  UnconnectedOutputMsg	  "warning"
+  UnconnectedLineMsg	  "warning"
+  SfunCompatibilityCheckMsg "none"
+  RTWInlineParameters	  off
+  BlockReductionOpt	  on
+  BooleanDataType	  on
+  ParameterPooling	  on
+  OptimizeBlockIOStorage  on
+  ZeroCross		  on
+  RTWSystemTargetFile	  "grt.tlc"
+  RTWTemplateMakefile	  "grt_default_tmf"
+  RTWMakeCommand	  "make_rtw"
+  RTWGenerateCodeOnly	  off
+  RTWRetainRTWFile	  off
+  TLCProfiler		  off
+  TLCDebug		  off
+  TLCCoverage		  off
+  BlockDefaults {
+    Orientation		    "right"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  LineDefaults {
+    FontName		    "Helvetica"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  System {
+    Name		    "tp364577"
+    Location		    [111, 212, 607, 492]
+    Open		    off
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    200
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "usletter"
+    PaperUnits		    "inches"
+    ZoomFactor		    "100"
+    ReportName		    "simulink-default.rpt"
+    Block {
+      BlockType		      Reference
+      Name		      "Explicit Controller"
+      Ports		      [2, 2]
+      Position		      [90, 36, 185, 109]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/MPT Controller"
+      SourceType	      "MPT Controller"
+      ctrl		      "expc"
+      Ts		      "[]"
+      infbreak		      on
+    }
+    Block {
+      BlockType		      Ground
+      Name		      "Ground"
+      Position		      [20, 80, 40, 100]
+      ShowName		      off
+    }
+    Block {
+      BlockType		      Ground
+      Name		      "Ground1"
+      Position		      [20, 205, 40, 225]
+      ShowName		      off
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "On-Line Controller"
+      Ports		      [2, 2]
+      Position		      [90, 161, 185, 234]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/MPT Controller"
+      SourceType	      "MPT Controller"
+      ctrl		      "onlc"
+      Ts		      "[]"
+      infbreak		      on
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Two Tanks System"
+      Ports		      [1, 2]
+      Position		      [245, 39, 335, 106]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/Dynamical System"
+      SourceType	      "Dynamical System with Constraints"
+      sysStruct		      "sysStruct"
+      x0		      "[0; 0]"
+      Ts		      "[]"
+      constr		      on
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Two Tanks System "
+      Ports		      [1, 2]
+      Position		      [245, 164, 335, 231]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/Dynamical System"
+      SourceType	      "Dynamical System with Constraints"
+      sysStruct		      "sysStruct"
+      x0		      "[0; 0]"
+      Ts		      "[]"
+      constr		      on
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Water Level (explicit)"
+      Ports		      [1]
+      Position		      [400, 74, 430, 106]
+      Floating		      off
+      Location		      [618, 190, 942, 429]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "1000"
+      YMin		      "0"
+      YMax		      "0.25"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Water Level (online)"
+      Ports		      [1]
+      Position		      [400, 199, 430, 231]
+      Floating		      off
+      Location		      [616, 487, 940, 726]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "1000"
+      YMin		      "0"
+      YMax		      "0.25"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData1"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Line {
+      SrcBlock		      "Ground"
+      SrcPort		      1
+      DstBlock		      "Explicit Controller"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Two Tanks System"
+      SrcPort		      1
+      Points		      [5, 0; 0, -30; -270, 0]
+      DstBlock		      "Explicit Controller"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Two Tanks System"
+      SrcPort		      2
+      DstBlock		      "Water Level (explicit)"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Explicit Controller"
+      SrcPort		      1
+      Points		      [0, 20]
+      DstBlock		      "Two Tanks System"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Ground1"
+      SrcPort		      1
+      DstBlock		      "On-Line Controller"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Two Tanks System "
+      SrcPort		      1
+      Points		      [5, 0; 0, -30; -270, 0]
+      DstBlock		      "On-Line Controller"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Two Tanks System "
+      SrcPort		      2
+      DstBlock		      "Water Level (online)"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "On-Line Controller"
+      SrcPort		      1
+      Points		      [0, 20]
+      DstBlock		      "Two Tanks System "
+      DstPort		      1
+    }
+  }
+}

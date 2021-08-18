@@ -1,0 +1,36 @@
+SYSTEM pwa3d {
+  INTERFACE {
+	STATE { 
+	  REAL x1 [-10, 10];
+	  REAL x2 [-5, 5];
+	  REAL x3 [-10, 10];
+	}
+	INPUT { 
+	  REAL u [-1,1];
+	}
+	OUTPUT{ 
+	  REAL y;
+	}
+  }
+  IMPLEMENTATION {
+	AUX { 
+	  REAL z1,z2; 
+      BOOL guard; 
+    }
+	AD  { 
+	  guard = x2<=1; 
+	} 
+	DA  { 
+	  z1 = { IF guard THEN x1 + 0.5*x2 + 0.3*x3 ELSE x1 + 0.2*x2 + 0.3*x3 + 0.3 };
+	  z2 = { IF guard THEN x2 + x3 ELSE 0.5*x2 + x3 + 0.5 }; 
+	}
+    CONTINUOUS { 
+      x1 = z1;
+	  x2 = z2;
+      x3 = x3 + u; 
+    }
+    OUTPUT { 
+      y = x1;  
+    }
+  }
+}

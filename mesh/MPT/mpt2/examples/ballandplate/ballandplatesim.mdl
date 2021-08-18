@@ -1,0 +1,763 @@
+Model {
+  Name			  "ballandplatesim"
+  Version		  5.1
+  SampleTimeColors	  off
+  LibraryLinkDisplay	  "none"
+  WideLines		  off
+  ShowLineDimensions	  off
+  ShowPortDataTypes	  off
+  ExecutionOrder		  off
+  RecordCoverage	  off
+  CovPath		  "/"
+  CovSaveName		  "covdata"
+  CovNameIncrementing	  off
+  CovHtmlReporting	  on
+  BlockNameDataTip	  off
+  BlockParametersDataTip  off
+  BlockDescriptionStringDataTip	off
+  ToolBar		  on
+  StatusBar		  on
+  BrowserShowLibraryLinks on
+  BrowserLookUnderMasks	  off
+  Created		  "Sat Mar 19 11:30:15 2005"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "michal"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Mon Apr 11 13:39:41 2005"
+  ModelVersionFormat	  "1.%<AutoIncrement:22>"
+  ConfigurationManager	  "None"
+  SimParamPage		  "Solver"
+  LinearizationMsg	  "none"
+  Profile		  off
+  AccelSystemTargetFile	  "accel.tlc"
+  AccelTemplateMakefile	  "accel_default_tmf"
+  AccelMakeCommand	  "make_rtw"
+  ExtModeMexFile	  "ext_comm"
+  ExtModeBatchMode	  off
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  ExtModeLogAll		  on
+  BufferReuse		  on
+  SimulationMode	  "normal"
+  Solver		  "ode45"
+  SolverMode		  "Auto"
+  StartTime		  "0.0"
+  StopTime		  "stoptime"
+  MaxOrder		  5
+  MaxStep		  "auto"
+  MinStep		  "auto"
+  MaxNumMinSteps	  "-1"
+  InitialStep		  "auto"
+  FixedStep		  "auto"
+  RelTol		  "1e-3"
+  AbsTol		  "auto"
+  OutputOption		  "RefineOutputTimes"
+  OutputTimes		  "[]"
+  Refine		  "1"
+  LoadExternalInput	  off
+  ExternalInput		  "[t, u]"
+  LoadInitialState	  off
+  InitialState		  "xInitial"
+  SaveTime		  on
+  TimeSaveName		  "tout"
+  SaveState		  off
+  StateSaveName		  "xout"
+  SaveOutput		  on
+  OutputSaveName	  "yout"
+  SaveFinalState	  off
+  FinalStateName	  "xFinal"
+  SaveFormat		  "Array"
+  Decimation		  "1"
+  LimitDataPoints	  on
+  MaxDataPoints		  "1000"
+  ConsistencyChecking	  "none"
+  ArrayBoundsChecking	  "none"
+  AlgebraicLoopMsg	  "warning"
+  BlockPriorityViolationMsg "warning"
+  MinStepSizeMsg	  "warning"
+  InheritedTsInSrcMsg	  "warning"
+  MultiTaskRateTransMsg	  "error"
+  SingleTaskRateTransMsg  "none"
+  CheckForMatrixSingularity "none"
+  IntegerOverflowMsg	  "warning"
+  Int32ToFloatConvMsg	  "warning"
+  UnnecessaryDatatypeConvMsg "none"
+  VectorMatrixConversionMsg "none"
+  SignalLabelMismatchMsg  "none"
+  UnconnectedInputMsg	  "warning"
+  UnconnectedOutputMsg	  "warning"
+  UnconnectedLineMsg	  "warning"
+  SfunCompatibilityCheckMsg "none"
+  RTWInlineParameters	  off
+  BlockReductionOpt	  on
+  BooleanDataType	  on
+  ParameterPooling	  on
+  OptimizeBlockIOStorage  on
+  ZeroCross		  on
+  RTWSystemTargetFile	  "grt.tlc"
+  RTWTemplateMakefile	  "grt_default_tmf"
+  RTWMakeCommand	  "make_rtw"
+  RTWGenerateCodeOnly	  off
+  RTWRetainRTWFile	  off
+  TLCProfiler		  off
+  TLCDebug		  off
+  TLCCoverage		  off
+  BlockDefaults {
+    Orientation		    "right"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  LineDefaults {
+    FontName		    "Helvetica"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  System {
+    Name		    "tp394047"
+    Location		    [26, 145, 670, 631]
+    Open		    off
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    200
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "usletter"
+    PaperUnits		    "inches"
+    ZoomFactor		    "100"
+    ReportName		    "simulink-default.rpt"
+    Block {
+      BlockType		      Mux
+      Name		      "Mux"
+      Ports		      [2, 1]
+      Position		      [455, 151, 460, 189]
+      ShowName		      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Mux
+      Name		      "Mux1"
+      Ports		      [2, 1]
+      Position		      [460, 341, 465, 379]
+      ShowName		      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Spiral"
+      Ports		      []
+      Position		      [515, 434, 612, 454]
+      BackgroundColor	      "green"
+      DropShadow	      on
+      ShowName		      off
+      OpenFcn		      "load kreisvolvente_1"
+      FontName		      "Arial"
+      FontSize		      12
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskDisplay	      "disp('Spiral')"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      System {
+	Name			"Spiral"
+	Location		[480, 89, 1060, 386]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Spiral1"
+      Ports		      []
+      Position		      [280, 434, 377, 454]
+      BackgroundColor	      "green"
+      DropShadow	      on
+      ShowName		      off
+      OpenFcn		      "load quadrat_20"
+      FontName		      "Arial"
+      FontSize		      12
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskDisplay	      "disp('Box')"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      System {
+	Name			"Spiral1"
+	Location		[433, 403, 931, 703]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Spiral2"
+      Ports		      []
+      Position		      [395, 434, 492, 454]
+      BackgroundColor	      "green"
+      DropShadow	      on
+      ShowName		      off
+      OpenFcn		      "load circle_10"
+      FontName		      "Arial"
+      FontSize		      12
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskDisplay	      "disp('Circle')"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      System {
+	Name			"Spiral2"
+	Location		[433, 403, 931, 703]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Spiral3"
+      Ports		      []
+      Position		      [165, 434, 262, 454]
+      BackgroundColor	      "green"
+      DropShadow	      on
+      ShowName		      off
+      OpenFcn		      "load star_40"
+      FontName		      "Arial"
+      FontSize		      12
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskDisplay	      "disp('Star')"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      System {
+	Name			"Spiral3"
+	Location		[433, 403, 931, 703]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Spiral4"
+      Ports		      []
+      Position		      [25, 396, 137, 456]
+      BackgroundColor	      "lightBlue"
+      DropShadow	      on
+      ShowName		      off
+      OpenFcn		      "ballandplate"
+      FontName		      "Arial"
+      FontSize		      12
+      ShowPortLabels	      on
+      Permissions	      "ReadWrite"
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      SimViewingDevice	      off
+      MaskDisplay	      "fprintf('Load parameters\\nand controller')"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      System {
+	Name			"Spiral4"
+	Location		[433, 403, 931, 703]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+      }
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "X region"
+      Ports		      [1]
+      Position		      [220, 129, 250, 161]
+      Orientation	      "left"
+      Floating		      off
+      Location		      [951, 124, 1275, 363]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "25"
+      YMin		      "0"
+      YMax		      "300"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData4"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "X voltage"
+      Ports		      [1]
+      Position		      [330, 129, 360, 161]
+      Floating		      off
+      Location		      [1011, 124, 1335, 363]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "25"
+      YMin		      "-20"
+      YMax		      "20"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData2"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "X-axis Ball Position/Reference"
+      Ports		      [1]
+      Position		      [540, 154, 570, 186]
+      Floating		      off
+      Location		      [679, 122, 1003, 361]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "25"
+      YMin		      "-20"
+      YMax		      "20"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "X-axis Controller"
+      Ports		      [2, 2]
+      Position		      [155, 31, 250, 104]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/MPT Controller"
+      SourceType	      "MPT Controller"
+      ctrl		      "ecx"
+      Ts		      "[]"
+      infbreak		      on
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "X-axis Model"
+      Ports		      [1, 2]
+      Position		      [305, 34, 395, 101]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/Dynamical System"
+      SourceType	      "Dynamical System with Constraints"
+      sysStruct		      "sysx"
+      x0		      "[0;0;0;0]"
+      Ts		      "[]"
+      constr		      on
+    }
+    Block {
+      BlockType		      FromWorkspace
+      Name		      "X-axis Reference"
+      Position		      [30, 73, 95, 97]
+      VariableName	      "xref"
+      SampleTime	      "0.03"
+      Interpolate	      on
+      OutputAfterFinalValue   "Extrapolation"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "XY Ball Position"
+      Ports		      [2]
+      Position		      [540, 220, 570, 255]
+      SourceBlock	      "simulink/Sinks/XY Graph"
+      SourceType	      "XY scope."
+      xmin		      "-30"
+      xmax		      "30"
+      ymin		      "-30"
+      ymax		      "30"
+      st		      "-1"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Y region"
+      Ports		      [1]
+      Position		      [215, 319, 245, 351]
+      Orientation	      "left"
+      Floating		      off
+      Location		      [951, 419, 1275, 658]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "25"
+      YMin		      "0"
+      YMax		      "300"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData5"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Y voltage"
+      Ports		      [1]
+      Position		      [335, 319, 365, 351]
+      Floating		      off
+      Location		      [1010, 419, 1334, 658]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "25"
+      YMin		      "-20"
+      YMax		      "20"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData3"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Y-axis Ball Position/Reference"
+      Ports		      [1]
+      Position		      [540, 344, 570, 376]
+      Floating		      off
+      Location		      [680, 419, 1004, 658]
+      Open		      off
+      NumInputPorts	      "1"
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	axes1			""
+      }
+      Grid		      "on"
+      TimeRange		      "25"
+      YMin		      "-20"
+      YMax		      "20"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData1"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Y-axis Controller"
+      Ports		      [2, 2]
+      Position		      [160, 221, 255, 294]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/MPT Controller"
+      SourceType	      "MPT Controller"
+      ctrl		      "ecy"
+      Ts		      "[]"
+      infbreak		      on
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Y-axis Model"
+      Ports		      [1, 2]
+      Position		      [310, 224, 400, 291]
+      ForegroundColor	      "blue"
+      DropShadow	      on
+      SourceBlock	      "mpt_sim/Dynamical System"
+      SourceType	      "Dynamical System with Constraints"
+      sysStruct		      "sysy"
+      x0		      "[0;0;0;0]"
+      Ts		      "[]"
+      constr		      on
+    }
+    Block {
+      BlockType		      FromWorkspace
+      Name		      "Y-axis Reference"
+      Position		      [30, 263, 95, 287]
+      VariableName	      "yref"
+      SampleTime	      "0.03"
+      Interpolate	      on
+      OutputAfterFinalValue   "Extrapolation"
+    }
+    Line {
+      SrcBlock		      "X-axis Model"
+      SrcPort		      1
+      Points		      [20, 0; 0, -40; -295, 0; 0, 40]
+      DstBlock		      "X-axis Controller"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "X-axis Model"
+      SrcPort		      2
+      Points		      [30, 0; 0, 75]
+      Branch {
+	Points			[0, 70]
+	DstBlock		"XY Ball Position"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Mux"
+	DstPort			1
+      }
+    }
+    Line {
+      SrcBlock		      "Mux"
+      SrcPort		      1
+      DstBlock		      "X-axis Ball Position/Reference"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "X-axis Controller"
+      SrcPort		      1
+      Points		      [0, 20; 35, 0]
+      Branch {
+	DstBlock		"X-axis Model"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 75]
+	DstBlock		"X voltage"
+	DstPort			1
+      }
+    }
+    Line {
+      SrcBlock		      "X-axis Reference"
+      SrcPort		      1
+      Points		      [0, 0; 20, 0]
+      Branch {
+	DstBlock		"X-axis Controller"
+	DstPort			2
+      }
+      Branch {
+	Points			[0, 95]
+	DstBlock		"Mux"
+	DstPort			2
+      }
+    }
+    Line {
+      SrcBlock		      "Y-axis Reference"
+      SrcPort		      1
+      Points		      [0, 0; 20, 0]
+      Branch {
+	DstBlock		"Y-axis Controller"
+	DstPort			2
+      }
+      Branch {
+	Points			[0, 95]
+	DstBlock		"Mux1"
+	DstPort			2
+      }
+    }
+    Line {
+      SrcBlock		      "Y-axis Controller"
+      SrcPort		      1
+      Points		      [0, 20; 25, 0]
+      Branch {
+	DstBlock		"Y-axis Model"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 75]
+	DstBlock		"Y voltage"
+	DstPort			1
+      }
+    }
+    Line {
+      SrcBlock		      "Y-axis Model"
+      SrcPort		      1
+      Points		      [15, 0; 0, -35; -290, 0; 0, 35]
+      DstBlock		      "Y-axis Controller"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Y-axis Model"
+      SrcPort		      2
+      Points		      [0, 0; 25, 0]
+      Branch {
+	Points			[0, 75]
+	DstBlock		"Mux1"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, -30]
+	DstBlock		"XY Ball Position"
+	DstPort			2
+      }
+    }
+    Line {
+      SrcBlock		      "Mux1"
+      SrcPort		      1
+      DstBlock		      "Y-axis Ball Position/Reference"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "X-axis Controller"
+      SrcPort		      2
+      Points		      [20, 0; 0, 60]
+      DstBlock		      "X region"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Y-axis Controller"
+      SrcPort		      2
+      Points		      [10, 0; 0, 60]
+      DstBlock		      "Y region"
+      DstPort		      1
+    }
+  }
+}

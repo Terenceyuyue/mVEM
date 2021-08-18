@@ -1,0 +1,57 @@
+SYSTEM tank03nf {
+INTERFACE {
+STATE {
+REAL h1 [0, 0.62], h2 [0, 0.62], h3 [0, 0.62]; }
+INPUT {
+REAL Q1 [0, 1], Q2 [0, 1];
+BOOL V1, V2; }
+OUTPUT {
+REAL y3; }
+PARAMETER {
+REAL Area = 0.0143; /* Cross-Area of tank */
+REAL g = 9.81; /* Gravity Constant */
+REAL s13 = 10.9e-6;
+REAL s23 = 8.89e-6;
+REAL s2 = 5.54e-6;
+REAL s1 = 9.36e-6; /* Cross Section of valves */
+REAL dT = 10; /* sampling time */
+REAL hv = 0.3; /* m */
+REAL hmax = 0.62; /* m */
+REAL Q1max = 0.1e-3; /* Maximum flow through Pump 1 : 5V */
+REAL Q2max = 0.1e-3; /* Maximum flow through Pump 2 : 5V */
+REAL TdA = dT / Area; /* (sampling time (s) / Area (m^2) ) */
+REAL k1 = s1 * sqrt(2 * g / (hmax - hv));
+REAL k2 = s2 * sqrt(2 * g / (hmax - hv));
+REAL k13 = s13 * sqrt(2 * g / hmax);
+REAL k23 = s23 * sqrt(2 * g / hmax);
+REAL e = 1e-6;}
+} /* end interface */
+IMPLEMENTATION {
+AUX {
+REAL z01, z02, z03, z1, z2, z13, z23;
+BOOL d01, d02, d03;}
+AD {
+d01 = -h1 + hv <= 0.0;
+d02 = -h2 + hv <= 0.0;
+d03 = -h3 + hv <= 0.0; }
+DA {
+z01 = {IF d01 THEN h1 - hv};
+z02 = {IF d02 THEN h2 - hv};
+z03 = {IF d03 THEN h3 - hv};
+z1 = {IF V1 THEN z01 - z03};
+z2 = {IF V2 THEN z02 - z03};
+z13 = {IF V1 THEN h1 - h3 };
+z23 = {IF V2 THEN h2 - h3 }; }
+CONTINUOUS {
+h1 = h1 + TdA * (Q1 - k1 * z1 - k13 * z13);
+h2 = h2 + TdA * (Q2 - k2 * z2 - k23 * z23);
+h3 = h3 + TdA * (k1 * z1 + k2 * z2 + k13 * z13 + k23 * z23);}
+OUTPUT { y3=h3; }
+MUST {
+-h1 <= 0; h1 - hmax <= 0;
+-h2 <= 0; h2 - hmax <= 0;
+-h3 <= 0; h3 - hmax <= 0;
+-Q1 <= 0; Q1 - Q1max <= 0;
+-Q2 <= 0; Q2 - Q2max <= 0; }
+} /* end implementation */
+} /* end system */
