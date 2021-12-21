@@ -45,6 +45,8 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
    - The nonconforming VEM with a continuous treatment on the boundary of the domain
 
 ### Linear elasticity
+
+    For linear elasticity problems, we mainly consider the locking-free virtual elements in the lowest order case. 
    
    - elasticityVEM_NavierNC.m    
    - elasticityVEM_NC.m,  elasticityVEM_NCb.m
