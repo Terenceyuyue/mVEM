@@ -39,11 +39,16 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 ---------------
 ## Nonconforming Virtual Element Methods
 
-   We implement the nonconforming VEMs with a continuous treatment on the boundary of the domain.
+### Poisson equation
+
+   - Standard nonconforming VEM in the lowest order case
+   - The nonconforming VEM with a continuous treatment on the boundary of the domain
+
+### Linear elasticity
    
-   - Poisson equation
-   
-   - linear elasticity problem with tensor-type bilinear form
+   - elasticityVEM_NavierNC.m    
+   - elasticityVEM_NC.m,  elasticityVEM_NCb.m
+   - elasticityVEM_KouhiaStenberg.m
 
 
 ------------------
