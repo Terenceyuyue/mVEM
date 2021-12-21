@@ -46,7 +46,7 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 
 ### Linear elasticity
 
-    For linear elasticity problems, we mainly consider the locking-free virtual elements in the lowest order case. 
+For linear elasticity problems, we mainly consider the locking-free virtual elements in the lowest order case. 
    
    - elasticityVEM_NavierNC.m    
    - elasticityVEM_NC.m,  elasticityVEM_NCb.m
