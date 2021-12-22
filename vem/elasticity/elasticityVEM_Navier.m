@@ -98,24 +98,15 @@ ff = accumarray(elemf,Ff,[2*N 1]);
 
 %% Apply Dirichlet boundary conditions
 g_D = pde.g_D;
-bdNodeIdx = bdStruct.bdNodeIdx;
-isBdNode = false(2*N,1); isBdNode([bdNodeIdx;bdNodeIdx+N]) = true;
+bdNodeIdxD = bdStruct.bdNodeIdxD;
+isBdNode = false(2*N,1); isBdNode([bdNodeIdxD;bdNodeIdxD+N]) = true;
 bdDof = (isBdNode); freeDof = (~isBdNode);
-nodeD = node(bdNodeIdx,:);
+nodeD = node(bdNodeIdxD,:);
 u = zeros(2*N,1); uD = g_D(nodeD); u(bdDof) = uD(:);
 ff = ff - kk*u;
 
 %% Set solver
-solver = 'direct';
-%if 2*N < 2e3, solver = 'direct'; end
-% solve
-switch solver
-    case 'direct'
-        u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
-    case 'amg'
-        option.solver = 'CG';
-        u(freeDof) = amg(kk(freeDof,freeDof),ff(freeDof),option);
-end
+u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
 
 %% Store information for computing errors
 info.Ph = Ph; info.elem2dof = elem2dof;

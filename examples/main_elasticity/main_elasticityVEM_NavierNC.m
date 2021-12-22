@@ -9,7 +9,7 @@ ErrL2 = zeros(maxIt,1);
 ErrH1 = zeros(maxIt,1);
 
 %% PDE data
-para.lambda = 1e8; para.mu = 1;
+para.lambda = 1e10; para.mu = 1;
 pde = elasticitydataLocking(para); %elasticitydata();
 
 %% Virtual element method
@@ -19,12 +19,13 @@ for k = 1:maxIt
     % get boundary information
     bdStruct = setboundary(node,elem);
     % solve
-    [u,info] = elasticityVEM_Navier(node,elem,pde,bdStruct);
+    [u,info] = elasticityVEM_NavierNC(node,elem,pde,bdStruct);
     % record and plot
     N(k) = length(u);  h(k) = 1/sqrt(size(elem,1));
+    [uhI,nodeI,elemI] = EllipticProjection(node,elem,u,info);
     figure(1); 
-    showresult(node,elem,pde.uexact,u);
-    drawnow; %pause(0.1);
+    showresult(nodeI,elemI,pde.uexact,uhI);
+    drawnow; 
     % compute errors in discrete L2 and H1 norms
     kOrder = 1; 
     ErrL2(k) = getL2error(node,elem,u,info,pde,kOrder);
@@ -45,4 +46,4 @@ disptable(colname,N,[],h,'%0.3e',ErrL2,'%0.5e',ErrH1,'%0.5e');
 % The optimal rate of convergence of the H1-norm (1st order) and L2-norm
 % (2nd order) is observed for k = 1. 
 
-% figure,spy(info.kk)
+%figure,spy(info.kk)
