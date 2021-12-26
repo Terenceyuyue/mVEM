@@ -51,6 +51,7 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
    - elasticityVEM_NavierNC.m    
    - elasticityVEM_NC.m,  elasticityVEM_NCb.m
    - elasticityVEM_KouhiaStenberg.m
+   - elasticityVEM_NCreducedIntegration.m
 
 
 ------------------
