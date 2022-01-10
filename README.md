@@ -13,6 +13,7 @@
 - The mesh generation algorithms are also described in detail.
 
 - We present an efficient implementation of the mesh refinement for polygonal meshes. To the best of our knowledge, this is the first publicly available implementation of the polygonal mesh refinement algorithms. We remove the small edges by requiring the one-hanging-node rule.
+- nonConvexMesh: generates a typical nonconvex polygonal mesh
 
 -------------------------
 ## Conforming Virtual Element Methods
