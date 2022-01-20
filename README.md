@@ -83,7 +83,7 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
       
       在计算各种投影的边界项时，部分程序中使用有限元载荷向量的装配技巧避免了繁琐的人为处理。
 
-  Undo:
+  TO DO:
 
       - 3-D VEMs  
       
@@ -91,8 +91,5 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
       
       - Various applications: Cahn–Hilliard problem, Stokes–Darcy problem, Navier-Stokes, etc.
       
-      - Mesh generation in 3-D
-
-
-​      
+      - Mesh generation in 3-D 
 
