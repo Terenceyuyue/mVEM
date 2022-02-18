@@ -73,6 +73,14 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
   - Adaptive VEM for Poisson equation in the lowest order
 
 
+------------------
+##  3-D Linear Virtual Element Methods
+
+   We present a simple and efficient MATLAB implementation of the linear virtual element method for the three dimensional Poisson equation. 
+
+
+
+
   PS: 
 
       程序对区域、边界条件等的处理都较为一般，可容易地移植到其他问题。
@@ -84,8 +92,6 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
       在计算各种投影的边界项时，部分程序中使用有限元载荷向量的装配技巧避免了繁琐的人为处理。
 
   TO DO:
-
-      - 3-D VEMs  
       
       - Time-dependent problems and nonlinear problems
       
