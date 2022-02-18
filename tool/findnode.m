@@ -34,7 +34,7 @@ hold on
 dotColor = 'k.';
 
 if dim==2
-    plot(node(range,1),node(range,2),dotColor, 'MarkerSize', 8);
+    plot(node(range,1),node(range,2),dotColor, 'MarkerSize', 5);
     if shownum
         shift = [0.015 0.015];
         text(node(range,1)+shift(1),node(range,2)+shift(2),int2str(range), ...

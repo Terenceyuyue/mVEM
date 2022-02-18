@@ -10,6 +10,8 @@ for iel = 1:NT
     area = 0.5*abs(det([[1;1;1],vT]));
     
     xy = lambda*vT;
-    f = fun(xy(:,1),xy(:,2));
-    Int = Int + area*weight*f;
+    for p = 1:size(xy,1)
+        f = fun(xy(p,1),xy(p,2));
+        Int = Int + area*weight(p)*f;
+    end
 end
