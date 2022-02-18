@@ -76,8 +76,8 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
 ------------------
 ##  3-D Linear Virtual Element Methods
 
-   We present a simple and efficient MATLAB implementation of the linear virtual element method for the three dimensional Poisson equation. 
-
+   We present a simple and efficient implementation of the linear virtual element method for the three dimensional Poisson equation. 
+The design ideas can be directly generalized to higher-order cases.
 
 
 
