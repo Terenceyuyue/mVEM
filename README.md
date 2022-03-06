@@ -92,6 +92,8 @@ The design ideas can be directly generalized to higher-order cases.
       在计算各种投影的边界项时，部分程序中使用有限元载荷向量的装配技巧避免了繁琐的人为处理。
 
   TO DO:
+  
+      - Vectorized implementation ( PoissonVEM.m ---> PoissonVEM_vec.m accomplished )
       
       - Time-dependent problems and nonlinear problems
       
