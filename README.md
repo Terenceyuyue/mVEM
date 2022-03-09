@@ -80,6 +80,15 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
 The design ideas can be directly generalized to higher-order cases.
 
 
+-------------------
+## Vectorized Implementation
+
+     - The vectorized implementatioin for conforming VEMs of Poisson equation has been accomplished in a unified way. 
+     
+     - The current realization may be less straighforward compared to the FEMs.
+
+     - Only the calculation of projection matrices is vectorized, and the assembly procedure is still implemented by looping over the elements
+
 
   PS: 
 
