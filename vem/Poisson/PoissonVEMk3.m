@@ -1,5 +1,5 @@
 function [u,info] = PoissonVEMk3(node,elem,pde,bdStruct)
-%PoissonVEMk3 solves Poisson equation using virtual element method in V3/W3
+%PoissonVEMk3 solves Poisson equation using virtual element method in W3
 %
 %     -\Delta u + cu = f,  in Omega
 %     Dirichlet boundary condition u=g_D on \Gamma_D,
@@ -214,9 +214,8 @@ u = zeros(NNdof,1); u(bdDof) = [uD; uDa; uDb];
 ff = ff - kk*u;
 
 %% Set solver
-% solver = 'amg';
-% if NNdof < 2e3, solver = 'direct'; end
-solver = 'direct';
+solver = 'amg';
+if NNdof < 2e3, solver = 'direct'; end
 % solve
 switch solver
     case 'direct'

@@ -1,5 +1,6 @@
 function [u,info] = PoissonVEM_vec(node,elem,pde,bdStruct)
-%PoissonVEM solves Poisson equation using virtual element method in V1
+%PoissonVEM_vec solves Poisson equation using virtual element method in V1
+%with a vectorized implementation.
 %
 %     -\Delta u + cu = f,  in Omega
 %     Dirichlet boundary condition u=g_D on \Gamma_D,
@@ -27,35 +28,39 @@ nodeTri = [node; aux.centroid];
 Dc = cell(NT,1); 
 Bc = cell(NT,1);  Bsc = cell(NT,1);
 Hc = cell(NT,1);
-for Nv = vertNum'
+for Nv = vertNum(:)'
     % information of polygons with Nv vertices
     idNv = find(elemLen == Nv); % find polygons with Nv vertices
     NTv = length(idNv);  % number of elements with Nv vertices
     elemNv = cell2mat(elem(idNv)); % elem
-    xK = aux.centroid(idNv,1); yK = aux.centroid(idNv,2);
-    hK = aux.diameter(idNv);
     x = reshape(node(elemNv,1),NTv,Nv);
     y = reshape(node(elemNv,2),NTv,Nv);
+    xK = aux.centroid(idNv,1); 
+    yK = aux.centroid(idNv,2);
+    hK = aux.diameter(idNv);    
     v1 = 1:Nv;  v2 = [2:Nv,1];
     rotid1 = [Nv,1:Nv-1]; rotid2 = [2:Nv,1]; % ending and starting indices
     Nrotx = y(:,rotid2) - y(:,rotid1);
     Nroty = x(:,rotid1)-x(:,rotid2); 
     
-    % scaled monomials
+    % DoF values of scaled monomials
+    xKv = repmat(xK,1,Nv);  yKv = repmat(yK,1,Nv);  
+    hKv = repmat(hK,1,Nv);
     m = zeros(3*NTv, Nv);
     m(1:3:end,:) = 1 + 0*x;  
-    m(2:3:end,:) = (x-xK)./hK; 
-    m(3:3:end,:) = (y-yK)./hK; 
-    mx = [zeros(NTv,1), 1./hK, zeros(NTv,1)];  
-    my = [zeros(NTv,1), zeros(NTv,1), 1./hK];    
+    m(2:3:end,:) = (x-xKv)./hKv; 
+    m(3:3:end,:) = (y-yKv)./hKv;     
     
     % transition matrix
     Dc(idNv) = mat2cell(m', Nv, 3*ones(1,NTv));  
     
     % elliptic projection
     B = zeros(3*NTv, Nv);
+    mx = [0*x, 1./hKv, 0*x];  
+    my = [0*x, 0*x, 1./hKv];
     for i = 1:3
-        B(i:3:end,:) = 0.5*(mx(:,i).*Nrotx + my(:,i).*Nroty);
+        col = (i-1)*Nv+1:i*Nv;
+        B(i:3:end,:) = 0.5*(mx(:,col).*Nrotx + my(:,col).*Nroty);
     end
     Bc(idNv) = mat2cell(B, 3*ones(NTv,1), Nv);
     B(1:3:end,:) = 1/Nv;  % constraint
@@ -71,10 +76,10 @@ for Nv = vertNum'
                 + lambda(p,2)*nodeTri(elemTri(:,2),:) ...
                 + lambda(p,3)*nodeTri(elemTri(:,3),:);
             x = pxy(:,1);  y = pxy(:,2);
-            m = [ones(NTv,1), (x-xK)./hK, (y-yK)./hK];
+            mp = [ones(NTv,1), (x-xK)./hK, (y-yK)./hK];
             for i = 1:3   
                 H(i:3:end,:) = H(i:3:end,:) ...
-                    + weight(p)*repmat(areaTri.*m(:,i),1,3).*m;  
+                    + weight(p)*repmat(areaTri.*mp(:,i),1,3).*mp;  
             end
         end
     end
@@ -148,17 +153,16 @@ u = zeros(N,1); uD = g_D(nodeD); u(bdDof) = uD(:);
 ff = ff - kk*u;
 
 %% Set solver
-u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
-% solver = 'amg';
-% if N < 2e3, solver = 'direct'; end
-% % solve
-% switch solver
-%     case 'direct'
-%         u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
-%     case 'amg'
-%         option.solver = 'CG';
-%         u(freeDof) = amg(kk(freeDof,freeDof),ff(freeDof),option);
-% end
+solver = 'amg';
+if N < 2e3, solver = 'direct'; end
+% solve
+switch solver
+    case 'direct'
+        u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
+    case 'amg'
+        option.solver = 'CG';
+        u(freeDof) = amg(kk(freeDof,freeDof),ff(freeDof),option);
+end
 
 %% Store information for computing errors
 info.Ph = Ph; info.elem2dof = elem2dof;

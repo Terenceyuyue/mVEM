@@ -22,14 +22,14 @@ for k = 1:maxIt
     % get boundary information
     bdStruct = setboundary(node,elem,bdNeumann);
     % solve
-    [uh,info] = PoissonVEM_vec(node,elem,pde,bdStruct);
+    [uh,info] = PoissonVEMk2_vec(node,elem,pde,bdStruct);
     % record and plot
     N(k) = length(uh);  h(k) = 1/sqrt(size(elem,1));
     figure(1); 
     showresult(node,elem,pde.uexact,uh);
-    pause(0.1);
+    drawnow; %pause(0.1);
     % compute errors in discrete L2, H1 and energy norms
-    kOrder = 1; 
+    kOrder = 2; 
     ErrL2(k) = getL2error(node,elem,uh,info,pde,kOrder);
     ErrH1(k) = getH1error(node,elem,uh,info,pde,kOrder);
     ErrI(k) = getErrI(node,elem,uh,info,pde,kOrder);
@@ -46,13 +46,13 @@ disptable(colname,N,[],h,'%0.3e',ErrL2,'%0.5e',ErrH1,'%0.5e',ErrI,'%0.5e');
 
 %% Conclusion
 %
-% The optimal rate of convergence of the H1-norm (1st order), L2-norm
-% (2nd order) and energy norm ||uI-uh||_E (1st order) is observed for k = 1. 
+% The optimal rate of convergence of the H1-norm (2nd order) and L2-norm
+% (3rd order) is observed for k = 2. The order of ||uI-uh||_E is 2.7 order and
+% thus superconvergence exists.
 
 % figure,spy(info.kk)
 
-
-%% Comparision between PoissonVEM.m and PoissonVEM_vec.m
+%% Comparision 
 nameV = [1000:1000:5000,10000]; 
 maxIt = length(nameV);
 Time1 = zeros(maxIt,1);  Time2 = zeros(maxIt,1);
@@ -64,10 +64,10 @@ for k = 1:maxIt
     bdStruct = setboundary(node,elem,bdNeumann);
     % solve
     tic;
-    PoissonVEM(node,elem,pde,bdStruct);
+    PoissonVEMk2(node,elem,pde,bdStruct);
     Time1(k) =  toc;
     tic;
-    PoissonVEM_vec(node,elem,pde,bdStruct);
+    PoissonVEMk2_vec(node,elem,pde,bdStruct);
     Time2(k) =  toc;
 end
 
