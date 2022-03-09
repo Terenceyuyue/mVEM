@@ -102,7 +102,7 @@ The design ideas can be directly generalized to higher-order cases.
 
   TO DO:
   
-      - Vectorized implementation ( PoissonVEM.m ---> PoissonVEM_vec.m accomplished )
+      - Vectorized implementation
       
       - Time-dependent problems and nonlinear problems
       
