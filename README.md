@@ -1,5 +1,8 @@
 # MATLAB Programming for Virtual Element Methods
 
+mEM is a MATLAB software package containing efficient and easy-following codes for various virtual element methods (VEMs) published in the
+literature. Detailed instructions for the implementation are available in the PDF file, which is written in Chinese and is under continuous revision.
+
 --------------
 ## MESH
 
@@ -35,6 +38,8 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 ### Fourth-order singular perturbation problems
 
  This problem combines the techniques in Poisson equation and plate bending problems.
+ 
+ 
 
 
 ---------------
@@ -88,6 +93,29 @@ The design ideas can be directly generalized to higher-order cases.
 - The current realization may be less straighforward compared to the FEMs.
 
 - Only the calculation of projection matrices is vectorized, and the assembly procedure is still implemented by looping over the elements
+
+
+-------------------
+## Acknowlegement
+
+The author would like to thank Sen Lin and Fang Feng, my schoolmates in Shanghai Jiao Tong University for many helpful discussion.
+
+The author thanks Postdoc Dohyun for pointing out the bugs in PolyMeshRefine.m and provide another version PolyMeshRefine1.m. 
+Detailed credits can be found in the M-lint of several m files. 
+
+-----------------
+## Citation
+
+If you feel it is helpful for your research, please acknowledge your use by citing:
+
+Y. Yu, mFEM: MATLAB Programming for Virtual Element Methods, https://github.com/Terenceyuyue/mVEM, Shanghai Jiao Tong University, 2019-2022.
+
+    @misc{mvem,
+          title = { {mVEM: MATLAB Programming for Virtual Element Methods} },
+          url = {https://github.com/Terenceyuyue/mVEM},
+          author = {Yu, Y.}
+          institution = {Shanghai Jiao Tong University},
+          year = {2019-2022}.
 
 
   PS: 
