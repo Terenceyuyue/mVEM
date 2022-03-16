@@ -115,7 +115,8 @@ Y. Yu, mFEM: MATLAB Programming for Virtual Element Methods, https://github.com/
           url = {https://github.com/Terenceyuyue/mVEM},
           author = {Yu, Y.}
           institution = {Shanghai Jiao Tong University},
-          year = {2019-2022}.
+          year = {2019-2022},
+          }
 
 
   PS: 
