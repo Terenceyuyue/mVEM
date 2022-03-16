@@ -1,6 +1,6 @@
 # MATLAB Programming for Virtual Element Methods
 
-mEM is a MATLAB software package containing efficient and easy-following codes for various virtual element methods (VEMs) published in the
+mVEM is a MATLAB software package containing efficient and easy-following codes for various virtual element methods (VEMs) published in the
 literature. Detailed instructions for the implementation are available in the PDF file, which is written in Chinese and is under continuous revision.
 
 --------------
