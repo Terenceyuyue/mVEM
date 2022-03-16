@@ -98,7 +98,7 @@ The design ideas can be directly generalized to higher-order cases.
 -------------------
 ## Acknowlegement
 
-The author would like to thank Sen Lin and Fang Feng, my schoolmates in Shanghai Jiao Tong University for many helpful discussion.
+The author would like to thank Sen Lin and Fang Feng, my schoolmates in Shanghai Jiao Tong University for many helpful discussions.
 
 The author thanks Postdoc Dohyun for pointing out the bugs in PolyMeshRefine.m and provide another version PolyMeshRefine1.m. 
 Detailed credits can be found in the M-lint of several m files. 
