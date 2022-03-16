@@ -108,7 +108,7 @@ Detailed credits can be found in the M-lint of several m files.
 
 If you feel it is helpful for your research, please acknowledge your use by citing:
 
-Y. Yu, mFEM: MATLAB Programming for Virtual Element Methods, https://github.com/Terenceyuyue/mVEM, Shanghai Jiao Tong University, 2019-2022.
+Y. Yu, mVEM: MATLAB Programming for Virtual Element Methods, https://github.com/Terenceyuyue/mVEM, Shanghai Jiao Tong University, 2019-2022.
 
     @misc{mvem,
           title = { {mVEM: MATLAB Programming for Virtual Element Methods} },
