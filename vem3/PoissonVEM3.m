@@ -46,12 +46,8 @@ for iel = 1:NT
     % ------- element information --------
     % faces
     elemf = elem3{iel};   indexFace = elem2face{iel};
-    % global index of vertices
-    index3 = unique(horzcat(elemf{:}));
-    % local index of elemf
-    Idx = min(index3):max(index3);
-    Idx(index3) = 1:length(index3);
-    elemfLocal = cellfun(@(face) Idx(face), elemf, 'UniformOutput', false);
+    % global index of vertices and local index of elemf
+    [~,index3,~,elemfLocal] = faceTriangulation(elemf);
     % centroid and diameter
     Nv = length(index3);  Ndof = Nv;
     V = node3(index3,:);
@@ -80,7 +76,7 @@ for iel = 1:NT
         % elliptic projection on the face
         idFace = indexFace(s);   
         Pifs = faceProj{idFace}; % the order may be not correct
-        [~,idx] = sort(faces);
+        [~,~,idx] = unique(faces);
         Pifs = Pifs(:,idx);
         % normal vector           
         e1 = P(2,:)-P(1,:);  en = P(1,:)-P(end,:);

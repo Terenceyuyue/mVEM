@@ -12,7 +12,7 @@ pde = Poisson3data(c);
 bdNeumann = 'x==0'; % string for Neumann
 
 %% Virtual element method
-for k = 1:maxIt    
+for k = 1:maxIt
     % load mesh
     fprintf('Mesh %d: \n', k);
     load( ['SimpleMesh3data', num2str(k), '.mat'] ); % polyhedral mesh

@@ -8,25 +8,20 @@ function [Tri,index3,TriLocal,elemfLocal] = faceTriangulation(elemf)
 nf = size(elemf,1);
 % numbers of vertices on each face
 faceLen = cellfun('length',elemf); 
-
+% global index of vertices
+[index3,~,totalid] = unique(horzcat(elemf{:})');
+index3 = index3(:)';
+% local index of elemf
+elemfLocal = mat2cell(totalid', 1, faceLen)';
 % triangulation
 nTri = sum(faceLen-2);
-Tri = zeros(nTri,3);
+Tri = zeros(nTri,3);  TriLocal = zeros(nTri,3);
 id = 0;
 for s = 1:nf
     face = elemf{s}; face = face(:);
+    faceLocal = elemfLocal{s}; faceLocal = faceLocal(:);
     nt = faceLen(s)-2;
     Tri(id+1:id+nt,:) = [face(1)*ones(nt,1), face(2:end-1), face(3:end)];
+    TriLocal(id+1:id+nt,:) = [faceLocal(1)*ones(nt,1), faceLocal(2:end-1), faceLocal(3:end)];
     id = id + nt;
 end
-
-% global index of vertices
-index3 = unique(horzcat(elemf{:}));
-
-% local index of Tri
-Idx = min(index3):max(index3);
-Idx(index3) = 1:length(index3);
-TriLocal = Idx(Tri);
-
-% local index of elemf
-elemfLocal = cellfun(@(face) Idx(face), elemf, 'UniformOutput', false); 
