@@ -12,10 +12,6 @@ function [uh,info] = PoissonVEM_VI_Uzawa(node,elem,pde,bdStruct)
 %     u = g_D    on \Gamma_D
 %  \partial(\Omega) = \Gamma_C + \Gamma_D
 %
-%   References -------
-%   F. Feng, W. M. Han and J. G. Huang, "Virtual element methods for
-%   elliptic variational inequalities of the second kind", J. Sci. Comput., 
-%   Vol 80. No 1., pp. 60¨C80, 2019.  (See Eq. (4.6) there)
 %
 % Copyright (C)  Terence Yu.
 
