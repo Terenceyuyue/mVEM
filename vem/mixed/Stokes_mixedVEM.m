@@ -38,13 +38,17 @@ N = size(node,1); NT = size(elem,1); NE = size(edge,1);
 NNdofA = (N+NE)*2 + 2*NT;  NNdofB = 3*NT;  NNdof = NNdofA + NNdofB;
 Nm = 6; Nmm = 2*Nm;
 
-%% Compute projection matrices
-D = cell(NT,1);  Bs = cell(NT,1);
-G = cell(NT,1);  Gs = cell(NT,1); 
-P0 = cell(NT,1); % P_{k-2}^0
-Belem = cell(NT,1);
+%% Compute and assemble the linear system
+elemLen = cellfun('length',elem); 
+nnzA = sum((4*elemLen+2).^2);  nnzB = sum((4*elemLen+2)*3); 
+iiA = zeros(nnzA,1); jjA = zeros(nnzA,1); ssA = zeros(nnzA,1);
+iiB = zeros(nnzB,1); jjB = zeros(nnzB,1); ssB = zeros(nnzB,1);
+elemb = zeros(NNdofB,1);  Fb = zeros(NNdofA,1); 
+idA = 0; idB = 0;  ib = 0;
+Ph = cell(NT,1); % matrix for error evaluation
+elem2dof = cell(NT,1);
 d = zeros(NT, 3); % for Lagrange multiplier
-for iel = 1:NT    
+for iel = 1:NT
     % ------- element information ----------
     index = elem{iel};     Nv = length(index);
     xK = centroid(iel,1); yK = centroid(iel,2); hK = diameter(iel);
@@ -55,7 +59,7 @@ for iel = 1:NT
     nodeT = [node(index,:);centroid(iel,:)];
     elemT = [(Nv+1)*ones(Nv,1),(1:Nv)',[2:Nv,1]'];
     
-    % ------- scaled monomials --------
+    % --------------- scaled monomials -----------------
     m1 = @(x,y) 1+0*x;                  gradm1 = @(x,y) [0+0*x, 0+0*x];
     m2 = @(x,y) (x-xK)./hK;             gradm2 = @(x,y) [1/hK+0*x, 0+0*x];
     m3 = @(x,y) (y-yK)./hK;             gradm3 = @(x,y) [0+0*x, 1/hK+0*x];
@@ -72,20 +76,19 @@ for iel = 1:NT
     NdofBd = 2*Nv; NdofA = 2*NdofBd+2;
     divmm2 = @(x,y) divmm(x,y).*repmat(m2(x,y),1,Nmm);
     divmm3 = @(x,y) divmm(x,y).*repmat(m3(x,y),1,Nmm);
-    D1 = zeros(NdofA, Nmm);
+    D = zeros(NdofA, Nmm);
     Dbd = [m(x,y); m(xe,ye)];
-    D1(1:4*Nv, :) = blkdiag(Dbd, Dbd);
-    D1(end-1,:) = integralTri(divmm2,4,nodeT,elemT);
-    D1(end,:) = integralTri(divmm3,4,nodeT,elemT);
-    D{iel} = D1;
+    D(1:4*Nv, :) = blkdiag(Dbd, Dbd);
+    D(end-1,:) = integralTri(divmm2,4,nodeT,elemT);
+    D(end,:) = integralTri(divmm3,4,nodeT,elemT);
     
     % --------- elliptic projection -----------
     % B
     % --- first term ---
     Lapm = [0, 0, 0, 2/hK^2, 0, 2/hK^2];
-    B1 = zeros(Nmm, NdofA);
-    B1(1:Nm, end-1) = pde.nu*hK*Lapm;
-    B1(Nm+1:end, end) = pde.nu*hK*Lapm;
+    B = zeros(Nmm, NdofA);
+    B(1:Nm, end-1) = pde.nu*hK*Lapm;
+    B(Nm+1:end, end) = pde.nu*hK*Lapm;
     % --- second term ---
     elem1 = [v1(:), v2(:), v1(:)+Nv]; % elem2dof for [ae, be, me]
     Gradmm = cell(2,Nmm);
@@ -109,7 +112,7 @@ for iel = 1:NT
             F1 = 1/6*(sum(pm(x(v1),y(v1)).*Ne, 2) - qa(x(v1),y(v1)).*Ne(:,s));
             F2 = 1/6*(sum(pm(x(v2),y(v2)).*Ne, 2) - qa(x(v2),y(v2)).*Ne(:,s));
             F3 = 4/6*(sum(pm(xe,ye).*Ne, 2) - qa(xe,ye).*Ne(:,s));            
-            B1(im, id) = accumarray(elem1(:), [F1; F2; F3], [NdofBd, 1]);
+            B(im, id) = accumarray(elem1(:), [F1; F2; F3], [NdofBd, 1]);
         end
     end
     % constraint 
@@ -127,93 +130,59 @@ for iel = 1:NT
     end
     P0K = 1/area(iel)*hK*P0K;
     % Bs, G, Gs
-    B1s = B1;  B1s([1,7], :) = P0K;
-    G{iel} = B1*D1;
-    Bs{iel} = B1s;  Gs{iel} = B1s*D1;
-    % P0
-    P0{iel} = P0K';    
-    
-    % -------------- matrix for Qh ---------------
+    Bs = B;  Bs([1,7], :) = P0K;
+    G = B*D;  Gs = Bs*D;
+        
+    % ------------- stiffness matrix -------------
+    % projection
+    Pis = Gs\Bs;   Pi  = D*Pis;   I = eye(size(Pi));    
+    % stiffness matrix A
+    AK  = Pis'*G*Pis + (I-Pi)'*(I-Pi);
+    AK = reshape(AK',1,[]); % straighten as row vector for easy assembly
+    % stiffness matrix B for Qh
     BK = zeros(NdofA,3);
     BK(end-1, 2) = 1;  BK(end, 3) = 1;
     F = 1/6*[(1*Ne); (1*Ne); (4*Ne)]; % [n1, n2]
     BK(1:end-2,1) = accumarray([elem1(:);elem1(:)+NdofBd], F(:), [2*NdofBd 1]);
-    Belem{iel} = reshape(BK',1,[]); % straighten as row vector for easy assembly 
+    BK = reshape(BK',1,[]); % straighten as row vector for easy assembly 
     
+    % -------- load vector f ----------
+    fxy = @(x,y) pde.f([x,y]); % f(p) = f([x,y]), f = [f1, f2]
+    Pf = integralTri(fxy,3,nodeT,elemT); 
+    fK = Pf(1)*P0K(1,:) + Pf(2)*P0K(2,:); 
+    
+    % ------ assembly index for bilinear forms --------
+    NdofA = 4*Nv+2; NdofB = 3;
+    indexDofA = [elem{iel}, elem2edge{iel}+N, ...
+                 elem{iel}+N+NE, elem2edge{iel}+2*N+NE, ...
+                 iel+2*N+2*NE, iel+2*N+2*NE+NT];
+    indexDofB = [iel, iel+NT, iel+2*NT];
+    iiA(idA+1:idA+NdofA^2) = reshape(repmat(indexDofA, NdofA,1), [], 1);
+    jjA(idA+1:idA+NdofA^2) = repmat(indexDofA(:), NdofA, 1);
+    ssA(idA+1:idA+NdofA^2) = AK(:);
+    idA = idA + NdofA^2;
+    iiB(idB+1:idB+NdofA*NdofB) = reshape(repmat(indexDofA, NdofB,1), [], 1);
+    jjB(idB+1:idB+NdofA*NdofB) = repmat(indexDofB(:), NdofA, 1);
+    ssB(idB+1:idB+NdofA*NdofB) = BK(:);
+    idB = idB + NdofA*NdofB;
+    
+    % ------- assembly index for rhs -------
+    elemb(ib+1:ib+NdofA) = indexDofA(:);
+    Fb(ib+1:ib+NdofA) = fK(:);
+    ib = ib + NdofA;
+
     % ------------ Lagrange multiplier -------------
     md = @(x,y) [m1(x,y), m2(x,y), m3(x,y)];
     d(iel,:) = integralTri(md,3,nodeT,elemT);
-end
-d = d(:);
-
-%% Get elementwise stiffness matrix and load vector
-Aelem = cell(NT,1); belem = cell(NT,1);
-Ph = cell(NT,1); % matrix for error evaluation
-for iel = 1:NT
-    % element information
-    index = elem{iel};   Nv = length(index);   
-    nodeT = [node(index,:);centroid(iel,:)];
-    elemT = [(Nv+1)*ones(Nv,1),(1:Nv)',[2:Nv,1]'];
-    % Projection
-    Pis = Gs{iel}\Bs{iel};   Pi  = D{iel}*Pis;   I = eye(size(Pi));
-    % Stiffness matrix A
-    AK  = Pis'*G{iel}*Pis + (I-Pi)'*(I-Pi);
-    Aelem{iel} = reshape(AK',1,[]); % straighten as row vector for easy assembly
-    % Load vector f
-    fxy = @(x,y) pde.f([x,y]); % f(p) = f([x,y]), f = [f1, f2]
-    Pf = integralTri(fxy,3,nodeT,elemT); 
-    P0K = P0{iel};
-    fK = Pf(1)*P0K(:,1) + Pf(2)*P0K(:,2); 
-    belem{iel} = fK'; % straighten as row vector for easy assembly
-    % matrix for error evaluation
-    Ph{iel} = Pis;
-end
-
-%% Assemble matrices A,B, and vector f,d
-elemLen = cellfun('length',elem); vertNum = unique(elemLen);
-nnzA = sum((4*elemLen+2).^2);  nnzB = sum((4*elemLen+2)*3); 
-iiA = zeros(nnzA,1); jjA = zeros(nnzA,1); ssA = zeros(nnzA,1);
-iiB = zeros(nnzB,1); jjB = zeros(nnzB,1); ssB = zeros(nnzB,1);
-ffA = zeros(NNdofA,1); 
-idA = 0; idB = 0; 
-elem2dof = cell(NT,1);
-for Nv = vertNum(:)' % only valid for row vector
     
-    idNv = find(elemLen == Nv); % find polygons with Nv vertices
-    NTv = length(idNv); % number of elements with Nv vertices
-    
-    % elem2dof 
-    elemNv = cell2mat(elem(idNv));
-    elem2edgeNv = cell2mat(elem2edge(idNv)); 
-    elem2dofA = [elemNv, elem2edgeNv+N, ...
-                 elemNv+N+NE, elem2edgeNv+2*N+NE, ...
-                 idNv+2*N+2*NE, idNv+2*N+2*NE+NT];
-    elem2dofB = [idNv, idNv+NT, idNv+2*NT];
-    NdofA = 4*Nv+2; NdofB = 3;
-    
-    % assemble the matrix A    
-    KA = cell2mat(Aelem(idNv));    
-    iiA(idA+1:idA+NTv*NdofA^2) = reshape(repmat(elem2dofA, NdofA,1), [], 1);
-    jjA(idA+1:idA+NTv*NdofA^2) = repmat(elem2dofA(:), NdofA, 1);
-    ssA(idA+1:idA+NTv*NdofA^2) = KA(:);
-    idA = idA + NTv*NdofA^2;
-    
-    % assemble the matrix B    
-    KB = cell2mat(Belem(idNv));    
-    iiB(idB+1:idB+NTv*NdofA*NdofB) = reshape(repmat(elem2dofA, NdofB,1), [], 1);
-    jjB(idB+1:idB+NTv*NdofA*NdofB) = repmat(elem2dofB(:), NdofA, 1);
-    ssB(idB+1:idB+NTv*NdofA*NdofB) = KB(:);
-    idB = idB + NTv*NdofA*NdofB;
-
-    % assemble the vector
-    FA = cell2mat(belem(idNv));
-    ffA = ffA + accumarray(elem2dofA(:),FA(:),[NNdofA 1]);
-    
-    % elementwise global indices
-    elem2dof(idNv) = mat2cell(elem2dofA, ones(NTv,1), NdofA);
+    % ------- matrix for error evaluation -------
+    Ph{iel} = Pis; 
+    elem2dof{iel} = indexDofA;
 end
 A = sparse(iiA,jjA,ssA,NNdofA,NNdofA);
 B = sparse(iiB,jjB,ssB,NNdofA,NNdofB);
+Fb = accumarray(elemb,Fb,[NNdofA 1]);
+d = d(:);  % for Lagrange multiplier 
 
 %% Get block linear system
 kk = sparse(NNdof+1,NNdof+1);  ff = zeros(NNdof+1,1);
@@ -222,7 +191,7 @@ kk(1:NNdofA, (1:NNdofB)+NNdofA) = B;
 kk((1:NNdofB)+NNdofA, 1:NNdofA) = B';
 kk((1:NNdofB)+NNdofA, end) = d;
 kk(end, (1:NNdofB)+NNdofA) = d';
-ff(1:NNdofA) = ffA;
+ff(1:NNdofA) = Fb;
 
 %% Apply Dirichlet boundary conditions 
 % bdDof, freeDof

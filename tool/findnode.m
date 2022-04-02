@@ -43,11 +43,11 @@ if dim==2
 end
 
 if dim==3
-    plot3(node(range,1),node(range,2),node(range,3),dotColor, 'MarkerSize', 15);
+    plot3(node(range,1),node(range,2),node(range,3),dotColor, 'MarkerSize', 8);
     if shownum
         shift = [0.015 0.015 0.015];
         text(node(range,1)+shift(1),node(range,2)+shift(2),node(range,3)+shift(3),int2str(range), ...
-            'FontSize',8,'FontWeight','bold'); % show index number
+            'FontSize',6,'FontWeight','bold'); % show index number
     end
 end
 hold off

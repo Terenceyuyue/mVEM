@@ -14,6 +14,13 @@ function centroid = polycentroid3(V,Tri)
 %   Email : irashidzade@gmail.com
 %   Web Site: isfzade.info
 %   Year: 2016
+%
+%  Modified by Terence Yu.
+
+if iscell(Tri) % cell for face
+    elemf = Tri; 
+    Tri = faceTriangulation(elemf);
+end
 
 vector1 = V(Tri(:,2), :) - V(Tri(:,1), :);
 vector2 = V(Tri(:,3), :) - V(Tri(:,1), :);

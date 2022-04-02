@@ -11,7 +11,7 @@ ErrH1 = zeros(maxIt,1);
 %% PDE data
 para.lambda = 1e10; para.mu = 1;
 pde = elasticitydataLocking(para); %elasticitydata();
-bdNeumann = 'all';  % 'all' for pure traction problem
+bdNeumann = 'y==0';  % 'all' for pure traction problem
 
 %% Virtual element method
 for k = 1:maxIt

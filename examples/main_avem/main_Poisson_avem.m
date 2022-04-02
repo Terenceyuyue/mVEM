@@ -9,7 +9,7 @@ ErrL2 = zeros(maxIt,1);
 ErrH1 = zeros(maxIt,1);
 
 %% Generate an initial mesh
-load meshdata1
+load meshex1
 
 %% Get the PDE data
 pde = Poissondata_avem();

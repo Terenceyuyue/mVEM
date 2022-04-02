@@ -1,5 +1,5 @@
 function [u,info] = elasticityVEM_KouhiaStenberg(node,elem,pde,bdStruct)
-%elasticityVEM_FNC solves linear elasticity equation of tensor form using
+%elasticityVEM_KouhiaStenberg solves linear elasticity equation of tensor form using
 % the Kouhia-Stenberg type virtual element: V_nc \times V_c
 %
 % The problem is
@@ -13,7 +13,8 @@ function [u,info] = elasticityVEM_KouhiaStenberg(node,elem,pde,bdStruct)
 %
 %   References
 %   D. Y. Kwak and H. Park, "Lowest-order virtual element methods for linear 
-%   elasticity problems", Math. Comp., Vol 59. No 200., pp. 321¨C338, 1992.
+%   elasticity problems", Comput. Methods Appl. Mech. Engrg., Vol 390., 
+%   No. 114448, 20 pp., 2022.
 %
 % Copyright (C)  Terence Yu.
 
@@ -67,41 +68,19 @@ for iel = 1:NT
     D(1:Nv,1:3) = 0.5*( m(x(v1),y(v1)) + m(x(v2),y(v2)) );
     D(Nv+1:end,4:end) = m(x,y);
     
-    % -------------- integration over edges ------------------
-    % C0
-    C01xe = zeros(1,Nv);  C01ye = zeros(1,Nv);  
-    C01xv = zeros(1,Nv);  C01yv = zeros(1,Nv);
-    % B0 for constraints
-    B0x = zeros(3,Nv);  B0y = zeros(3,Nv);
-    % fK
-    f1K = zeros(Nv,1);
-    f1int = integralTri(f1xy,3,nodeT,elemT);
-    f2int = integralTri(f2xy,3,nodeT,elemT);
-    for i = 1:Nv   % integrating basis functions over edges
-        % basis for edges
-        phie = zeros(1,Nv); phie(i) = 1; 
-        phinxe = Ne(i,1)*phie;  phinye = Ne(i,2)*phie;
-        phitxe = Te(i,1)*phie;  
-        % C0
-        C01xe = C01xe + phinxe;
-        C01ye = C01ye + phinye;
-        C01xv(i) = 0.5*(Ne(p1(i),1)+Ne(p2(i),1)); % loop of basis
-        C01yv(i) = 0.5*(Ne(p1(i),2)+Ne(p2(i),2)); 
-        % B0
-        B0x(1,:) = B0x(1,:) + phitxe;
-        B0x(2,:) = B0x(2,:) + he(i)*phie;
-        B0y(1,i) = 0.5*(Te(p1(i),2)+Te(p2(i),2));        
-        B0y(3,i) = 0.5*(he(p1(i))+he(p2(i)));
-        % right-hand side
-        f1K = f1K + phie';
-    end
-    
     % ------------------ H0,C0 ---------------------
     H0 = area(iel);
+    C01xe = Ne(:,1)';  C01ye = Ne(:,2)';
+    C01xv = 0.5*(Ne(p1,1)+Ne(p2,1))';
+    C01yv = 0.5*(Ne(p1,2)+Ne(p2,2))';
     C0 = [C01xe, C01yv];
     
     % ---------------- B,Bs,G,Gs -------------------
     % B0
+    B0x = zeros(3,Nv);    B0y = zeros(3,Nv);
+    B0x(1,:) = Te(:,1)';  B0x(2,:) = he';
+    B0y(1,:) = 0.5*(Te(p1,2)+Te(p2,2))'; 
+    B0y(3,:) = 0.5*(he(p1)+he(p2))';
     B0 = [B0x, B0y];
     % B
     E = zeros(6,4);
@@ -122,7 +101,9 @@ for iel = 1:NT
     AB = reshape(AK'+BK',1,[]);
     
     % ------------- local load vector ------------------
-    f1K = f1int/Nv*f1K;
+    f1int = integralTri(f1xy,3,nodeT,elemT);
+    f2int = integralTri(f2xy,3,nodeT,elemT);    
+    f1K = f1int*ones(Nv,1)/Nv;
     f2K = f2int*ones(Nv,1)/Nv;
     fK = [f1K; f2K];
     

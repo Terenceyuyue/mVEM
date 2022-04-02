@@ -37,7 +37,7 @@ end
 
 %% Plot convergence rates and display error table
 figure(2);
-ErrI2 = 5*ErrI; % widen the gap between ErrH1 and ErrI
+ErrI2 = ErrI; % widen the gap between ErrH1 and ErrI
 showrateErr(h,ErrL2,ErrH1,ErrI2);
 
 fprintf('\n');

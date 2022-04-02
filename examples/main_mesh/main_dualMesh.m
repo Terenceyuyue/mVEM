@@ -29,8 +29,8 @@ showmesh(node,elem);
 % Example-3
 load meshLake
 figure,
-subplot(2,1,1)
+subplot(1,2,1)
 showmesh(node,elem);
-subplot(2,1,2)
+subplot(1,2,2)
 [node,elem] = dualMesh(node,elem);
 showmesh(node,elem);

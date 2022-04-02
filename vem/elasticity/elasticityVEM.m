@@ -51,14 +51,14 @@ for iel = 1:NT
     H0 = area(iel);
     elem1 = [v1(:), v2(:)];
     C0 = zeros(1,2*Nv);
-    F = 1/2*[(1*Ne); (1*Ne)]; % [n1, n2]
+    F = 1/2*[(1*Ne); (1*Ne)]; % [he*n1, he*n2]
     C0(:) = accumarray([elem1(:);elem1(:)+Nv], F(:), [2*Nv 1]);
     
     % --------- elliptic projection -----------
     % E = [E11,E12,E21,E22]
     E = zeros(6,4);
     E(2,1) = 1/hK;  E([3,5],[2,3]) = 1/(2*hK); E(6,4) = 1/hK;
-    % B1
+    % B
     B = [E(:,1)*C0(1:Nv)+E(:,2)*C0(Nv+1:end), ...
           E(:,3)*C0(1:Nv)+E(:,4)*C0(Nv+1:end)];
     

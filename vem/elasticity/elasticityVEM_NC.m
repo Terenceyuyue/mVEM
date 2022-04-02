@@ -63,37 +63,16 @@ for iel = 1:NT
     D = 0.5*( m(x(v1),y(v1)) + m(x(v2),y(v2)) );
     D = blkdiag(D,D);
     
-    % -------------- integration over edges ------------------
-    % C0
-    C01x = zeros(1,Nv);  C01y = zeros(1,Nv);
-    % B0 for constraints
-    B0x = zeros(3,Nv);  B0y = zeros(3,Nv);
-    % fK
-    fK = zeros(Nv,1);
-    f1int = integralTri(f1xy,3,nodeT,elemT);
-    f2int = integralTri(f2xy,3,nodeT,elemT);
-    for i = 1:Nv   % integrating basis functions over edges
-        % basis for edges
-        phie = zeros(1,Nv); phie(i) = 1; % moment values of all basis functions on ei
-        phinxe = Ne(i,1)*phie;  phinye = Ne(i,2)*phie;
-        phitxe = Te(i,1)*phie;  phitye = Te(i,2)*phie;
-        % C0
-        C01x = C01x + phinxe;
-        C01y = C01y + phinye;
-        % B0
-        B0x(1,:) = B0x(1,:) + phitxe;
-        B0y(1,:) = B0y(1,:) + phitye;
-        B0x(2,:) = B0x(2,:) + he(i)*phie;
-        % right-hand side
-        fK = fK + phie';
-    end
-    
     % ------------------ H0,C0 ---------------------
     H0 = area(iel);
+    C01x = Ne(:,1)';  C01y = Ne(:,2)';
     C0 = [C01x, C01y];
     
     % ---------------- B,Bs,G,Gs -------------------
-    % B0
+    % B0 for constraints
+    B0x = zeros(3,Nv);    B0y = zeros(3,Nv);
+    B0x(1,:) = Te(:,1)';  B0x(2,:) = he';
+    B0y(2,:) = Te(:,2)';      
     B0y(3,:) = B0x(2,:); % second constraint - row 3
     B0 = [B0x, B0y];
     % B
@@ -115,6 +94,9 @@ for iel = 1:NT
     AB = reshape(AK'+BK',1,[]);
     
     % ------------- local load vector ------------------
+    fK = ones(Nv,1);
+    f1int = integralTri(f1xy,3,nodeT,elemT);
+    f2int = integralTri(f2xy,3,nodeT,elemT);
     f1K = f1int/Nv*fK;
     f2K = f2int/Nv*fK;
     fK = [f1K; f2K];

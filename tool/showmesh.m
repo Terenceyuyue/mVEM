@@ -4,6 +4,9 @@ function showmesh(node,elem,options)
 % Copyright (C) Terence Yu
 
 if nargin==2, options.FaceAlpha = 0.4; end
+if nargin==3 && ~isfield(options,'FaceAlpha') 
+    options.FaceAlpha = 0.4;
+end
 
 dim = size(node,2);
 if ~iscell(elem)
