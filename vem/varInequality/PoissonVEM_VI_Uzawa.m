@@ -1,6 +1,8 @@
 function [uh,info] = PoissonVEM_VI_Uzawa(node,elem,pde,bdStruct)
-%PoissonVEM_VI solves the simplified friction problem using conforming
-% virtual element method in the lowest order case.
+%PoissonVEM_VI_Uzawa solves the simplified friction problem using conforming
+% virtual element method in the lowest order case. The problem is iteratively 
+% solved by using the Uzawa algorithm, hence the implementation is reduced to
+% that of Poisson equation in each iteration.
 %
 % The problem is
 %
@@ -12,6 +14,12 @@ function [uh,info] = PoissonVEM_VI_Uzawa(node,elem,pde,bdStruct)
 %     u = g_D    on \Gamma_D
 %  \partial(\Omega) = \Gamma_C + \Gamma_D
 %
+%   References
+%   [1] F. Wang and H. Wei. Virtual element method for simplified friction problem. 
+%       Appl. Math. Lett., 85: 125-131, 2018.
+%   [2] B. Wu, F. Wang, and W. Han. Virtual element method for a frictional contact 
+%       problem with normal compliance. Commun. Nonlinear Sci. Numer. Simul., 107: 
+%       Paper No. 106125, 13 pp., 2022.
 %
 % Copyright (C)  Terence Yu.
 
@@ -105,6 +113,16 @@ end
 kk = sparse(ii,jj,ss,N,N);
 ff = accumarray(elemb,Fb,[N 1]);
 
+%% Initialization of Uzawa iteration or Gamma_C is empty 
+g_D = pde.g_D;  bdNodeIdxD = bdStruct.bdNodeIdxD;
+isBdNode = false(N,1); isBdNode(bdNodeIdxD) = true;
+bdDof = find(isBdNode); freeDof = find(~isBdNode);
+nodeD = node(bdDof,:); 
+uD = g_D(nodeD); 
+uh0 = zeros(N,1); 
+uh0(bdDof) = uD(:);
+uh0(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
+
 %% Uzawa iteration
 bdEdgeFri = bdStruct.bdEdgeN; 
 if ~isempty(bdEdgeFri)
@@ -112,13 +130,7 @@ if ~isempty(bdEdgeFri)
     z1 = node(bdEdgeFri(:,1),:); z2 = node(bdEdgeFri(:,2),:);
     gC = max([g(z1); g(z2)]);
     e = z2-z1;
-    he = sqrt(e(:,1).^2+e(:,2).^2);
-    g_D = pde.g_D;  bdNodeIdxD = bdStruct.bdNodeIdxD;
-    isBdNode = false(N,1); isBdNode(bdNodeIdxD) = true;
-    bdDof = find(isBdNode); freeDof = find(~isBdNode);
-    nodeD = node(bdDof,:); 
-    uh0 = zeros(N,1); 
-    uD = g_D(nodeD); uh0(bdDof) = uD(:);
+    he = sqrt(e(:,1).^2+e(:,2).^2);       
     lambdah0 = ones(N,1); % Lagrange multiplizer 
     tol = 1e-8;  Err = 1;   
     iter = 0;  maxIt = 500;
@@ -150,7 +162,9 @@ if ~isempty(bdEdgeFri)
     end
 end
 
+%% The discrete solution
+uh = uh0;
+
 %% Store information for computing errors
 info.Ph = Ph; info.elem2dof = elem2dof; 
 info.kk = kk; info.DofI = freeDof; % d.o.f.s for computing errors in the energy norm
-info.D = Dm;
