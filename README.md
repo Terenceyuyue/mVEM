@@ -82,7 +82,7 @@ For linear elasticity problems, we mainly consider the locking-free virtual elem
 ------------------
 ##  Variational Inequalities
 
-   We provide the implementation of the the virtual element method for a simplified friction problem, which is a typical elliptic variational inequality of the second kind. The discrete problem is solved by using the Uzawa iteration algorithm, hence the implentation is reduced to a Poisson problem in each iteration.
+   We provide the implementation of the the virtual element method for a simplified friction problem, which is a typical elliptic variational inequality of the second kind. The discrete problem is solved by using the Uzawa iteration algorithm, hence the implentation is reduced to that of Poisson equation in each iteration.
 
 
 ------------------
