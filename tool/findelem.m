@@ -33,8 +33,8 @@ end
 
 if d==2
     plot(center(:,1),center(:,2),'o','LineWidth',1,'MarkerEdgeColor','k',...
-        'MarkerFaceColor','y','MarkerSize',18);
-    text(center(:,1)-0.01,center(:,2),int2str(range),'FontSize',12,...
+        'MarkerFaceColor','y','MarkerSize',15);
+    text(center(:,1)-0.04,center(:,2),int2str(range),'FontSize',10,...
         'FontWeight','bold','Color','k');
 end
 

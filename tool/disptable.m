@@ -1,17 +1,16 @@
 function disptable(colname,varargin)
-%% DISPTABLE display data in table
-%
-% DISPTABLE({'Data 1', 'Data 2'},data1,format1,data2,format2) display data1
-% and data2 in table using format1 and format2, respectively.  
-%
-% Example
-%
-%	load dispdata
-%   colname = {'#nodes'     '|u_I-u_h|_1'      '||p-p_h||'};
-%   disptable(colname,err.N,[],err.uH1,'%0.5e',err.pL2,'%0.5e');
-%
-% See also displaytable
-%
-% Copyright (C)  Long Chen. See COPYRIGHT.txt for details.
 
-displaytable(colname,varargin{:});
+ncol = length(colname);
+if length(varargin)~=2*ncol
+    error('length(varargin) = 2*ncol !');
+end
+
+var = cell(1,ncol);
+for s = 1:ncol
+    if isempty(varargin{2*s})
+        var{s} = num2str(varargin{2*s-1});
+        continue;
+    end
+     var{s} = num2str(varargin{2*s-1}, varargin{2*s});
+end
+disp( table(var{:}, 'VariableNames', colname) );

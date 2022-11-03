@@ -1,8 +1,8 @@
 clc;clear;close all
 
 %% Example 1
-load meshdata5
-z = linspace(0,1,18);
+load meshex1
+z = linspace(0,1,4);
 [node3,elem3] = PolyMesh3Simple(node,elem,z);
 figure,
 option.FaceAlpha = 0.4;

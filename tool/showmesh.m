@@ -13,7 +13,10 @@ if ~iscell(elem)
     if size(elem,2)==3  % triangles
         h = patch('Faces', elem, 'Vertices', node);
     end
-    if size(elem,2)==4 % tetrahadrons
+    if size(elem,2)==4 && dim==2
+        h = patch('Faces', elem, 'Vertices', node);
+    end
+    if size(elem,2)==4 && dim>2 % tetrahadrons
         h = tetramesh(elem,node,ones(size(elem,1),1));
     end
 end

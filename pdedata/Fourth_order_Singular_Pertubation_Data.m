@@ -47,8 +47,8 @@ function [u,f,ux,uy,uxx,uxy,uyy] = compute_rhs(para)
     syms x y;    
     
     % exact solution
-    %u = (sin(pi*x)*sin(pi*y))^2;
-    u = (exp(cos(2*pi*x))-exp(1)).*(exp(cos(2*pi*y))-exp(1));
+    u = (sin(pi*x)*sin(pi*y))^2;
+    %u = (exp(cos(2*pi*x))-exp(1)).*(exp(cos(2*pi*y))-exp(1));
 
     % derivative
     ux = diff(u,x);      uy = diff(u,y);

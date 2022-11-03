@@ -1,5 +1,5 @@
-clc; close all;
-clear variables;
+% clc; close all;
+% clear variables;
 
 %% Parameters
 nameV = [32, 64, 128, 256, 512];

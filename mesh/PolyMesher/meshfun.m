@@ -1,6 +1,6 @@
 
 %Meshfun: generate basic data structure (node,elem) representing meshes
-% Copyright (C) Terence Yue Yu.
+% Copyright (C) Terence Yu.
 
 clc;clear;close all
 
@@ -8,8 +8,8 @@ clc;clear;close all
 % Options: Lshape_Domain, Rectangle_Domain, Circle_Domain, Upper_Circle_Domain,
 % Upper_Circle_Circle_Domain, Rectangle_Circle_Domain, Circle_Circle_Domain
 % Michell_Domain, Horn_Domain, Suspension_Domain, Wrench_Domain
-Domain = @Rectangle_Domain;  MaxIter = 100;
-NT = 100;  
+Domain = @Rectangle_Domain;  MaxIter = 400;
+NT = 10000;  
 [node,elem] = PolyMesher(Domain,MaxIter,NT);
 % Nx = 10; Ny = 10;
 % [node,elem] = PolyMesher(Domain,MaxIter,Nx,Ny);
@@ -20,4 +20,5 @@ showmesh(node,elem);
 % axis off
 
 % % % ------------------- Save the mesh data --------------------
-% save meshdata node elem
+meshname = sprintf('meshdata%d',NT);
+save(meshname,'node','elem');
