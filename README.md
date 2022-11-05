@@ -55,12 +55,13 @@ Three VEMs involved in the literature are described in detail, i.e., the C1, C0 
 
 ### Linear elasticity
 
-For linear elasticity problems, we mainly consider the locking-free virtual elements in the lowest order case. 
+For linear elasticity problems, we mainly consider the (locking-free) virtual elements in the lowest order case. 
    
-   - elasticityVEM_NavierNC.m    
-   - elasticityVEM_NC.m,  elasticityVEM_NCb.m
-   - elasticityVEM_KouhiaStenberg.m
-   - elasticityVEM_NCreducedIntegration.m
+   - conforming and nonconforming VEMs for the Navier/displacement form  
+   - conforming and nonconforming VEMs for the tensor form 
+   - nonconforming VEMs for a continuous treatment of the domain boundary
+   - locking-free VEMs: Kouhia-Stenberg VEM (Vnc \times Vc),  reduced integration technique based VEMs
+   - a standard benchmark: Cook's membrane problem
 
 
 ------------------
