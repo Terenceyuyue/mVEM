@@ -19,6 +19,7 @@ literature.
 
 - We present an efficient implementation of the mesh refinement for polygonal meshes. To the best of our knowledge, this is the first publicly available implementation of the polygonal mesh refinement algorithms. We remove the small edges by requiring the one-hanging-node rule.
 - nonConvexMesh: generates a typical nonconvex polygonal mesh
+- gunelveMesh: generates the Gunelve mesh used in the Cook's membrane problem
 - dualMesh: Generate polygonal mesh by establishing the dual mesh of a given Delaunay triangulation.
 
 -------------------------
