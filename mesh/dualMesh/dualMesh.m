@@ -10,7 +10,7 @@ function [node,elem] = dualMesh(pp,tt)
 %     0  1  1 -1 -1  0
 %     1  1  1  1  1  1
 %     0  0  0  0  0  0];
-% [pp,~,tt]=initmesh(g,'hmax',0.5); 
+% [pp,~,tt] = initmesh(g,'hmax',0.5); 
 % pp = pp'; tt = tt(1:3,:)';
 % [node,elem] = dualMesh(pp,tt);
 
@@ -94,3 +94,11 @@ elem = mat2cell(totalid', 1, elemLen)';
 nBd = size(nodeBd,1); nBdm = size(nodeBdm,1); nCd = size(nodeCd,1);
 connection = [(1:nCd)+nBd+nBdm, (1:nBdm)+nBd, (1:nBd)];
 elem = cellfun(@(index) connection(index), elem, 'UniformOutput', false);
+
+%% Counterclockwise order
+[node,elem] = PolyMesher_Reorder(node,elem);
+% PolyMesher_Reorder.m uses the first three vertices to decide the sign
+% For voronoi cell corresponding to the vertices on the boundary, the first
+% three vertices are: the vertex, the mid-point and the centroid.  Hence,
+% the formed triangle is inside the domain, even if the vertex is near the 
+% non-convex corner.
