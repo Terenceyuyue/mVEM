@@ -1,4 +1,4 @@
-function [node,elem] = dualMesh(pp,tt)
+function [node,elem] = dualMesh(pp,tt,isDelete)
 % Generate polygonal mesh by establishing the dual mesh of a given
 % triangulation.
 %
@@ -51,7 +51,8 @@ for ip = 1:np
     if isBoundary(ip)  % boundary nodes                      
         isCon(rep(v2e)==1) = true;         
         ee(isCon,2) = v2e(isCon)+nt; % connection number
-        ee((1:2)+Nv,:) = [ip+nt+ne+[0;0], ee(isCon,2)]; % add edges on the boundary      
+        ee((1:2)+Nv,:) = [ip+nt+ne+[0;0], ee(isCon,2)]; % add edges on the boundary 
+        ee = ee([(1:2)+Nv, 1:Nv], :);  % vertex as the first one
         Nv = size(ee,1);
     end
     % connectivity of voronoi cell
@@ -102,3 +103,21 @@ elem = cellfun(@(index) connection(index), elem, 'UniformOutput', false);
 % three vertices are: the vertex, the mid-point and the centroid.  Hence,
 % the formed triangle is inside the domain, even if the vertex is near the 
 % non-convex corner.
+
+%% Delete hanging nodes and non-convex cells
+if exist('isDelete','var') && (isDelete==true)
+    nBd = sum(isBoundary);
+    elemBd = cell(nBd,1);
+    s = 1;
+    for ip = 1:np
+        if isBoundary(ip)
+            index = elem{ip};  Nv = length(index);
+            elem{ip} = index(1:3);
+            elemBd{s} = [index(1)*ones(Nv-3,1), index(3:Nv-1)', index(4:Nv)'];
+            s = s + 1;
+        end
+    end
+    elemBd = cell2mat(elemBd);
+    elemBd = mat2cell(elemBd, ones(size(elemBd,1),1), 3);
+    elem = [elem; elemBd];
+end
