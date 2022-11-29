@@ -5,13 +5,6 @@ If you have any problems, please contact me via the email: terenceyuyue@sjtu.edu
 mVEM is a MATLAB software package containing efficient and easy-following codes for various virtual element methods (VEMs) published in the
 literature. 
 
-Note: dualMesh.m has local order problem, which may be corrected as follows:
-
-    [node,elem] = dualMesh(pp,tt);  %% pp,tt are the basic data structures of triangulation
-    [node,elem] = PolyMesher_Reorder(node,elem);
-    
-    This will be updated later ( in fact it is not difficult )
-
 --------------
 ## MESH
 
