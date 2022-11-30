@@ -13,4 +13,9 @@ for s = 1:ncol
     end
      var{s} = num2str(varargin{2*s-1}, varargin{2*s});
 end
-disp( table(var{:}, 'VariableNames', colname) );
+
+if size(var{1},1)==1  % one-row table
+    disp(array2table(str2double(var), 'VariableNames', colname))
+else
+    disp( table(var{:}, 'VariableNames', colname) );
+end
