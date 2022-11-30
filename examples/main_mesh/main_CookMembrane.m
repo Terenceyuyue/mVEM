@@ -1,5 +1,7 @@
 clc;clear;close all
 
+%%% This is not an appropriate way. See gunelveMesh.m instead.
+
 n = 4;
 
 
@@ -31,5 +33,6 @@ options.plot = true;
 options.refineTimes = 0;
 options.hmax = n;
 [node,elem] = EdgePolyMesher(P1,P2,options);
+findnode(node,'noindex')
 
-save meshdata_Cook1 node elem  % n = 4, 2, 1
+%save meshdata_Cook1 node elem  % n = 4, 2, 1
