@@ -1,6 +1,6 @@
 # MATLAB Programming for Virtual Element Methods
 
-If you have any problems, please contact me via the email: terenceyuyue@sjtu.edu.cn
+If you have any problems (**I mean bugs you encountered**), please contact me via the email: terenceyuyue@sjtu.edu.cn
 
 mVEM is a MATLAB software package containing efficient and easy-following codes for various virtual element methods (VEMs) published in the
 literature. 
