@@ -1,6 +1,6 @@
 # MATLAB Programming for Virtual Element Methods
 
-If you have any problems (**I mean bugs you encountered**), please contact me via the email: terenceyuyue@sjtu.edu.cn
+If you have any problems (**I mean bugs you encountered, not your own problems**), please contact me via the email: terenceyuyue@sjtu.edu.cn
 
 mVEM is a MATLAB software package containing efficient and easy-following codes for various virtual element methods (VEMs) published in the
 literature. 
@@ -74,6 +74,8 @@ For linear elasticity problems, we mainly consider the (locking-free) virtual el
  
  - Divergence-free mixed vem for Stokes problem in the lowest order
 
+ - Divergence-free mixed vem for Stokes problem in the lowest order with enhancement technique used
+
 
 ------------------
 ##  Adaptive Virtual Element Methods
@@ -86,7 +88,7 @@ For linear elasticity problems, we mainly consider the (locking-free) virtual el
 ------------------
 ##  Variational Inequalities
 
-   We provide the implementation of the the virtual element method for a simplified friction problem, which is a typical elliptic variational inequality of the second kind. The discrete problem is solved by using the Uzawa iteration algorithm, hence the implentation is reduced to that of Poisson equation in each iteration.
+  - We provide the implementation of the the virtual element method for a simplified friction problem, which is a typical elliptic variational inequality of the second kind. The discrete problem is solved by using the Uzawa iteration algorithm, hence the implentation is reduced to that of Poisson equation in each iteration.
 
 
 ------------------
@@ -105,6 +107,14 @@ The design ideas can be directly generalized to higher-order cases.
 
 - Only the calculation of projection matrices is vectorized, and the assembly procedure is still implemented by looping over the elements
 
+-------------------
+## Interior penalty virtual element method (IPVEM)
+
+ - IPVEM for biharmonic equation
+
+ - IPVEM for fourth-order singular perturbation problems
+
+
 
 -------------------
 ## Acknowlegement
@@ -117,18 +127,7 @@ Detailed credits can be found in the M-lint of several m files.
 -----------------
 ## Citation
 
-If you feel it is helpful for your research, please acknowledge your use by citing:
-
-Y. Yu, mVEM: MATLAB Programming for Virtual Element Methods, https://github.com/Terenceyuyue/mVEM, Shanghai Jiao Tong University, 2019-2022.
-
-    @misc{mvem,
-          title = { {mVEM: MATLAB Programming for Virtual Element Methods} },
-          url = {https://github.com/Terenceyuyue/mVEM},
-          author = {Yu, Y.}
-          institution = {Shanghai Jiao Tong University},
-          year = {2019-2022},
-          }
-
+If you feel it is helpful for your research, please acknowledge your use by citing the arxiv paper in Doc.
 
   PS: 
 
