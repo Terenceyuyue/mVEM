@@ -99,6 +99,20 @@ The design ideas can be directly generalized to higher-order cases.
 
 
 -------------------
+## Interior penalty virtual element method (IPVEM)
+
+ - IPVEM for biharmonic equation
+
+ - IPVEM for fourth-order singular perturbation problems
+
+
+-------------------
+## Eigenvalue problems
+
+ - Poisson equation
+
+
+-------------------
 ## Vectorized Implementation
 
 - The vectorized implementatioin for conforming VEMs of Poisson equation has been accomplished in a unified way. 
@@ -107,12 +121,7 @@ The design ideas can be directly generalized to higher-order cases.
 
 - Only the calculation of projection matrices is vectorized, and the assembly procedure is still implemented by looping over the elements
 
--------------------
-## Interior penalty virtual element method (IPVEM)
 
- - IPVEM for biharmonic equation
-
- - IPVEM for fourth-order singular perturbation problems
 
 
 
