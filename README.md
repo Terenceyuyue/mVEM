@@ -101,9 +101,11 @@ The design ideas can be directly generalized to higher-order cases.
 -------------------
 ## Interior penalty virtual element method (IPVEM)
 
- - IPVEM for biharmonic equation
+ - IPVEM for biharmonic equation  (including treatment of inhomogeneous boundary conditions)
 
  - IPVEM for fourth-order singular perturbation problems
+ 
+ - adaptive IPVEM
 
 
 -------------------
@@ -147,14 +149,4 @@ If you feel it is helpful for your research, please acknowledge your use by citi
       相比网上有的程序，过程更加清晰，充分使用了 MATLAB 的向量运算。
       
       在计算各种投影的边界项时，部分程序中使用有限元载荷向量的装配技巧避免了繁琐的人为处理。
-
-  TO DO:
-  
-      - Vectorized implementation
-      
-      - Time-dependent problems and nonlinear problems
-      
-      - Various applications: Cahn–Hilliard problem, Stokes–Darcy problem, Navier-Stokes, etc.
-      
-      - Mesh generation in 3-D 
 
